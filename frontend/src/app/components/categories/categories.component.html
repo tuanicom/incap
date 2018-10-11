@@ -1,0 +1,6 @@
+<table class="table table-dark" *ngIf="(categories$ | async)?.length">
+  <tr *ngFor="let category of categories$ | async">
+    <td>{{category.title}}</td>
+    <td>{{category.description}}</td>
+  </tr>
+</table>

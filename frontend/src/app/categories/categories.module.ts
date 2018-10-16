@@ -7,6 +7,7 @@ import { ListComponent } from './components/list/list.component';
 import { CategoryService } from './services/category.service'
 import { RouterModule, Routes } from '@angular/router';
 import { EditComponent } from './components/edit/edit.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 const routes: Routes = [
   { path: 'categories', component: CategoriesComponent },
@@ -20,6 +21,7 @@ const routes: Routes = [
     EditComponent
   ],
   imports: [
+    AngularFontAwesomeModule,
     BrowserModule,
     HttpClientModule,
     NgbModule.forRoot(),

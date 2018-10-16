@@ -1,6 +1,30 @@
-<table class="table table-dark" *ngIf="(categories$ | async)?.length">
-  <tr *ngFor="let category of categories$ | async">
-    <td>{{category.title}}</td>
-    <td>{{category.description}}</td>
-  </tr>
+<table class="table table-striped table-hover" *ngIf="(categories$ | async)?.length">
+  <thead class="thead-dark">
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let category of categories$ | async">
+      <td>{{category.title}}</td>
+      <td>{{category.description}}</td>
+      <td class="btn-group"><a href="" class="btn btn-light">
+          <fa name="edit" size="lg"></fa>
+        </a>
+        <a href="" class="btn btn-light">
+          <fa name="trash" size="lg"></fa>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="3">
+          <a href="" class="btn btn-light">
+            <fa name="plus" size="lg"></fa>
+          </a></td>
+    </tr>
+  </tfoot>
 </table>

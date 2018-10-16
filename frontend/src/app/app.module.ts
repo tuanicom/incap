@@ -4,7 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
-import {CategoriesModule} from './categories/categories.module'
+import {CategoriesModule} from './categories/categories.module';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 const routes: Routes = [];
 
@@ -13,6 +14,7 @@ const routes: Routes = [];
     AppComponent,
   ],
   imports: [
+    AngularFontAwesomeModule,
     BrowserModule,
     HttpClientModule,
     CategoriesModule,

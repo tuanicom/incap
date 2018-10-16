@@ -1,40 +1,38 @@
 import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
+import { CategoriesComponent } from './categories.component';
+import { ListComponent } from './components/list/list.component';
+import { EditComponent } from './components/edit/edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { CategoriesModule } from './categories/categories.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterModule } from '@angular/router';
+import { CategoryService } from './services/category.service';
 import { APP_BASE_HREF } from '@angular/common';
 
-describe('AppComponent', () => {
+describe('CategoriesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [
+        CategoriesComponent,
+        ListComponent,
+        EditComponent
+      ],
       imports: [
         BrowserModule,
         HttpClientModule,
-        CategoriesModule,
         NgbModule.forRoot(),
         RouterModule.forRoot([])
       ],
-      declarations: [
-        AppComponent
-      ],
       providers: [
+        CategoryService,
         { provide: APP_BASE_HREF, useValue: '/' }
       ],
     }).compileComponents();
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
+    const fixture = TestBed.createComponent(CategoriesComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'frontend'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Incap');
   });
 });

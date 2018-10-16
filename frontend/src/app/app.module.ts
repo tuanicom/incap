@@ -3,27 +3,23 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CategoriesComponent } from './components/categories/categories.component';
-import { CategoryService } from './services/category.service'
 import { RouterModule, Routes } from '@angular/router';
+import {CategoriesModule} from './categories/categories.module'
 
-const routes: Routes = [
-  { path: 'categories', component: CategoriesComponent },
-  { path: '', redirectTo: '/categories', pathMatch: 'full' },
-];
+const routes: Routes = [];
 
 @NgModule({
   declarations: [
     AppComponent,
-    CategoriesComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
+    CategoriesModule,
     NgbModule.forRoot(),
     RouterModule.forRoot(routes)
   ],
-  providers: [CategoryService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

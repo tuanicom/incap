@@ -4,11 +4,11 @@ import {Category} from "../../models/category"
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-categories',
-  templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  selector: 'list-categories',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.css']
 })
-export class CategoriesComponent implements OnInit {
+export class ListComponent implements OnInit {
   public categories$: Observable<Category[]>;
 
   constructor(private categoryService: CategoryService) { }

@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -21,6 +22,7 @@ describe('ListComponent', () => {
         EditComponent
       ],
       imports: [
+        AngularFontAwesomeModule,
         BrowserModule,
         HttpClientModule,
         NgbModule.forRoot(),

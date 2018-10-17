@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 describe('CategoryService', () => {
   beforeEach(() => TestBed.configureTestingModule({
@@ -18,6 +19,7 @@ describe('CategoryService', () => {
       EditComponent
     ],
     imports: [
+      AngularFontAwesomeModule,
       BrowserModule,
       HttpClientModule,
       NgbModule.forRoot(),

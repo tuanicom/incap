@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from './services/category.service';
 import { APP_BASE_HREF } from '@angular/common';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 describe('CategoriesComponent', () => {
   beforeEach(async(() => {
@@ -18,6 +19,7 @@ describe('CategoriesComponent', () => {
         EditComponent
       ],
       imports: [
+        AngularFontAwesomeModule,
         BrowserModule,
         HttpClientModule,
         NgbModule.forRoot(),

@@ -1,7 +1,7 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 install:
-- cmd: npm install -g angular-cli
+- cmd: npm install -g @angular/cli
 cache: node_modules
 build_script:
 - cd frontend

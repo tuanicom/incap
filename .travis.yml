@@ -18,9 +18,11 @@ before_install:
   - sh -e /etc/init.d/xvfb start
 
 before_script:
-- cd frontend
 - npm install -g angular-cli
-- npm install
-- ng build
 
-script: ng test
+script: 
+- cd frontend 
+- npm install
+- ng build 
+- ng test --watch false --browsers ChromeHeadless --code-coverage
+- ng e2e

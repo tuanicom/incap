@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/tuanicom/incap.svg?branch=master)](https://travis-ci.org/tuanicom/incap)
+[![Build status](https://ci.appveyor.com/api/projects/status/x9dtpjle2v6afiwf?svg=true)](https://ci.appveyor.com/project/tuanicom/incap)
+
 # incap
 
 This is just a personal test project. Anyway, if you want to fork it, feel free to do it (just let me know your goal)

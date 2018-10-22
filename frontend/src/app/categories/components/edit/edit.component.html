@@ -1,3 +1,15 @@
-<p>
-  edit works!
-</p>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Editing {{ (category$ | async)?.title }}</h5>
+    <form [formGroup]="editCategoryForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>
+          Description:
+          <input type="text" class="form-control" formControlName="description">
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button (click)="goBackToList()" class="btn btn-secondary">Cancel</button>
+    </form>
+  </div>
+</div>

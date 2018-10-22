@@ -23,7 +23,7 @@ export class CategoryService {
     return this.http.post<Category>(`${this.uri}/categories`, category);
   }
 
-  public updateCategory(category): Observable<Category> {
+  public updateCategory(category: Category): Observable<Category> {
     return this.http.put<Category>(`${this.uri}/categories`, category);
   }
 

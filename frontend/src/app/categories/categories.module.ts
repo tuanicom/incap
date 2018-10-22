@@ -8,9 +8,13 @@ import { CategoryService } from './services/category.service'
 import { RouterModule, Routes } from '@angular/router';
 import { EditComponent } from './components/edit/edit.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { AddComponent } from './components/add/add.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
-  { path: 'categories', component: CategoriesComponent },
+  { path: 'categories', component: ListComponent },
+  { path: 'categories/edit/:id', component: EditComponent },
+  { path: 'categories/add', component: AddComponent },
   { path: '', redirectTo: '/categories', pathMatch: 'full' },
 ];
 
@@ -18,10 +22,12 @@ const routes: Routes = [
   declarations: [
     CategoriesComponent,
     ListComponent,
-    EditComponent
+    EditComponent,
+    AddComponent
   ],
   imports: [
     AngularFontAwesomeModule,
+    ReactiveFormsModule,
     BrowserModule,
     HttpClientModule,
     NgbModule.forRoot(),

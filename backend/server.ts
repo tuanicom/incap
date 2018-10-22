@@ -86,8 +86,8 @@ export class Server {
                 });
         });
 
-        this.router.route('/categories/:id').put((req, res) => {
-            Category.findById(req.params.id, (err, category: ICategory) => {
+        this.router.route('/categories').put((req, res) => {
+            Category.findById(req.body._id, (err, category: ICategory) => {
                 if (err) {
                     res.json(err);
                 } else {

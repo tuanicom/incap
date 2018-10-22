@@ -10,21 +10,22 @@
     <tr *ngFor="let category of categories$ | async">
       <td>{{category.title}}</td>
       <td>{{category.description}}</td>
-      <td class="btn-group"><a href="" class="btn btn-light">
+      <td class="btn-group"><button class="btn btn-light" (click)="editCategory(category._id)">
           <fa name="edit" size="lg"></fa>
-        </a>
-        <a href="" class="btn btn-light">
+        </button>
+        <button class="btn btn-light" (click)="deleteCategory(category._id)">
           <fa name="trash" size="lg"></fa>
-        </a>
+        </button>
       </td>
     </tr>
   </tbody>
   <tfoot>
     <tr>
       <td colspan="3">
-          <a href="" class="btn btn-light">
-            <fa name="plus" size="lg"></fa>
-          </a></td>
+        <button class="btn btn-light" (click)="addCategory()">
+          <fa name="plus" size="lg"></fa>
+        </button>
+      </td>
     </tr>
   </tfoot>
 </table>

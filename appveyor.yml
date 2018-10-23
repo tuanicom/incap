@@ -1,15 +1,22 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 install:
-- cmd: npm install -g @angular/cli
-cache: node_modules
+- npm install -g @angular/cli
+- mkdir C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium
+- curl -oC:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium\chrome-response.xml https://chromedriver.storage.googleapis.com/
+cache: 
+  - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
+  - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
+  - node_modules -> package.json                                        # local npm modules
 build_script:
 - cd frontend
 - npm install
 - ng build
 test_script:
 - ng test --watch false --browsers ChromeHeadless --code-coverage
-- ng e2e
+- appveyor-retry npm run pree2e
+- npm run pree2e
+- ng e2e --no-webdriver-update
 artifacts:
 - path: coverage/index.html
   name: Coverage

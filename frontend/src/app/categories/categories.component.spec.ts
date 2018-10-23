@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { CategoryService } from './services/category.service';
 import { APP_BASE_HREF } from '@angular/common';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CategoriesComponent', () => {
   beforeEach(async(() => {
@@ -20,6 +21,7 @@ describe('CategoriesComponent', () => {
       ],
       imports: [
         AngularFontAwesomeModule,
+        ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,
         NgbModule.forRoot(),

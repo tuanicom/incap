@@ -9,6 +9,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('ListComponent', () => {
   let component: ListComponent;
@@ -23,6 +24,7 @@ describe('ListComponent', () => {
       ],
       imports: [
         AngularFontAwesomeModule,
+        ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,
         NgbModule.forRoot(),

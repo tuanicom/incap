@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/tuanicom/incap.svg?branch=master)](https://travis-ci.org/tuanicom/incap)
 [![Build status](https://ci.appveyor.com/api/projects/status/x9dtpjle2v6afiwf?svg=true)](https://ci.appveyor.com/project/tuanicom/incap)
+[![Coverage Status](https://coveralls.io/repos/github/tuanicom/incap/badge.svg?branch=master)](https://coveralls.io/github/tuanicom/incap?branch=master)
 [![Documentation Status](https://readthedocs.com/projects/tuanicom-incap/badge/?version=latest)](https://tuanicom-incap.readthedocs-hosted.com/en/latest/?badge=latest)
 
 # incap

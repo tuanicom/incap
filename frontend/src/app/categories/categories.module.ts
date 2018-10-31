@@ -1,22 +1,15 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoriesComponent } from './categories.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListComponent } from './components/list/list.component';
-import { CategoryService } from './services/category.service'
-import { RouterModule, Routes } from '@angular/router';
+import { CategoryService } from './services/category.service';
 import { EditComponent } from './components/edit/edit.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { AddComponent } from './components/add/add.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
-const routes: Routes = [
-  { path: 'categories', component: ListComponent },
-  { path: 'categories/edit/:id', component: EditComponent },
-  { path: 'categories/add', component: AddComponent },
-  { path: '', redirectTo: '/categories', pathMatch: 'full' },
-];
+import { CategoriesRoutingModule } from './categories-routing.module';
 
 @NgModule({
   declarations: [
@@ -26,14 +19,14 @@ const routes: Routes = [
     AddComponent
   ],
   imports: [
+    CommonModule,
     AngularFontAwesomeModule,
     ReactiveFormsModule,
-    BrowserModule,
     HttpClientModule,
     NgbModule.forRoot(),
-    RouterModule.forRoot(routes)
+    CategoriesRoutingModule
   ],
-  providers: [CategoryService],
+  providers: [CategoryService]
 })
 export class CategoriesModule {
 }

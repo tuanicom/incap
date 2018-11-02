@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService } from "../../services/category.service"
-import { Category } from "../../models/category"
+import { CategoryService } from '../../services/category.service';
+import { Category } from '../../models/category';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'list-categories',
+  selector: 'categories-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
@@ -20,13 +20,10 @@ export class ListComponent implements OnInit {
 
   getCategories() {
     this.categories$ = this.categoryService.getCategories();
-    this.categories$.subscribe((categories: Category[]) => {
-      console.log("categories loaded" + JSON.stringify(categories));
-    })
   }
 
   addCategory() {
-    this.router.navigate([`/categories/add`]);
+    this.router.navigate(['/categories/add']);
   }
 
   editCategory(id: string) {

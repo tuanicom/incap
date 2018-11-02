@@ -1,26 +1,33 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { EditComponent } from './edit.component';
-import { CategoriesComponent } from '../../categories.component';
-import { ListComponent } from '../list/list.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
-import { APP_BASE_HREF } from '@angular/common';
+import { Category } from '../../models/category';
+import * as Observable from 'rxjs';
 
 describe('EditComponent', () => {
   let component: EditComponent;
   let fixture: ComponentFixture<EditComponent>;
+  let categoryServiceSpy: {
+    getCategoryById: jasmine.Spy,
+    updateCategory: jasmine.Spy,
+  };
+  let routerSpy: {
+    navigate: jasmine.Spy,
+  };
+  const categoryId = '123';
 
   beforeEach(async(() => {
+    categoryServiceSpy = jasmine.createSpyObj('CategoryService', ['getCategoryById', 'updateCategory']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
     TestBed.configureTestingModule({
       declarations: [
-        CategoriesComponent,
-        ListComponent,
         EditComponent
       ],
       imports: [
@@ -32,8 +39,9 @@ describe('EditComponent', () => {
         RouterModule.forRoot([])
       ],
       providers: [
-        CategoryService,
-        { provide: APP_BASE_HREF, useValue: '/' }
+        { provide: CategoryService, useValue: categoryServiceSpy },
+        { provide: Router, useValue: routerSpy },
+        { provide: ActivatedRoute, useValue: { params: Observable.of<Params>({ id: categoryId }) } }
       ],
     });
   }));
@@ -44,7 +52,56 @@ describe('EditComponent', () => {
     fixture.detectChanges();
   });
 
+  beforeEach(() => {
+    categoryServiceSpy.getCategoryById.calls.reset();
+    categoryServiceSpy.getCategoryById.and.returnValue(Observable.of<Category>(<Category>{
+      id: categoryId,
+      title: 'test',
+      description: 'test'
+    }));
+    component.ngOnInit();
+  });
+
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should init the form', () => {
+    expect(component.editCategoryForm).toBeTruthy();
+  });
+
+  it('should retrieve the category corresponding to the provided id', () => {
+    expect(categoryServiceSpy.getCategoryById).toHaveBeenCalled();
+    expect(categoryServiceSpy.getCategoryById.calls.count()).toBe(1);
+    expect(categoryServiceSpy.getCategoryById.calls.first().args[0]).toBe(categoryId);
+  });
+
+  describe('when submitting the form', () => {
+
+    beforeEach(() => {
+      component.editCategoryForm.get('description').setValue('test2');
+      categoryServiceSpy.updateCategory.and.returnValue(Observable.of<Category>(<Category>{}));
+      component.onSubmit();
+    });
+
+    it('should call the add function with category service', () => {
+      expect(categoryServiceSpy.updateCategory).toHaveBeenCalled();
+      expect(categoryServiceSpy.updateCategory.calls.count()).toBe(1);
+    });
+
+    it('should add a category with the values of the form', () => {
+      expect(categoryServiceSpy.updateCategory.calls.first().args.length).toBe(1);
+      expect((categoryServiceSpy.updateCategory.calls.first().args[0] as Category).id).toBe(categoryId);
+      expect((categoryServiceSpy.updateCategory.calls.first().args[0] as Category).title).toBe('test');
+      expect((categoryServiceSpy.updateCategory.calls.first().args[0] as Category).description).toBe('test2');
+    });
+
+    // it('should redirect to the list after', () => {
+    //   expect(routerSpy.navigate).toHaveBeenCalled();
+    //   expect(routerSpy.navigate.calls.count()).toBe(1);
+    //   expect(routerSpy.navigate.calls.first().args.length).toBe(1);
+    //   expect(routerSpy.navigate.calls.first().args[0].length).toBe(1);
+    //   expect(routerSpy.navigate.calls.first().args[0][0]).toBe('/categories');
+    // });
   });
 });

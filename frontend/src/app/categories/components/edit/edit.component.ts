@@ -4,10 +4,10 @@ import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
 
 @Component({
-  selector: 'category-edit',
+  selector: 'categories-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
@@ -21,14 +21,16 @@ export class EditComponent implements OnInit {
   constructor(private categoryService: CategoryService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.category$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.categoryService.getCategoryById(params.get('id')))
-    );
+    this.route.params.subscribe((params: Params) => {
+      this.getCategoryById(params['id']);
+    });
+  }
+
+  private getCategoryById(id: string) {
+    this.category$ = this.categoryService.getCategoryById(id);
     this.category$.subscribe((category: Category) => {
-      console.log("category loaded" + JSON.stringify(category));
-      this.editCategoryForm.get("description").setValue(category.description);
-    })
+      this.editCategoryForm.get('description').setValue(category.description);
+    });
   }
 
   onSubmit() {

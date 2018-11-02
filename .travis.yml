@@ -22,6 +22,7 @@ script:
 - ng test --watch false --browsers ChromeHeadless --code-coverage
 - npm run coverall
 - ng e2e
+- ng lint
 cache:
   directories:
     - "node_modules"

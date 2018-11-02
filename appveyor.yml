@@ -17,6 +17,7 @@ test_script:
 - appveyor-retry npm run pree2e
 - npm run pree2e
 - ng e2e --no-webdriver-update
+- ng lint
 artifacts:
-- path: coverage/index.html
+- path: frontend/coverage/index.html
   name: Coverage

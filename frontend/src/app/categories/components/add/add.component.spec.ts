@@ -1,29 +1,33 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AddComponent } from './add.component';
-import { CategoriesComponent } from '../../categories.component';
-import { ListComponent } from '../list/list.component';
-import { EditComponent } from '../edit/edit.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
-import { APP_BASE_HREF } from '@angular/common';
+import { Category } from '../../models/category';
+import * as Observable from 'rxjs';
 
 describe('AddComponent', () => {
   let component: AddComponent;
   let fixture: ComponentFixture<AddComponent>;
+  let categoryServiceSpy: {
+    addCategory: jasmine.Spy,
+  };
+
+  let routerSpy: {
+    navigate: jasmine.Spy,
+  };
 
   beforeEach(async(() => {
+    categoryServiceSpy = jasmine.createSpyObj('CategoryService', ['addCategory']);
+    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+
     TestBed.configureTestingModule({
       declarations: [
-        AddComponent,
-        CategoriesComponent,
-        ListComponent,
-        EditComponent
+        AddComponent
       ],
       imports: [
         AngularFontAwesomeModule,
@@ -34,8 +38,8 @@ describe('AddComponent', () => {
         RouterModule.forRoot([])
       ],
       providers: [
-        CategoryService,
-        { provide: APP_BASE_HREF, useValue: '/' }
+        { provide: CategoryService, useValue: categoryServiceSpy },
+        { provide: Router, useValue: routerSpy }
       ],
     });
   }));
@@ -48,5 +52,38 @@ describe('AddComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should init the form', () => {
+    expect(component.addCategoryForm).toBeTruthy();
+  });
+
+  describe('when submitting the form', () => {
+
+    beforeEach(() => {
+      component.addCategoryForm.get('title').setValue('test');
+      component.addCategoryForm.get('description').setValue('test');
+      categoryServiceSpy.addCategory.and.returnValue(Observable.of<object>({}));
+      component.onSubmit();
+    });
+
+    it('should call the add function with category service', () => {
+      expect(categoryServiceSpy.addCategory).toHaveBeenCalled();
+      expect(categoryServiceSpy.addCategory.calls.count()).toBe(1);
+    });
+
+    it('should add a category with the values of the form', () => {
+      expect(categoryServiceSpy.addCategory.calls.first().args.length).toBe(1);
+      expect((categoryServiceSpy.addCategory.calls.first().args[0] as Category).title).toBe('test');
+      expect((categoryServiceSpy.addCategory.calls.first().args[0] as Category).description).toBe('test');
+    });
+
+    it('should redirect to the list after', () => {
+      expect(routerSpy.navigate).toHaveBeenCalled();
+      expect(routerSpy.navigate.calls.count()).toBe(1);
+      expect(routerSpy.navigate.calls.first().args.length).toBe(1);
+      expect(routerSpy.navigate.calls.first().args[0].length).toBe(1);
+      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('/categories');
+    });
   });
 });

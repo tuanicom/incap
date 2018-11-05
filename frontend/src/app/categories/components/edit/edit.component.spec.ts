@@ -84,24 +84,21 @@ describe('EditComponent', () => {
       component.onSubmit();
     });
 
-    it('should call the add function with category service', () => {
+    it('should call the add function with category service with the values of the form', () => {
       expect(categoryServiceSpy.updateCategory).toHaveBeenCalled();
       expect(categoryServiceSpy.updateCategory.calls.count()).toBe(1);
-    });
-
-    it('should add a category with the values of the form', () => {
       expect(categoryServiceSpy.updateCategory.calls.first().args.length).toBe(1);
       expect((categoryServiceSpy.updateCategory.calls.first().args[0] as Category).id).toBe(categoryId);
       expect((categoryServiceSpy.updateCategory.calls.first().args[0] as Category).title).toBe('test');
       expect((categoryServiceSpy.updateCategory.calls.first().args[0] as Category).description).toBe('test2');
     });
 
-    // it('should redirect to the list after', () => {
-    //   expect(routerSpy.navigate).toHaveBeenCalled();
-    //   expect(routerSpy.navigate.calls.count()).toBe(1);
-    //   expect(routerSpy.navigate.calls.first().args.length).toBe(1);
-    //   expect(routerSpy.navigate.calls.first().args[0].length).toBe(1);
-    //   expect(routerSpy.navigate.calls.first().args[0][0]).toBe('/categories');
-    // });
+    it('should redirect to the list after', () => {
+      expect(routerSpy.navigate).toHaveBeenCalled();
+      expect(routerSpy.navigate.calls.count()).toBe(1);
+      expect(routerSpy.navigate.calls.first().args.length).toBe(1);
+      expect(routerSpy.navigate.calls.first().args[0].length).toBe(1);
+      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('/categories');
+    });
   });
 });

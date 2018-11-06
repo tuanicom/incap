@@ -2,7 +2,7 @@ version: 1.0.{build}
 image: Visual Studio 2017
 install:
 - npm install -g @angular/cli
-- mkdir C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium
+- if not exist C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium ( mkdir C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium )
 - curl -oC:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium\chrome-response.xml https://chromedriver.storage.googleapis.com/
 cache: 
   - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules

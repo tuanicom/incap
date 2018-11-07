@@ -4,7 +4,7 @@ import * as express from "express";
 import * as cors from "cors";
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
-import Category, { ICategory } from "./models/category";
+import CategoryRoutes from "./categories/category.routes";
 
 /**
  * The server.
@@ -33,12 +33,12 @@ export class Server {
         // create expressjs application
         this.app = express();
         this.router = express.Router();
+        this.dbConnection();
+        this.routes();
         this.config();
     }
 
     private config() {
-        this.dbConnection();
-        this.routes();
         this.app.use(cors());
         this.app.use(bodyParser.json());
         this.app.use("/", this.router);
@@ -56,66 +56,7 @@ export class Server {
     }
 
     private routes() {
-        this.router.route('/categories').get((req, res) => {
-            Category.find((err, categories) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.json(categories);
-                }
-            });
-        });
-        this.router.route('/categories/:id').get((req, res) => {
-            Category.findById(req.params.id, (err, category) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.json(category);
-                }
-            });
-        });
-
-        this.router.route('/categories').post((req, res) => {
-            const newCategory = new Category(req.body);
-            newCategory.save()
-                .then(category => {
-                    res.status(200).json(category);
-                })
-                .catch(err => {
-                    res.status(400).json(err);
-                });
-        });
-
-        this.router.route('/categories').put((req, res) => {
-            Category.findById(req.body._id, (err, category: ICategory) => {
-                if (err) {
-                    res.json(err);
-                } else {
-                    if (!category) {
-                        return req.next(new Error('Could not load Document'));
-                    } else {
-                        category.title = req.body.title;
-                        category.description = req.body.description;
-
-                        category.save().then(updatedCategory => {
-                            res.json(updatedCategory);
-                        }).catch(err2 => {
-                            res.status(400).json(err2);
-                        });
-                    }
-                }
-            });
-        });
-
-        this.router.route('/categories/:id').delete((req, res) => {
-            Category.findByIdAndRemove({ _id: req.params.id }, (err, category) => {
-                if (err) {
-                    res.json(err);
-                } else {
-                    res.json('Removed successfully' + category.title);
-                }
-            });
-        });
+        this.router.use('/categories', CategoryRoutes);
     }
 }
 

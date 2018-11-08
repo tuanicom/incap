@@ -5,7 +5,14 @@ module.exports = function (grunt) {
         ts: {
             default: {
                 tsconfig: './tsconfig.json',
+                outDir: "dist",
+                src: ["**/*.ts", "!**/*.specs.ts", "!node_modules/**"]
+            },
+            tests: {
+                tsconfig: './tsconfig.json',
+                outDir: 'tests',
                 src: ["**/*.ts", "!node_modules/**"]
+
             }
         },
         tslint: {
@@ -13,7 +20,7 @@ module.exports = function (grunt) {
                 configuration: "tslint.json"
             },
             files: {
-                src: ["\*\*/\*.ts", "!node_modules/\*\*/\*.ts"]
+                src: ["\*\*/\*.ts","!\*\*/\*.specs.ts", "!node_modules/\*\*/\*.ts"]
             }
         },
         watch: {

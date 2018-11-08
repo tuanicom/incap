@@ -8,3 +8,5 @@
 !gruntfile.js
 
 .sonarlint
+.nyc_output
+coverage

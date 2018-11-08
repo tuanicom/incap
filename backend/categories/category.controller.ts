@@ -1,7 +1,15 @@
 import Category, { ICategory } from "./category.model";
 import CategoryProcess from "./category.process";
 
-export class CategoryController {
+export interface ICategoryController {
+    getAll(): Promise<ICategory[]>;
+    getById(id: string): Promise<ICategory>;
+    add(input: any): Promise<ICategory>;
+    update(input: any): Promise<ICategory>;
+    delete(id: string): Promise<ICategory>;
+}
+
+export class CategoryController implements ICategoryController {
 
     public async getAll(): Promise<ICategory[]> {
         return await CategoryProcess.getAll();
@@ -28,4 +36,4 @@ export class CategoryController {
     }
 }
 
-export default new CategoryController();
+export default new CategoryController() as ICategoryController;

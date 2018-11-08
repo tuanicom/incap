@@ -1,6 +1,13 @@
 import Category, { ICategory } from "./category.model";
 
-export class CategoryProcess {
+export interface ICategoryProcess {
+    getAll(): Promise<ICategory[]>;
+    getById(id: string): Promise<ICategory>;
+    save(newCategory: ICategory): Promise<ICategory>;
+    delete(id: string): Promise<ICategory>;
+}
+
+export class CategoryProcess implements ICategoryProcess {
 
     public async getAll(): Promise<ICategory[]> {
         return await Category.find().exec();
@@ -19,4 +26,4 @@ export class CategoryProcess {
     }
 }
 
-export default new CategoryProcess();
+export default new CategoryProcess() as ICategoryProcess;

@@ -1,6 +1,8 @@
 version: 1.0.{build}
 image: Visual Studio 2017
 install:
+- npm install codecov -g
+- npm install -g snyk
 - npm install -g @angular/cli
 - if not exist C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium ( mkdir C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium )
 - curl -oC:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium\chrome-response.xml https://chromedriver.storage.googleapis.com/
@@ -8,16 +10,44 @@ cache:
   - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
   - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
   - frontend\node_modules -> package.json                               # local npm modules
-build_script:
+  # scripts to run before build
+before_build:
 - cd frontend
 - npm install
+- cd ..
+- cd backend
+- npm install
+- cd ..
+build_script:
+- cd frontend
 - ng build
+- cd ..
+- cd backend
+- npm run grunt ts
+- cd ..
 test_script:
+- cd frontend
 - ng test --watch false --browsers ChromeHeadless --code-coverage
 - appveyor-retry npm run pree2e
 - npm run pree2e
 - ng e2e --no-webdriver-update
+- codecov
+- cd ..
+- cd backend
+- npm test
+- codecov
+- cd ..
+after_test:
+- cd frontend
 - ng lint
+- snyk monitor --file=package.json --project-name=incap-frontend
+- cd ..
+- cd backend
+- npm run grunt tslint
+- snyk monitor --file=package.json --project-name=incap-backend
+- cd ..
 artifacts:
 - path: frontend/coverage/index.html
-  name: Coverage
+  name: Frontend Coverage
+- path: backend/coverage/lcov-report/index.html
+  name: Frontend Coverage

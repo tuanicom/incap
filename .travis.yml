@@ -17,16 +17,29 @@ before_install:
     - 'sh -e /etc/init.d/xvfb start'
 before_script:
     - 'npm install -g @angular/cli'
-script:
-    - 'cd frontend'
-    - 'npm install'
-    - 'ng build'
-    - 'ng test --watch false --browsers ChromeHeadless --code-coverage'
-    - 'npm run coverall'
-    - 'ng e2e'
-    - 'ng lint'
-    - 'cd ..'
-    - 'sonar-scanner'
-cache:
-    directories:
-        - node_modules
+jobs:
+    include:
+        - stage: build&test 
+          script:
+                - 'cd frontend'
+                - 'npm install'
+                - 'ng build'
+                - 'ng test --watch false --browsers ChromeHeadless --code-coverage'
+                - 'npm run coveralls -- -v "$(dirname "`pwd`")"'
+                - 'ng e2e'
+                - 'ng lint'
+        - # stage name not required
+          script:
+                - 'cd backend'
+                - 'npm install'
+                - 'npm run grunt ts'
+                - 'npm test'
+                - 'npm run coveralls -- -v "$(dirname "`pwd`")"'
+                - 'npm run grunt tslint'
+        - stage: sonar
+          script:
+                - 'sonar-scanner'
+cache: npm
+notifications:
+  webhooks: 
+    - https://coveralls.io/webhook

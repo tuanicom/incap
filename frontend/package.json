@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --host 0.0.0.0",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "pree2e": "webdriver-manager update --standalone false --gecko false --versions.chrome 2.43",

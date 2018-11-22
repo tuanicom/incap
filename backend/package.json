@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/server.js",
   "scripts": {
+    "start": "node dist/server.js",
     "grunt": "grunt",
     "test": "nyc mocha ./tests/**/*.spec.js --timeout 10000",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"

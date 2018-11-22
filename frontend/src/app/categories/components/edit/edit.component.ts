@@ -12,7 +12,7 @@ import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
   styleUrls: ['./edit.component.css']
 })
 export class EditComponent implements OnInit {
-  private category$: Observable<Category>;
+  public category$: Observable<Category>;
 
   editCategoryForm = new FormGroup({
     description: new FormControl(''),

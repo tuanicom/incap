@@ -20,7 +20,7 @@ before_build:
 - cd ..
 build_script:
 - cd frontend
-- ng build
+- ng build --prod 
 - cd ..
 - cd backend
 - npm run grunt ts

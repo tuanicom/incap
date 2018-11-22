@@ -31,11 +31,11 @@ test_script:
 - appveyor-retry npm run pree2e
 - npm run pree2e
 - ng e2e --no-webdriver-update
-- codecov
+- codecov --disable=gcov
 - cd ..
 - cd backend
 - npm test
-- codecov
+- codecov --disable=gcov
 - cd ..
 after_test:
 - cd frontend

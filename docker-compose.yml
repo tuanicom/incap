@@ -5,7 +5,7 @@ services:
   frontend: # name of the first service
     build: frontend # specify the directory of the Dockerfile
     ports:
-      - "4200:4200" # specify port forewarding
+      - "8080:8080" # specify port forewarding
     depends_on:
       - backend
 

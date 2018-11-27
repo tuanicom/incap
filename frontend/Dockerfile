@@ -1,23 +1,26 @@
-# Create image based on the official Node 6 image from the dockerhub
-FROM node:8
-
+# Create image based on the official Node 8 image from the dockerhub
+FROM node:alpine as builder
 # Create a directory where our app will be placed
 RUN mkdir -p /usr/src/app
-
 # Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
-
 # Copy files
 COPY . /usr/src/app
-
 # Install dependecies
 RUN npm install
-
 #Build
 RUN npm build
 
+# In order to clean from building, we restarted from the original image (multi-stage build)
+FROM nginx:alpine as runner
+# Create a directory where our app will be placed
+RUN rm -rf /usr/share/nginx/html/*
+# Change directory so that our commands run inside this new directory
+WORKDIR /usr/src/app
+# Copy files
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY --from=builder /usr/src/app/dist/frontend /usr/share/nginx/html
 # Expose the port the app runs in
-EXPOSE 4200
-
+EXPOSE 8080
 # Serve the app
-CMD ["npm", "start"]
+CMD ["nginx", "-g", "daemon off;"]

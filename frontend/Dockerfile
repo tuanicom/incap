@@ -2,10 +2,10 @@
 FROM node:alpine as builder
 # Create a directory where our app will be placed
 RUN mkdir -p /usr/src/app
-# Change directory so that our commands run inside this new directory
-WORKDIR /usr/src/app
 # Copy files
 COPY . /usr/src/app
+# Change directory so that our commands run inside this new directory
+WORKDIR /usr/src/app
 # Install dependecies
 RUN npm install
 #Build
@@ -15,8 +15,6 @@ RUN npm build
 FROM nginx:alpine as runner
 # Create a directory where our app will be placed
 RUN rm -rf /usr/share/nginx/html/*
-# Change directory so that our commands run inside this new directory
-WORKDIR /usr/src/app
 # Copy files
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /usr/src/app/dist/frontend /usr/share/nginx/html

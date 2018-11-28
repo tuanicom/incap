@@ -9,7 +9,7 @@ WORKDIR /usr/src/app
 # Install dependecies
 RUN npm install
 #Build
-RUN npm build
+RUN npm run build
 
 # In order to clean from building, we restarted from the original image (multi-stage build)
 FROM nginx:alpine as runner

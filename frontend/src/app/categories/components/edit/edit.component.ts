@@ -28,9 +28,11 @@ export class EditComponent implements OnInit {
 
   private getCategoryById(id: string) {
     this.category$ = this.categoryService.getCategoryById(id);
+    if (this.category$) {
     this.category$.subscribe((category: Category) => {
       this.editCategoryForm.get('description').setValue(category.description);
     });
+  }
   }
 
   onSubmit() {

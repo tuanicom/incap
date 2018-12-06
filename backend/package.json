@@ -1,7 +1,7 @@
 {
-  "name": "backend",
+  "name": "incap_backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "Back-end part of the Incap project",
   "main": "dist/server.js",
   "scripts": {
     "start": "node dist/server.js",
@@ -9,9 +9,22 @@
     "test": "nyc mocha ./tests/**/*.spec.js --timeout 10000",
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
-  "keywords": [],
-  "author": "",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuanicom/incap.git"
+  },
+  "keywords": [
+    "expressjs",
+    "nodejs",
+    "mean"
+  ],
+  "author": "Tuani SIMETE",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuanicom/incap/issues"
+  },
+  "homepage": "https://github.com/tuanicom/incap#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
     "cors": "^2.8.5",

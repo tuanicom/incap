@@ -1,6 +1,7 @@
 {
-  "name": "frontend",
-  "version": "0.0.0",
+  "name": "incap_frontend",
+  "version": "1.0.0",
+  "description": "Front-end part of the Incap project",
   "scripts": {
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
@@ -12,6 +13,20 @@
     "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
   },
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tuanicom/incap.git"
+  },
+  "keywords": [
+    "angular",
+    "mean"
+  ],
+  "author": "Tuani SIMETE",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tuanicom/incap/issues"
+  },
+  "homepage": "https://github.com/tuanicom/incap#readme",
   "dependencies": {
     "@angular/animations": "^7.1.0",
     "@angular/common": "^7.1.0",

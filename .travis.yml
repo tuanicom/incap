@@ -26,9 +26,10 @@ jobs:
           script:
                 - 'cd frontend'
                 - 'npm install'
+                - 'npm install coveralls'
                 - 'ng build --prod'
                 - 'ng test --watch false --browsers ChromeHeadless --code-coverage'
-                - 'npm run coveralls -- -v "$(dirname "`pwd`")"'
+                - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"'
                 - 'ng e2e'
                 - 'mkdir ~/$TRAVIS_BUILD_NUMBER/frontend'
                 - 'cp coverage/lcov.info ~/$TRAVIS_BUILD_NUMBER/frontend'
@@ -37,9 +38,10 @@ jobs:
           script:
                 - 'cd backend'
                 - 'npm install'
+                - 'npm install coveralls'
                 - 'npm run grunt ts'
                 - 'npm test'
-                - 'npm run coveralls -- -v "$(dirname "`pwd`")"'
+                - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"'
                 - 'mkdir ~/$TRAVIS_BUILD_NUMBER/backend'
                 - 'cp coverage/lcov.info ~/$TRAVIS_BUILD_NUMBER/backend'
                 - 'npm run grunt tslint'

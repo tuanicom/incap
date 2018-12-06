@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "grunt": "grunt",
-    "test": "nyc mocha ./tests/**/*.spec.js --timeout 10000",
-    "coveralls": "cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js"
+    "test": "nyc mocha ./tests/**/*.spec.js --timeout 10000"
   },
   "private": true,
   "repository": {
@@ -47,7 +46,6 @@
     "grunt": "^1.0.3",
     "grunt-cli": "^1.3.2",
     "grunt-contrib-watch": "^1.1.0",
-    "grunt-coveralls": "^2.0.0",
     "grunt-ts": "^6.0.0-beta.21",
     "grunt-tslint": "^5.0.2",
     "mocha": "^5.2.0",

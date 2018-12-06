@@ -22,7 +22,7 @@ export class CategoryProcess implements ICategoryProcess {
     }
 
     public async delete(id: string): Promise<ICategory> {
-        return Category.findByIdAndRemove({ _id: id }).exec();
+        return Category.findOneAndDelete({ _id: id }).exec();
     }
 }
 

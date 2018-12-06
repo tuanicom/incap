@@ -76,20 +76,20 @@ describe("CategoryProcess", () => {
     });
 
     describe("delete(\"123\")", () => {
-        let findByIdAndRemoveSpy;
+        let findOneAndDeleteSpy;
         const id = "123";
         const query = {};
 
         beforeEach(() => {
-            findByIdAndRemoveSpy = sandbox.on(daoMock, "findByIdAndRemove", () => query);
+            findOneAndDeleteSpy = sandbox.on(daoMock, "findOneAndDelete", () => query);
             sandbox.on(query, "exec");
         });
         afterEach(() => sandbox.restore());
 
-        it("should delete the item with id \"123\" in model using findByIdAndRemove", () => {
+        it("should delete the item with id \"123\" in model using findOneAndDelete", () => {
             process.delete(id).then(() => {
-                chai.expect(findByIdAndRemoveSpy).to.have.been.called();
-                chai.expect(findByIdAndRemoveSpy).to.have.been.called.with({_id: id});
+                chai.expect(findOneAndDeleteSpy).to.have.been.called();
+                chai.expect(findOneAndDeleteSpy).to.have.been.called.with({_id: id});
             });
         });
     });

@@ -1,25 +1,18 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  annotations:
-    kompose.cmd: kompose convert
-    kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
-  labels:
-    io.kompose.service: backend
-  name: backend
+  name: incap-backend
 spec:
   replicas: 1
   strategy: {}
   template:
     metadata:
-      creationTimestamp: null
-      labels:
-        io.kompose.service: backend
+      labels: 
+        app: incap-backend
     spec:
       containers:
       - image: tuanicom/incap-backend
-        name: backend
+        name: incap-backend
         ports:
         - containerPort: 4000
         resources: {}

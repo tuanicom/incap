@@ -10,8 +10,7 @@ This is just a personal test project. Anyway, if you want to fork it, feel free 
 
 ## Purpose
 This is a test project for me to be able to test a few technologies I want to get skilled on:
-* MEAN stack 
-* Typescript
+* MEAN stack (with Typescript) 
 * Bootstrap 4
 * Micro-services
 * Docker/Kubernetes

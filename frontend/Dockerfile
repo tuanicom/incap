@@ -13,7 +13,7 @@ RUN npm run build
 
 # In order to clean from building, we restarted from the original image (multi-stage build)
 FROM nginx:alpine as runner
-# Create a directory where our app will be placed
+# Clean the directory where our app will be placed
 RUN rm -rf /usr/share/nginx/html/*
 # Copy files
 COPY nginx.conf /etc/nginx/nginx.conf

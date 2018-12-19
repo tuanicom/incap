@@ -46,7 +46,8 @@ export class Server {
     }
 
     private dbConnection() {
-        mongoose.connect("mongodb://mongodb:27017/incap", { useNewUrlParser: true });
+        const mongoDbUrl = process.env.MONGO_DB_URL || "localhost:27017";
+        mongoose.connect(`mongodb://${mongoDbUrl}/incap`, { useNewUrlParser: true });
 
         const connection = mongoose.connection;
 

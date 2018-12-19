@@ -21,4 +21,5 @@ COPY --from=builder /usr/src/app/dist/frontend /usr/share/nginx/html
 # Expose the port the app runs in
 EXPOSE 8080
 # Serve the app
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/settings.template.json > /usr/share/nginx/html/assets/settings.json && exec nginx -g 'daemon off;'"]
+

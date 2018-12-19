@@ -7,10 +7,13 @@ spec:
   strategy: {}
   template:
     metadata:
-      labels: 
+      labels:
         app: incap-backend
     spec:
       containers:
+      - env:
+        - name: MONGO_DB_URL
+          value: mongodb:27017
       - image: tuanicom/incap-backend
         name: incap-backend
         ports:

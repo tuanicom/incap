@@ -7,10 +7,13 @@ spec:
   strategy: {}
   template:
     metadata:
-      labels: 
+      labels:
         app: incap-frontend
     spec:
       containers:
+      - env:
+        - name: CATEGORIES_API_URL
+          value: http://localhost:4000
       - image: tuanicom/incap-frontend
         name: incap-frontend
         ports:

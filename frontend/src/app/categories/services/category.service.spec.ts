@@ -13,6 +13,7 @@ import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Category } from '../models/category';
 import * as Observable from 'rxjs';
+import { AppSettingsService } from 'src/app/app.settings';
 
 describe('CategoryService', () => {
   let httpClientSpy: {
@@ -43,6 +44,7 @@ describe('CategoryService', () => {
       providers: [
         CategoryService,
         { provide: HttpClient, useValue: httpClientSpy },
+        { provide: AppSettingsService, useValue: { settings: { categoriesApiUrl: 'http://localhost:4000' } } },
         { provide: APP_BASE_HREF, useValue: '/' }
       ],
     });

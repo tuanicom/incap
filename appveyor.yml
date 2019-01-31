@@ -30,7 +30,7 @@ test_script:
 - ng test --watch false --browsers ChromeHeadless --code-coverage
 - appveyor-retry npm run pree2e
 - npm run pree2e
-- ng e2e --no-webdriver-update
+- ng e2e --no-webdriver-update --prod
 - codecov --disable=gcov
 - cd ..
 - cd backend

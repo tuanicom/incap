@@ -34,7 +34,7 @@ describe('ListComponent', () => {
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,
-        NgbModule.forRoot(),
+        NgbModule,
         RouterModule.forRoot([])
       ],
       providers: [

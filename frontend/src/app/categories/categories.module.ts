@@ -23,7 +23,7 @@ import { CategoriesRoutingModule } from './categories-routing.module';
     AngularFontAwesomeModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule.forRoot(),
+    NgbModule,
     CategoriesRoutingModule
   ],
   providers: [CategoryService]

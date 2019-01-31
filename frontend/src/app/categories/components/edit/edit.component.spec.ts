@@ -35,7 +35,7 @@ describe('EditComponent', () => {
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,
-        NgbModule.forRoot(),
+        NgbModule,
         RouterModule.forRoot([])
       ],
       providers: [

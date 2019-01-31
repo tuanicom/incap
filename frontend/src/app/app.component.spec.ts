@@ -14,7 +14,7 @@ describe('AppComponent', () => {
         BrowserModule,
         HttpClientModule,
         CategoriesModule,
-        NgbModule.forRoot(),
+        NgbModule,
         RouterModule.forRoot([])
       ],
       declarations: [

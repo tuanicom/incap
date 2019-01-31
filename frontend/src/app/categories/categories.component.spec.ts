@@ -24,7 +24,7 @@ describe('CategoriesComponent', () => {
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,
-        NgbModule.forRoot(),
+        NgbModule,
         RouterModule.forRoot([])
       ],
       providers: [

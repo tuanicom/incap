@@ -44,7 +44,7 @@ describe('CategoryService', () => {
       providers: [
         CategoryService,
         { provide: HttpClient, useValue: httpClientSpy },
-        { provide: AppSettingsService, useValue: { settings: { categoriesApiUrl: 'http://localhost:4000' } } },
+        { provide: AppSettingsService, useValue: { settings: { categoriesApiUrl: 'http://localhost:4000/categories' } } },
         { provide: APP_BASE_HREF, useValue: '/' }
       ],
     });

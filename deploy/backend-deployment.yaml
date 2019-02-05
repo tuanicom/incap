@@ -1,20 +1,27 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: incap-backend
   name: incap-backend
 spec:
   replicas: 1
   strategy: {}
   template:
     metadata:
+      creationTimestamp: null
       labels:
-        app: incap-backend
+        io.kompose.service: incap-backend
     spec:
       containers:
       - env:
         - name: MONGO_DB_URL
           value: mongodb:27017
-      - image: tuanicom/incap-backend
+        image: tuanicom/incap-backend
         name: incap-backend
         ports:
         - containerPort: 4000

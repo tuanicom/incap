@@ -9,7 +9,7 @@ import { AppSettingsService } from 'src/app/app.settings';
 })
 export class CategoryService {
   private get apiUrl(): string {
-    return `${this.appSettings.settings.categoriesApiUrl}/categories`;
+    return this.appSettings.settings.categoriesApiUrl;
   }
 
   constructor(private http: HttpClient, private appSettings: AppSettingsService) { }

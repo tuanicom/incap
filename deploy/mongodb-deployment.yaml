@@ -1,14 +1,21 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongodb
   name: mongodb
 spec:
   replicas: 1
   strategy: {}
   template:
     metadata:
-      labels: 
-        app: mongodb
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mongodb
     spec:
       containers:
       - image: mongo

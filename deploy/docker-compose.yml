@@ -2,16 +2,16 @@ version: '3' # specify docker-compose version
 
 # Define the services/containers to be run
 services:
-  frontend: # name of the first service
+  incap-frontend: # name of the first service
     image: tuanicom/incap-frontend
     ports:
-      - "80:8080" # specify port forewarding
+      - "8080:8080" # specify port forewarding
     environment:
-      CATEGORIES_API_URL: http://localhost:4000
+      CATEGORIES_API_URL: http://localhost:4000/categories
     depends_on:
       - backend
 
-  backend: #name of the second service
+  incap-backend: #name of the second service
     image: tuanicom/incap-backend
     ports:
       - "4000:4000" #specify ports forewarding

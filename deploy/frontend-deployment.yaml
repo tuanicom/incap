@@ -1,20 +1,27 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: incap-frontend
   name: incap-frontend
 spec:
   replicas: 1
   strategy: {}
   template:
     metadata:
+      creationTimestamp: null
       labels:
-        app: incap-frontend
+        io.kompose.service: incap-frontend
     spec:
       containers:
       - env:
         - name: CATEGORIES_API_URL
           value: http://localhost:4000
-      - image: tuanicom/incap-frontend
+        image: tuanicom/incap-frontend
         name: incap-frontend
         ports:
         - containerPort: 8080

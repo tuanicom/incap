@@ -13,10 +13,10 @@ cache:
   # scripts to run before build
 before_build:
 - cd frontend
-- npm install
+- npm ci
 - cd ..
 - cd backend
-- npm install
+- npm ci
 - cd ..
 build_script:
 - cd frontend

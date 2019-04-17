@@ -2,7 +2,7 @@ sudo: required
 dist: trusty
 language: node_js
 node_js:
-    - '8.12'
+    - '11.12'
 addons:
     apt:
         sources:
@@ -25,7 +25,7 @@ jobs:
         - stage: build&test 
           script:
                 - 'cd frontend'
-                - 'npm install'
+                - 'npm ci'
                 - 'npm install coveralls'
                 - 'ng build --prod'
                 - 'ng test --watch false --browsers ChromeHeadless --code-coverage'
@@ -37,7 +37,7 @@ jobs:
         - # stage name not required
           script:
                 - 'cd backend'
-                - 'npm install'
+                - 'npm ci'
                 - 'npm install coveralls'
                 - 'npm run grunt ts'
                 - 'npm test'
@@ -52,9 +52,9 @@ jobs:
                 - 'mkdir backend/coverage'
                 - 'cp ~/$TRAVIS_BUILD_NUMBER/backend/* backend/coverage'
                 - 'cd frontend'
-                - 'npm install'
+                - 'npm ci'
                 - 'cd ../backend'
-                - 'npm install'
+                - 'npm ci'
                 - 'cd ..'
                 - 'sonar-scanner'
           after_success:

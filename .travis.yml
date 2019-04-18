@@ -64,5 +64,4 @@ after_success:
   - aws s3 sync ~/$TRAVIS_BUILD_NUMBER s3://incap-travis-builds/$TRAVIS_BUILD_NUMBER
 cache: npm
 notifications:
-  webhooks: 
-    - https://coveralls.io/webhook
+  webhooks: https://coveralls.io/webhook

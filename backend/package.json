@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node dist/server.js",
     "grunt": "grunt",
-    "test": "nyc mocha --opts mocha.opts"
+    "test": "nyc mocha --opts mocha.opts",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "private": true,
   "repository": {
@@ -29,7 +31,8 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-async-handler": "^1.1.4",
-    "mongoose": "^5.5.2"
+    "mongoose": "^5.5.2",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^0.1.1",
@@ -82,5 +85,6 @@
     ],
     "sourceMap": true,
     "instrument": true
-  }
+  },
+  "snyk": true
 }

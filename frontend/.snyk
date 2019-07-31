@@ -1,0 +1,18 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.13.5
+# ignores vulnerabilities until expiry date; change duration by modifying expiry date
+ignore:
+  SNYK-JS-SETVALUE-450213:
+    - '@angular-devkit/build-angular > webpack > micromatch > snapdragon > base > cache-base > union-value > set-value':
+        reason: No update available
+        expires: '2019-08-30T20:11:39.697Z'
+    - '@angular-devkit/build-angular > webpack-dev-server > http-proxy-middleware > micromatch > snapdragon > base > cache-base > union-value > set-value':
+        reason: None given
+        expires: '2019-08-30T20:11:39.697Z'
+    - '@angular-devkit/build-angular > webpack-dev-server > http-proxy-middleware > micromatch > braces > snapdragon > base > cache-base > union-value > set-value':
+        reason: skip
+        expires: '2019-08-30T20:11:39.697Z'
+    - '@angular-devkit/build-angular > webpack > watchpack > chokidar > braces > snapdragon > base > cache-base > union-value > set-value':
+        reason: skip
+        expires: '2019-08-30T20:11:39.697Z'
+patch: {}

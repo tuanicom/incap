@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/tuanicom/incap#readme",
   "dependencies": {
-    "@angular-devkit/build-angular": "^0.801.3",
+    "@angular-devkit/build-angular": "^0.803.5",
     "@angular/animations": "^8.2.0",
     "@angular/common": "^8.2.0",
     "@angular/compiler": "^8.2.0",

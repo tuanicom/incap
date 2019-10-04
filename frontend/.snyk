@@ -15,4 +15,10 @@ ignore:
     - '@angular-devkit/build-angular > webpack > watchpack > chokidar > braces > snapdragon > base > cache-base > union-value > set-value':
         reason: skip
         expires: '2019-08-30T20:11:39.697Z'
-patch: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - snyk > proxy-agent > https-proxy-agent:
+        patched: '2019-10-03T21:53:43.957Z'
+    - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-10-03T21:53:43.957Z'

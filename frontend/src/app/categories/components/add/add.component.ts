@@ -7,7 +7,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 @Component({
   selector: 'categories-add',
   templateUrl: './add.component.html',
-  styleUrls: ['./add.component.css']
+  styleUrls: ['./add.component.scss']
 })
 export class AddComponent implements OnInit {
 

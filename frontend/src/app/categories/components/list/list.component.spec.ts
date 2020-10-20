@@ -5,8 +5,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import * as Observable from 'rxjs';
 
 describe('ListComponent', () => {
@@ -30,7 +30,7 @@ describe('ListComponent', () => {
         ListComponent
       ],
       imports: [
-        AngularFontAwesomeModule,
+        FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,

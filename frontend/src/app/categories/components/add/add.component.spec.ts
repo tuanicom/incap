@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddComponent } from './add.component';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,7 +30,8 @@ describe('AddComponent', () => {
         AddComponent
       ],
       imports: [
-        AngularFontAwesomeModule,
+        FontAwesomeModule
+,
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,

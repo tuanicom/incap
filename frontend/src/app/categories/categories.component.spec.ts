@@ -8,7 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from './services/category.service';
 import { APP_BASE_HREF } from '@angular/common';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 
 describe('CategoriesComponent', () => {
@@ -20,7 +20,8 @@ describe('CategoriesComponent', () => {
         EditComponent
       ],
       imports: [
-        AngularFontAwesomeModule,
+        FontAwesomeModule
+,
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,

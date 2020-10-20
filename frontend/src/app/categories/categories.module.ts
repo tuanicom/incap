@@ -6,10 +6,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListComponent } from './components/list/list.component';
 import { CategoryService } from './services/category.service';
 import { EditComponent } from './components/edit/edit.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AddComponent } from './components/add/add.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CategoriesRoutingModule } from './categories-routing.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -20,11 +20,11 @@ import { CategoriesRoutingModule } from './categories-routing.module';
   ],
   imports: [
     CommonModule,
-    FontAwesomeModule,
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    CategoriesRoutingModule
+    CategoriesRoutingModule,
+    FontAwesomeModule
   ],
   providers: [CategoryService]
 })

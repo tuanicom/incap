@@ -5,10 +5,11 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { faPlus, faEdit, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
+
 @Component({
   selector: 'categories-list',
   templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
   public categories$: Observable<Category[]>;

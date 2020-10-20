@@ -8,6 +8,7 @@ metadata:
   labels:
     io.kompose.service: incap-backend
   name: incap-backend
+  namespace: incap
 spec:
   replicas: 1
   strategy: {}

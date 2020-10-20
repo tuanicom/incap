@@ -6,15 +6,17 @@ metadata:
     kompose.version: 1.16.0 (0c01309)
   creationTimestamp: null
   labels:
+    name: incap-frontend
     io.kompose.service: incap-frontend
   name: incap-frontend
+  namespace: incap
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-  - name: "8080"
-    port: 8080
+  - name: "incap-frontend"
+    port: 80
     targetPort: 8080
-    nodePort: 30080
+    protocol: TCP
   selector:
     io.kompose.service: incap-frontend
 status:

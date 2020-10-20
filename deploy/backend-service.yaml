@@ -7,14 +7,16 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: incap-backend
+    name: incap-backend
   name: incap-backend
+  namespace: incap
 spec:
-  type: NodePort
+  type: LoadBalancer
   ports:
-  - name: "4000"
+  - name: "incap-backend"
     port: 4000
     targetPort: 4000
-    nodePort: 30400
+    protocol: TCP
   selector:
     io.kompose.service: incap-backend
 status:

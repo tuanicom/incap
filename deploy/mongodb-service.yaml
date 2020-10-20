@@ -7,10 +7,12 @@ metadata:
   creationTimestamp: null
   labels:
     io.kompose.service: mongodb
+    name: mongodb
   name: mongodb
+  namespace: incap
 spec:
   ports:
-  - name: "27017"
+  - name: "mongodb"
     port: 27017
     targetPort: 27017
   selector:

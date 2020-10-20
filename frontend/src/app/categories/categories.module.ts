@@ -6,7 +6,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListComponent } from './components/list/list.component';
 import { CategoryService } from './services/category.service';
 import { EditComponent } from './components/edit/edit.component';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AddComponent } from './components/add/add.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CategoriesRoutingModule } from './categories-routing.module';
@@ -20,7 +20,7 @@ import { CategoriesRoutingModule } from './categories-routing.module';
   ],
   imports: [
     CommonModule,
-    AngularFontAwesomeModule,
+    FontAwesomeModule,
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,

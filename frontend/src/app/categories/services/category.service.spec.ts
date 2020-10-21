@@ -9,7 +9,7 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
-import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Category } from '../models/category';
 import * as Observable from 'rxjs';
@@ -34,7 +34,8 @@ describe('CategoryService', () => {
         EditComponent
       ],
       imports: [
-        AngularFontAwesomeModule,
+        FontAwesomeModule
+,
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,

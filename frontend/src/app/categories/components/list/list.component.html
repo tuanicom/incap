@@ -11,10 +11,10 @@
       <td>{{category.title}}</td>
       <td>{{category.description}}</td>
       <td class="btn-group"><button class="btn btn-light" (click)="editCategory(category._id)">
-          <fa name="edit" size="lg"></fa>
+        <fa-icon [icon]="icons['edit']"></fa-icon>
         </button>
         <button class="btn btn-light" (click)="deleteCategory(category._id)">
-          <fa name="trash" size="lg"></fa>
+          <fa-icon [icon]="icons['trash']"></fa-icon>
         </button>
       </td>
     </tr>
@@ -23,7 +23,7 @@
     <tr>
       <td colspan="3">
         <button class="btn btn-light" (click)="addCategory()">
-          <fa name="plus" size="lg"></fa>
+          <fa-icon [icon]="icons['plus']"></fa-icon>
         </button>
       </td>
     </tr>

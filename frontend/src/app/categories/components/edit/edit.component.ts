@@ -9,7 +9,7 @@ import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
 @Component({
   selector: 'categories-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.css']
+  styleUrls: ['./edit.component.scss']
 })
 export class EditComponent implements OnInit {
   public category$: Observable<Category>;

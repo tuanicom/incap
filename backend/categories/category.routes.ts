@@ -15,26 +15,26 @@ export class CategoryRoutes {
     }
 
     public declareRoutes() {
-        this.router.route('/').get(asyncHandler(async (req: express.Request, res: express.Response) => {
+        this.router.route('/').get(asyncHandler(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
             const categories = await CategoryController.getAll();
             res.json(categories);
         }));
-        this.router.route('/:id').get(asyncHandler(async (req: express.Request, res: express.Response) => {
+        this.router.route('/:id').get(asyncHandler(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
             const category = await CategoryController.getById(req.params.id);
             res.json(category);
         }));
 
-        this.router.route('/').post(asyncHandler(async (req: express.Request, res: express.Response) => {
+        this.router.route('/').post(asyncHandler(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
             const category = await CategoryController.add(req.body);
             res.json(category);
         }));
 
-        this.router.route('/').put(asyncHandler(async (req: express.Request, res: express.Response) => {
+        this.router.route('/').put(asyncHandler(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
             const category = await CategoryController.update(req.body);
             res.json(category);
         }));
 
-        this.router.route('/:id').delete(asyncHandler(async (req: express.Request, res: express.Response) => {
+        this.router.route('/:id').delete(asyncHandler(async (req: express.Request, res: express.Response, next: express.NextFunction) => {
             const category = await CategoryController.delete(req.params.id);
             res.json(category);
         }));

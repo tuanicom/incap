@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "grunt": "grunt",
-    "test": "nyc mocha --opts mocha.opts",
+    "test": "nyc mocha",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },
@@ -90,5 +90,19 @@
     "sourceMap": true,
     "instrument": true
   },
-  "snyk": true
+  "snyk": true,
+  "mocha": {
+    "extension": [
+      "ts"
+    ],
+    "spec": "**/*.spec.ts",
+    "recursive": true,
+    "require": [
+      "ts-node/register",
+      "source-map-support/register"
+    ],
+    "bail": true,
+    "full-trace": true,
+    "timeout": 10000
+  }
 }

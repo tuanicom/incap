@@ -32,7 +32,7 @@
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
     "mongoose": "^5.10.9",
-    "npm-check-updates": "^3.1.25",
+    "npm-check-updates": "^3.2.2",
     "snyk": "^1.419.0"
   },
   "devDependencies": {

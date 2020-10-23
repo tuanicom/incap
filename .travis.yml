@@ -4,14 +4,12 @@ language: node_js
 node_js:
     - 'lts/*'
 addons:
-    apt:
-        sources:
-            - google-chrome
-        packages:
-            - google-chrome
     sonarcloud:
         organization: tuanicom-github
 before_install:
+    - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
+    - sudo apt-get -q update
+    - sudo apt-get -y install google-chrome-stable
     - 'export CHROME_BIN=chromium-browser'
     - 'export DISPLAY=:99.0'
     - 'sh -e /etc/init.d/xvfb start'
@@ -31,7 +29,7 @@ jobs:
                 - 'ng test --watch false --browsers ChromeHeadless --code-coverage'
                 - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"'
                 - 'npm run pree2e'
-                - 'ng e2e --no-webdriver-update --prod'
+                - 'ng e2e --prod'
                 - 'mkdir ~/$TRAVIS_BUILD_NUMBER/frontend'
                 - 'cp coverage/lcov.info ~/$TRAVIS_BUILD_NUMBER/frontend'
                 - 'ng lint'

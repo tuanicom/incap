@@ -13,54 +13,27 @@ before_install:
     - 'export CHROME_BIN=chromium-browser'
     - 'export DISPLAY=:99.0'
     - 'sh -e /etc/init.d/xvfb start'
-    - pip install --user awscli
-    - mkdir -p ~/$TRAVIS_BUILD_NUMBER
-    - aws s3 sync s3://incap-travis-builds/$TRAVIS_BUILD_NUMBER ~/$TRAVIS_BUILD_NUMBER
-before_script:
+ before_script:
     - 'npm install -g @angular/cli'
-jobs:
-    include:
-        - stage: build&test 
-          script:
-                - 'cd frontend'
-                - 'npm ci'
-                - 'npm install coveralls'
-                - 'ng build --prod'
-                - 'ng test --watch false --browsers ChromeHeadless --code-coverage'
-                - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"'
-                - 'npm run pree2e'
-                - 'ng e2e --prod'
-                - 'mkdir ~/$TRAVIS_BUILD_NUMBER/frontend'
-                - 'cp coverage/lcov.info ~/$TRAVIS_BUILD_NUMBER/frontend'
-                - 'ng lint'
-        - # stage name not required
-          script:
-                - 'cd backend'
-                - 'npm ci'
-                - 'npm install coveralls'
-                - 'npm run grunt ts'
-                - 'npm test'
-                - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"'
-                - 'mkdir ~/$TRAVIS_BUILD_NUMBER/backend'
-                - 'cp coverage/lcov.info ~/$TRAVIS_BUILD_NUMBER/backend'
-                - 'npm run grunt tslint'
-        - stage: sonar
-          script:
-                - 'mkdir frontend/coverage'
-                - 'cp ~/$TRAVIS_BUILD_NUMBER/frontend/* frontend/coverage'
-                - 'mkdir backend/coverage'
-                - 'cp ~/$TRAVIS_BUILD_NUMBER/backend/* backend/coverage'
-                - 'cd frontend'
-                - 'npm ci'
-                - 'cd ../backend'
-                - 'npm ci'
-                - 'cd ..'
-                - 'sonar-scanner'
-          after_success:
-                - aws s3 rm --recursive s3://incap-travis-builds/$TRAVIS_BUILD_NUMBER # clean up after ourselves
-
-after_success:
-  - aws s3 sync ~/$TRAVIS_BUILD_NUMBER s3://incap-travis-builds/$TRAVIS_BUILD_NUMBER
+script:
+    - 'cd frontend'
+    - 'npm ci'
+    - 'npm install coveralls'
+    - 'ng build --prod'
+    - 'ng test --watch false --browsers ChromeHeadless --code-coverage'
+    - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"'
+    - 'npm run pree2e'
+    - 'ng e2e --prod'
+    - 'ng lint'
+    - 'cd backend'
+    - 'npm ci'
+    - 'npm install coveralls'
+    - 'npm run grunt ts'
+    - 'npm test'
+    - 'cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"'
+    - 'npm run grunt tslint'
+    - 'cd ..'
+    - 'sonar-scanner'
 cache: npm
 notifications:
   webhooks: https://coveralls.io/webhook

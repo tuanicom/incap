@@ -27,7 +27,7 @@ script:
     - 'npm run pree2e'
     - 'ng e2e --prod'
     - 'ng lint'
-    - 'cd backend'
+    - 'cd ../backend'
     - 'npm ci'
     - 'npm install coveralls'
     - 'npm run grunt ts'

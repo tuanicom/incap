@@ -7,7 +7,7 @@ import { switchMap } from 'rxjs/operators';
 import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
 
 @Component({
-  selector: 'categories-edit',
+  selector: 'app-categories-edit',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
@@ -20,31 +20,31 @@ export class EditComponent implements OnInit {
 
   constructor(private categoryService: CategoryService, private route: ActivatedRoute, private router: Router) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.getCategoryById(params['id']);
+      this.getCategoryById(params.id);
     });
   }
 
-  private getCategoryById(id: string) {
+  private getCategoryById(id: string): void {
     this.category$ = this.categoryService.getCategoryById(id);
     if (this.category$) {
-    this.category$.subscribe((category: Category) => {
-      this.editCategoryForm.get('description').setValue(category.description);
-    });
-  }
+      this.category$.subscribe((category: Category) => {
+        this.editCategoryForm.get('description').setValue(category.description);
+      });
+    }
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.category$.subscribe((category: Category) => {
-      category.description = this.editCategoryForm.controls['description'].value;
+      category.description = this.editCategoryForm.controls.description.value;
       this.categoryService.updateCategory(category).subscribe(() => {
         this.goBackToList();
       });
     });
   }
 
-  goBackToList() {
+  goBackToList(): void {
     this.router.navigate(['/categories']);
   }
 }

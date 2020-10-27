@@ -1,4 +1,4 @@
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, waitForAsync, inject } from '@angular/core/testing';
 
 import { CategoryService } from './category.service';
 import { CategoriesComponent } from '../categories.component';
@@ -24,7 +24,7 @@ describe('CategoryService', () => {
   };
   let service: CategoryService;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'put', 'delete']);
 
     TestBed.configureTestingModule({
@@ -35,7 +35,7 @@ describe('CategoryService', () => {
       ],
       imports: [
         FontAwesomeModule
-,
+        ,
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,
@@ -52,12 +52,12 @@ describe('CategoryService', () => {
   }));
 
   it('should be created', () => {
-    service = TestBed.get(CategoryService);
+    service = TestBed.inject(CategoryService);
     expect(service).toBeTruthy();
   });
 
   describe('when calling getCategories', () => {
-    const data = <Category[]>[{
+    const data = [{
       id: '1234',
       description: 'desc1',
       title: 'title1'
@@ -65,11 +65,11 @@ describe('CategoryService', () => {
       id: '5678',
       description: 'desc2',
       title: 'title2'
-    }];
+    }] as Category[];
 
     beforeEach(() => {
       httpClientSpy.get.and.returnValues(Observable.of<Category[]>(data));
-      service = TestBed.get(CategoryService);
+      service = TestBed.inject(CategoryService);
     });
 
     it('should call http://localhost:4000/categories with no parameter', () => {
@@ -82,7 +82,7 @@ describe('CategoryService', () => {
       expect(httpClientSpy.get.calls.first().args[0]).toBe('http://localhost:4000/categories');
     });
 
-    it('should return a list of categories', async(inject([CategoryService], (categoryService) => {
+    it('should return a list of categories', waitForAsync(inject([CategoryService], (categoryService) => {
       categoryService.getCategories().subscribe(result => {
         expect(result.length).toBe(2);
         expect(result[0]).toBe(data[0]);
@@ -92,15 +92,15 @@ describe('CategoryService', () => {
   });
 
   describe('when calling getCategoryById', () => {
-    const data = <Category>{
+    const data = {
       id: '1234',
       description: 'desc1',
       title: 'title1'
-    };
+    } as Category;
 
     beforeEach(() => {
       httpClientSpy.get.and.returnValues(Observable.of<Category>(data));
-      service = TestBed.get(CategoryService);
+      service = TestBed.inject(CategoryService);
     });
 
     it('should call http://localhost:4000/categories with no parameter', () => {
@@ -113,7 +113,7 @@ describe('CategoryService', () => {
       expect(httpClientSpy.get.calls.first().args[0]).toBe('http://localhost:4000/categories/1234');
     });
 
-    it('should return a category', async(inject([CategoryService], (categoryService) => {
+    it('should return a category', waitForAsync(inject([CategoryService], (categoryService) => {
       categoryService.getCategories().subscribe(result => {
         expect(result).toBeTruthy();
         expect(result.id).toBe(data.id);
@@ -124,21 +124,21 @@ describe('CategoryService', () => {
   });
 
   describe('when calling addCategory', () => {
-    const input = <Category>{
+    const input = {
       description: 'desc1',
       title: 'title1'
-    };
+    } as Category;
 
-    const output = <Category>{
+    const output = {
       id: 'id1',
       description: 'desc1',
       title: 'title1'
-    };
+    } as Category;
 
 
     beforeEach(() => {
       httpClientSpy.post.and.returnValues(Observable.of<Category>(output));
-      service = TestBed.get(CategoryService);
+      service = TestBed.inject(CategoryService);
     });
 
     it('should call http://localhost:4000/categories with category parameter', () => {
@@ -152,7 +152,7 @@ describe('CategoryService', () => {
       expect(httpClientSpy.post.calls.first().args[1]).toBe(input);
     });
 
-    it('should return a category', async(inject([CategoryService], (categoryService) => {
+    it('should return a category', waitForAsync(inject([CategoryService], (categoryService) => {
       categoryService.addCategory(input).subscribe(result => {
         expect(result).toBeTruthy();
         expect(result.id).toBe(output.id);
@@ -163,15 +163,15 @@ describe('CategoryService', () => {
   });
 
   describe('when calling updateCategory', () => {
-    const data = <Category>{
+    const data = {
       id: 'id1',
       description: 'desc1',
       title: 'title1'
-    };
+    } as Category;
 
     beforeEach(() => {
       httpClientSpy.put.and.returnValues(Observable.of<Category>(data));
-      service = TestBed.get(CategoryService);
+      service = TestBed.inject(CategoryService);
     });
 
     it('should call http://localhost:4000/categories with category parameter', () => {
@@ -185,7 +185,7 @@ describe('CategoryService', () => {
       expect(httpClientSpy.put.calls.first().args[1]).toBe(data);
     });
 
-    it('should return a category', async(inject([CategoryService], (categoryService) => {
+    it('should return a category', waitForAsync(inject([CategoryService], (categoryService) => {
       categoryService.updateCategory(data).subscribe(result => {
         expect(result).toBeTruthy();
         expect(result).toBe(data);
@@ -197,7 +197,7 @@ describe('CategoryService', () => {
 
     beforeEach(() => {
       httpClientSpy.delete.and.callThrough();
-      service = TestBed.get(CategoryService);
+      service = TestBed.inject(CategoryService);
     });
 
     it('should call http://localhost:4000/categories with category parameter', () => {

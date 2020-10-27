@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditComponent } from './edit.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,7 +22,7 @@ describe('EditComponent', () => {
   };
   const categoryId = '123';
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     categoryServiceSpy = jasmine.createSpyObj('CategoryService', ['getCategoryById', 'updateCategory']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
@@ -32,7 +32,7 @@ describe('EditComponent', () => {
       ],
       imports: [
         FontAwesomeModule
-,
+        ,
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,
@@ -55,11 +55,11 @@ describe('EditComponent', () => {
 
   beforeEach(() => {
     categoryServiceSpy.getCategoryById.calls.reset();
-    categoryServiceSpy.getCategoryById.and.returnValue(Observable.of<Category>(<Category>{
+    categoryServiceSpy.getCategoryById.and.returnValue(Observable.of<Category>({
       id: categoryId,
       title: 'test',
       description: 'test'
-    }));
+    } as Category));
     component.ngOnInit();
   });
 
@@ -81,7 +81,7 @@ describe('EditComponent', () => {
 
     beforeEach(() => {
       component.editCategoryForm.get('description').setValue('test2');
-      categoryServiceSpy.updateCategory.and.returnValue(Observable.of<Category>(<Category>{}));
+      categoryServiceSpy.updateCategory.and.returnValue(Observable.of<Category>({} as Category));
       component.onSubmit();
     });
 

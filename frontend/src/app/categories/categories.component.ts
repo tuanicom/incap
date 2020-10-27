@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'categories-root',
+  selector: 'app-categories-root',
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss']
 })

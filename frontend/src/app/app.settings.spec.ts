@@ -1,4 +1,4 @@
-import { TestBed, async } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { AppSettingsHttpService, AppSettingsService, AppSettings } from './app.settings';
 import { APP_BASE_HREF } from '@angular/common';
@@ -11,7 +11,7 @@ describe('AppSettings', () => {
   let httpClientSpy: {
     get: jasmine.Spy,
   };
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     appSettings.categoriesApiUrl = 'http://localhost:4000/categories';
 
@@ -27,8 +27,8 @@ describe('AppSettings', () => {
         { provide: APP_BASE_HREF, useValue: '/' }
       ],
     });
-    appSettingsHttpService = TestBed.get(AppSettingsHttpService);
-    appSettingsService = TestBed.get(AppSettingsService);
+    appSettingsHttpService = TestBed.inject(AppSettingsHttpService);
+    appSettingsService = TestBed.inject(AppSettingsService);
   }));
 
   it('should create the AppSettingsService', () => {
@@ -40,7 +40,7 @@ describe('AppSettings', () => {
   });
 
   describe('on app initialization', () => {
-    beforeEach(async(() => {
+    beforeEach(waitForAsync(() => {
       httpClientSpy.get.and.returnValues(Observable.of<AppSettings>(appSettings));
       appSettingsHttpService.initializeApp();
     }));

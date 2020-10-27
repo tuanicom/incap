@@ -5,7 +5,7 @@ import { Category } from '../../models/category';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'categories-add',
+  selector: 'app-categories-add',
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
@@ -19,21 +19,20 @@ export class AddComponent implements OnInit {
   });
 
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
-  onSubmit() {
-    const category: Category = <Category>{
+  onSubmit(): void {
+    const category: Category = {
       title: this.addCategoryForm.get('title').value,
-      description : this.addCategoryForm.get('description').value
-    };
+      description: this.addCategoryForm.get('description').value
+    } as Category;
     this.categoryService.addCategory(category).subscribe(() => {
       this.goBackToList();
     });
   }
 
-  goBackToList() {
+  goBackToList(): void {
     this.router.navigate(['/categories']);
   }
-
 }

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListComponent } from './list.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -20,7 +20,7 @@ describe('ListComponent', () => {
     navigate: jasmine.Spy,
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
 
     categoryServiceSpy = jasmine.createSpyObj('CategoryService', ['getCategories', 'deleteCategory']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);

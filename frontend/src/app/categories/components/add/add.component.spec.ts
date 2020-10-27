@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddComponent } from './add.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -21,7 +21,7 @@ describe('AddComponent', () => {
     navigate: jasmine.Spy,
   };
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     categoryServiceSpy = jasmine.createSpyObj('CategoryService', ['addCategory']);
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 

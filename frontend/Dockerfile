@@ -1,5 +1,10 @@
 # Create image based on the official Node 8 image from the dockerhub
 FROM node:alpine as builder
+# Install python/pip
+ENV PYTHONUNBUFFERED=1
+RUN apk add --update --no-cache python make gcc g++
+RUN python -m ensurepip
+RUN pip install --no-cache --upgrade pip setuptools
 # Create a directory where our app will be placed
 RUN mkdir -p /usr/src/app
 # Copy files

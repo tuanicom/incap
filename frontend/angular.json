@@ -28,12 +28,14 @@
               "src/assets"
             ],
             "styles": [
-             "src/styles.scss",
+              "src/styles.scss",
               {
-                "input": "./node_modules/bootstrap/dist/css/bootstrap.css"
+                "input": "./node_modules/bootstrap/dist/css/bootstrap.css",
+                "inject": true
               },
               {
-                "input": "./node_modules/font-awesome/css/font-awesome.css"
+                "input": "./node_modules/font-awesome/css/font-awesome.css",
+                "inject": true
               }
             ],
             "scripts": []
@@ -49,7 +51,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,

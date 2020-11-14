@@ -40,7 +40,7 @@ describe('CategoryService', () => {
         BrowserModule,
         HttpClientModule,
         NgbModule,
-        RouterModule.forRoot([])
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
       ],
       providers: [
         CategoryService,

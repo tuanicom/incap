@@ -36,7 +36,7 @@ describe('AddComponent', () => {
         BrowserModule,
         HttpClientModule,
         NgbModule,
-        RouterModule.forRoot([])
+        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
       ],
       providers: [
         { provide: CategoryService, useValue: categoryServiceSpy },

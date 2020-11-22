@@ -3,8 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ActivatedRoute, ParamMap, Router, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 @Component({
   selector: 'app-categories-edit',

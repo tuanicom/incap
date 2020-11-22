@@ -56,7 +56,6 @@
     "grunt-tslint": "^5.0.2",
     "minimist": "1.2.5",
     "mocha": "^8.2.1",
-    "npm-check-updates": "^10.2.2",
     "nyc": "^15.1.0",
     "rewiremock": "^3.14.3",
     "set-value": "3.0.2",

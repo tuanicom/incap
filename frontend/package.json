@@ -47,7 +47,6 @@
     "core-js": "^3.7.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.5.1",
-    "npm-check-updates": "^10.2.2",
     "popper.js": "^1.16.1",
     "rxjs": "~6.6.3",
     "sass": "^1.27.0",

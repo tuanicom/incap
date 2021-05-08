@@ -5,6 +5,9 @@
     "outDir": "./out-tsc/app",
     "types": []
   },
+  "angularCompilerOptions": {
+    "disableTypeScriptVersionCheck": true
+  },
   "files": [
     "src/main.ts",
     "src/polyfills.ts"

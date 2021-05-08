@@ -29,7 +29,7 @@ export class AppSettingsHttpService {
           .toPromise()
           .then(response => {
             this.appSettingsService.settings = response as AppSettings;
-            resolve();
+            resolve(response);
           });
       }
     );

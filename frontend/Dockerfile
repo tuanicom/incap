@@ -1,16 +1,9 @@
 # Create image based on the official Node 8 image from the dockerhub
 FROM node:alpine as builder
-# Install python/pip
-ENV PYTHONUNBUFFERED=1
-RUN apk add --update --no-cache python make gcc g++
-RUN python -m ensurepip
-RUN pip install --no-cache --upgrade pip setuptools
-# Create a directory where our app will be placed
-RUN mkdir -p /usr/src/app
-# Copy files
-COPY . /usr/src/app
 # Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
+# Copy files
+COPY . .
 # Install dependecies
 RUN npm install
 #Build
@@ -21,10 +14,12 @@ FROM nginx:alpine as runner
 # Clean the directory where our app will be placed
 RUN rm -rf /usr/share/nginx/html/*
 # Copy files
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf nginx.tpl.conf
 COPY --from=builder /usr/src/app/dist/frontend /usr/share/nginx/html
+COPY src/assets/settings.prod.json /usr/share/nginx/html/assets/settings.json
 # Expose the port the app runs in
 EXPOSE 8080
+ENV CATEGORIES_API_URL=http://localhost/api/categories
 # Serve the app
-CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/settings.template.json > /usr/share/nginx/html/assets/settings.json && exec nginx -g 'daemon off;'"]
+CMD ["/bin/sh",  "-c",  "envsubst '${CATEGORIES_API_URL}' < nginx.tpl.conf > /etc/nginx/nginx.conf && cat  /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"]
 

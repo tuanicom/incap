@@ -25,12 +25,7 @@ export class AppSettingsHttpService {
 
     return new Promise(
       (resolve) => {
-        this.http.get('assets/settings.json')
-          .toPromise()
-          .then(response => {
-            this.appSettingsService.settings = response as AppSettings;
-            resolve(response);
-          });
+        this.http.get('assets/settings.json').subscribe((res: AppSettings) => this.appSettingsService.settings = res);
       }
     );
   }

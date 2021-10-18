@@ -8,7 +8,7 @@ import { AppSettingsHttpService } from './app.settings';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => Promise<any> {
+export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => void {
   return () => appSettingsHttpService.initializeApp();
 }
 

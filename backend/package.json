@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node dist/server.js",
     "grunt": "grunt",
-    "test": "nyc mocha",
+    "test": "snyk test && nyc mocha",
+    "snyk": "snyk auth & snyk wizard",
     "snyk-protect": "snyk protect",
     "prepare": "npm run snyk-protect"
   },

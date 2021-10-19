@@ -2,45 +2,40 @@ dist: focal
 os: linux
 language: node_js
 node_js:
-  - node
+ - node
 addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
-  sonarcloud:
-    organization: tuanicom-github
-before_install:
-  - 'export DISPLAY=:99.0'
-  - sh -e /etc/init.d/xvfb start
+ apt:
+  sources:
+   - google-chrome
+  packages:
+   - google-chrome-stable
+ sonarcloud:
+  organization: tuanicom-github
+services:
+  - xvfb
 before_script:
-  - npm install -g @angular/cli
+ - npm install -g @angular/cli
 script:
-  - cd frontend
-  - npm ci
-  - npm install coveralls
-  - ng build --prod
-  - ng test --watch false --browsers ChromeHeadless --code-coverage
-  - npm run pree2e
-  - ng e2e --prod
-  - ng lint
-  - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-frontend
-  - >-
-    cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v
-    "$(dirname "`pwd`")"
-  - cd ../backend
-  - npm ci
-  - npm install coveralls
-  - npm run grunt ts
-  - npm test
-  - npm run grunt tslint
-  - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-backend
-  - >-
-    cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v
-    "$(dirname "`pwd`")"
-  - cd ..
-  - sonar-scanner
+ - cd frontend
+ - npm ci
+ - npm install coveralls
+ - ng build --prod
+ - ng test --watch false --browsers ChromeHeadless --code-coverage
+ - npm run pree2e
+ - ng e2e --prod
+ - ng lint
+ - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-frontend
+ - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"
+ - cd ../backend
+ - npm ci
+ - npm install coveralls
+ - npm run grunt ts
+ - npm test
+ - npm run grunt tslint
+ - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-backend
+ - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"
+ - cd ..
+ - sonar-scanner
 cache: npm
 notifications:
-  webhooks: 'https://coveralls.io/webhook'
+ webhooks: "https://coveralls.io/webhook"

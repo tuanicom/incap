@@ -21,7 +21,7 @@ script:
  - ng e2e --prod
  - ng lint
  - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-frontend
- - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"
+ - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js $(dirname "`pwd`")
  - cd ../backend
  - npm ci
  - npm install coveralls
@@ -29,7 +29,7 @@ script:
  - npm test
  - npm run grunt tslint
  - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-backend
- - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js -v "$(dirname "`pwd`")"
+ - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js $(dirname "`pwd`")
  - cd ..
  - sonar-scanner
 cache: npm

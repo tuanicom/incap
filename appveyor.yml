@@ -45,11 +45,11 @@ test_script:
 - cd ..
 after_test:
 - cd frontend
-- ng lint
+- npx ng lint frontend
 - snyk monitor --file=package.json --project-name=incap-frontend
 - cd ..
 - cd backend
-- npm run grunt tslint
+- npm run grunt eslint
 - snyk monitor --file=package.json --project-name=incap-backend
 - cd ..
 artifacts:

@@ -5,7 +5,7 @@ export interface ICategory extends Document {
     description: string;
 }
 
-export const CategorySchema = new Schema({
+export const categorySchema = new Schema({
     title: {
         type: String
     },
@@ -13,5 +13,5 @@ export const CategorySchema = new Schema({
         type: String
     }
 });
-const Category = model<ICategory>('Category', CategorySchema);
-export default Category;
+const category = model<ICategory>('Category', categorySchema);
+export default category;

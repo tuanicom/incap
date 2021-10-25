@@ -1,4 +1,4 @@
-import Category, { ICategory } from "./category.model";
+import category, { ICategory } from "./category.model";
 
 export interface ICategoryProcess {
     getAll(): Promise<ICategory[]>;
@@ -10,11 +10,11 @@ export interface ICategoryProcess {
 export class CategoryProcess implements ICategoryProcess {
 
     public async getAll(): Promise<ICategory[]> {
-        return await Category.find().exec();
+        return await category.find().exec();
     }
 
     public async getById(id: string): Promise<ICategory> {
-        return await Category.findById(id).exec();
+        return await category.findById(id).exec();
     }
 
     public async save(newCategory: ICategory): Promise<ICategory> {
@@ -22,7 +22,7 @@ export class CategoryProcess implements ICategoryProcess {
     }
 
     public async delete(id: string): Promise<ICategory> {
-        return Category.findOneAndDelete({ _id: id }).exec();
+        return category.findOneAndDelete({ _id: id }).exec();
     }
 }
 

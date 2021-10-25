@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { Router } from '@angular/router';
 import { Category } from '../../models/category';
@@ -9,7 +9,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   templateUrl: './add.component.html',
   styleUrls: ['./add.component.scss']
 })
-export class AddComponent implements OnInit {
+export class AddComponent {
 
   constructor(private categoryService: CategoryService, private router: Router) { }
 
@@ -17,10 +17,6 @@ export class AddComponent implements OnInit {
     title: new FormControl(''),
     description: new FormControl(''),
   });
-
-
-  ngOnInit(): void {
-  }
 
   onSubmit(): void {
     const category: Category = {

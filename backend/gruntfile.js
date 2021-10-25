@@ -15,12 +15,10 @@ module.exports = function (grunt) {
 
             }
         },
-        tslint: {
+        eslint: {
+            target: ["\*\*/\*.ts","!\*\*/\*.spec.ts", "!node_modules/\*\*/\*.ts"],
             options: {
-                configuration: "tslint.json"
-            },
-            files: {
-                src: ["\*\*/\*.ts","!\*\*/\*.spec.ts", "!node_modules/\*\*/\*.ts"]
+                format: grunt.option('format') || 'stylish'
             }
         },
         watch: {
@@ -33,10 +31,10 @@ module.exports = function (grunt) {
 
     grunt.loadNpmTasks("grunt-contrib-watch");
     grunt.loadNpmTasks("grunt-ts");
-    grunt.loadNpmTasks("grunt-tslint");
+    grunt.loadNpmTasks("grunt-eslint");
 
     grunt.registerTask("default", [
         "ts",
-        "tslint"
+        "eslint"
     ]);
 };

@@ -1,4 +1,4 @@
-import Category, { ICategory } from "./category.model";
+import category, { ICategory } from "./category.model";
 import CategoryProcess from "./category.process";
 
 export interface ICategoryController {
@@ -20,15 +20,15 @@ export class CategoryController implements ICategoryController {
     }
 
     public async add(input: any): Promise<ICategory> {
-        const newCategory = new Category(input);
+        const newCategory = new category(input);
         return await CategoryProcess.save(newCategory);
     }
 
     public async update(input: any): Promise<ICategory> {
-        const category = await CategoryProcess.getById(input._id);
-        category.title = input.title;
-        category.description = input.description;
-        return await CategoryProcess.save(category);
+        const categoryToUpdate = await CategoryProcess.getById(input._id);
+        categoryToUpdate.title = input.title;
+        categoryToUpdate.description = input.description;
+        return await CategoryProcess.save(categoryToUpdate);
     }
 
     public async delete(id: string): Promise<ICategory> {

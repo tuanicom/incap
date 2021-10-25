@@ -17,16 +17,6 @@ export class Server {
     private router: express.Router;
 
     /**
-     * Bootstrap the application.
-     *
-     * @method bootstrap
-     * @return Returns the newly created injector for this app.
-     */
-    public static bootstrap(): Server {
-        return new Server();
-    }
-
-    /**
      * Constructor.
      *
      */
@@ -37,6 +27,16 @@ export class Server {
         this.dbConnection();
         this.routes();
         this.config();
+    }
+
+    /**
+     * Bootstrap the application.
+     *
+     * @method bootstrap
+     * @return Returns the newly created injector for this app.
+     */
+    public static bootstrap(): Server {
+        return new Server();
     }
 
     private config() {

@@ -3,15 +3,15 @@ import CategoryController from './category.controller';
 import * as asyncHandler from 'express-async-handler';
 
 export class CategoryRoutes {
-    private router: express.Router;
-
-    get Router(): express.Router {
-        return this.router;
-    }
+    private _router: express.Router;
 
     constructor() {
-        this.router = express.Router();
+        this._router = express.Router();
         this.declareRoutes();
+    }
+
+    public get router(): express.Router {
+        return this._router;
     }
 
     public declareRoutes() {
@@ -40,4 +40,4 @@ export class CategoryRoutes {
         }));
     }
 }
-export default new CategoryRoutes().Router;
+export default new CategoryRoutes().router;

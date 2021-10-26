@@ -29,7 +29,7 @@ script:
  - npm test
  - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-backend
  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js 
- - npm run grunt eslint -- --format=json > eslint.json
+ - npm run grunt eslint -- --format=json --output-file=eslint.json
  - cd ..
  - sonar-scanner
 cache: npm

@@ -18,7 +18,8 @@ module.exports = function (grunt) {
         eslint: {
             target: ["\*\*/\*.ts","!\*\*/\*.spec.ts", "!node_modules/\*\*/\*.ts"],
             options: {
-                format: grunt.option('format') || 'stylish'
+                format: grunt.option('format') || 'stylish',
+                outputFile: grunt.option('output-file') || ''
             }
         },
         watch: {

@@ -49,7 +49,7 @@ after_test:
 - snyk monitor --file=package.json --project-name=incap-frontend
 - cd ..
 - cd backend
-- npm run grunt eslint
+- npm run grunt eslint 
 - snyk monitor --file=package.json --project-name=incap-backend
 - cd ..
 artifacts:

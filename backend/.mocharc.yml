@@ -1,0 +1,8 @@
+require:
+  - 'ts-node/register'
+  - 'source-map-support/register'
+full-trace: true
+bail: true
+timeout: 10000
+spec:
+  - 'categories/*.spec.ts'

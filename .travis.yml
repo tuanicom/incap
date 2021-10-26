@@ -19,17 +19,17 @@ script:
  - ng test --watch false --browsers ChromeHeadless --code-coverage
  - npm run pree2e
  - ng e2e --prod
- - npx ng lint frontend --format=json
  - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-frontend
  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js 
+ - npx ng lint frontend --format=json > eslint.json
  - cd ../backend
  - npm ci
  - npm install coveralls
  - npm run grunt ts
  - npm test
- - npm run grunt eslint -- --format=json > eslint.json
  - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-backend
  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js 
+ - npm run grunt eslint -- --format=json > eslint.json
  - cd ..
  - sonar-scanner
 cache: npm

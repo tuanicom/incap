@@ -73,44 +73,5 @@
     "ts-node": "^10.3.0",
     "typescript": "^4.4.4"
   },
-  "nyc": {
-    "extension": [
-      ".ts"
-    ],
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "all": true,
-    "include": [
-      "**/*.ts"
-    ],
-    "exclude": [
-      "server.ts",
-      "**/*.d.ts",
-      "**/*.spec.ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ],
-    "reporter": [
-      "lcov",
-      "text",
-      "html"
-    ],
-    "sourceMap": true,
-    "instrument": true
-  },
-  "snyk": true,
-  "mocha": {
-    "extension": [
-      "ts"
-    ],
-    "spec": "**/*.spec.ts",
-    "recursive": true,
-    "require": [
-      "ts-node/register",
-      "source-map-support/register"
-    ],
-    "bail": true,
-    "full-trace": true,
-    "timeout": 10000
-  }
+  "snyk": true
 }

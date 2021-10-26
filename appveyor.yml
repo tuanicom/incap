@@ -45,15 +45,19 @@ test_script:
 - cd ..
 after_test:
 - cd frontend
-- npx ng lint frontend
+- npx ng lint frontend --format html --output-file=eslint.html
 - snyk monitor --file=package.json --project-name=incap-frontend
 - cd ..
 - cd backend
-- npm run grunt eslint -- --format=json --output-file=eslint.json
+- npm run grunt eslint -- --format=html --output-file=eslint.html
 - snyk monitor --file=package.json --project-name=incap-backend
 - cd ..
 artifacts:
 - path: frontend/coverage/index.html
   name: Frontend Coverage
 - path: backend/coverage/lcov-report/index.html
-  name: Frontend Coverage
+  name: Backend Coverage
+- path: frontend/eslint.html
+  name: Frontend Linting
+- path: backend/eslint.html
+  name: Backend Linting

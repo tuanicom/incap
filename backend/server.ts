@@ -2,7 +2,6 @@
 
 import * as express from "express";
 import * as cors from "cors";
-import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
 import * as morgan from "morgan";
 import CategoryRoutes from "./categories/category.routes";
@@ -41,7 +40,7 @@ export class Server {
 
     private config() {
         this.app.use(cors());
-        this.app.use(bodyParser.json());
+        this.app.use(express.json());
         this.app.use(morgan('combined'));
         this.app.use("/", this.router);
         this.app.listen(4000, () => console.log(`Express server running on port 4000`));

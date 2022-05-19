@@ -10,15 +10,15 @@ export interface ICategoryProcess {
 export class CategoryProcess implements ICategoryProcess {
 
     public async getAll(): Promise<ICategory[]> {
-        return await category.find().exec();
+        return category.find().exec();
     }
 
     public async getById(id: string): Promise<ICategory> {
-        return await category.findById(id).exec();
+        return category.findById(id).exec();
     }
 
     public async save(newCategory: ICategory): Promise<ICategory> {
-        return await newCategory.save();
+        return newCategory.save();
     }
 
     public async delete(id: string): Promise<ICategory> {

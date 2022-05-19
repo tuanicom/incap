@@ -12,27 +12,27 @@ export interface ICategoryController {
 export class CategoryController implements ICategoryController {
 
     public async getAll(): Promise<ICategory[]> {
-        return await CategoryProcess.getAll();
+        return CategoryProcess.getAll();
     }
 
     public async getById(id: string): Promise<ICategory> {
-        return await CategoryProcess.getById(id);
+        return CategoryProcess.getById(id);
     }
 
     public async add(input: any): Promise<ICategory> {
         const newCategory = new category(input);
-        return await CategoryProcess.save(newCategory);
+        return CategoryProcess.save(newCategory);
     }
 
     public async update(input: any): Promise<ICategory> {
         const categoryToUpdate = await CategoryProcess.getById(input._id);
         categoryToUpdate.title = input.title;
         categoryToUpdate.description = input.description;
-        return await CategoryProcess.save(categoryToUpdate);
+        return CategoryProcess.save(categoryToUpdate);
     }
 
     public async delete(id: string): Promise<ICategory> {
-        return await CategoryProcess.delete(id);
+        return CategoryProcess.delete(id);
     }
 }
 

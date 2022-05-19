@@ -1,3 +1,3 @@
 # Frontend
 
-Developped with Angular 7
+Developped with Angular 13

@@ -15,10 +15,10 @@ script:
  - cd frontend
  - npm ci
  - npm install coveralls
- - ng build --prod
+ - ng build --configuration production
  - ng test --watch false --browsers ChromeHeadless --code-coverage
  - npm run pree2e
- - ng e2e --prod
+ - ng e2e --configuration production
  - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-frontend
  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js 
  - npx ng lint frontend --format json --output-file eslint.json

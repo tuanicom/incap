@@ -9,9 +9,9 @@ install:
 - npm install codecov -g
 - npm install -g snyk
 - npm install -g @angular/cli
-- if not exist C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium ( mkdir C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium )
-- curl -oC:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium\chrome-response.xml https://chromedriver.storage.googleapis.com/
-- choco upgrade GoogleChrome -y --ignore-checksums
+#- if not exist C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium ( mkdir C:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium )
+#- curl -oC:\projects\incap\frontend\node_modules\protractor\node_modules\webdriver-manager\selenium\chrome-response.xml https://chromedriver.storage.googleapis.com/
+#- choco upgrade GoogleChrome -y --ignore-checksums
 cache: 
   - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
   - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
@@ -26,7 +26,7 @@ before_build:
 - cd ..
 build_script:
 - cd frontend
-- ng build --prod 
+- ng build --configuration production 
 - cd ..
 - cd backend
 - npm run grunt ts
@@ -36,7 +36,8 @@ test_script:
 - ng test --watch false --browsers ChromeHeadless --code-coverage
 - appveyor-retry npm run pree2e
 - npm run pree2e
-- ng e2e --no-webdriver-update --prod
+- ng e2e --configuration production
+#- ng e2e --no-webdriver-update --configuration production
 - codecov --disable=gcov
 - cd ..
 - cd backend

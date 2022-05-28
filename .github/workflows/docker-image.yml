@@ -19,7 +19,7 @@ jobs:
     - name: Build the Backend Docker image
       run: docker build backend --file backend/Dockerfile --tag tuanicom/incap-backend:latest
     - name: Login to Docker
-      run: docker login --username=tuanicom --password=$DOCKER_HUB_PASSWORD
+      run: echo $DOCKER_HUB_PASSWORD | docker login --username=tuanicom --password-stdin
     - name: Push Frontend Docker image
       run: docker push tuanicom/incap-frontend:latest
     - name: Push Backend Docker image

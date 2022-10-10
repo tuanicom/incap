@@ -13,37 +13,8 @@ cache:
   - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
   - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
   - frontend\node_modules -> package.json                               # local npm modules
-  # scripts to run before build
-before_build:
-- cd frontend
-- npm ci
-- cd ..
-- cd backend
-- npm ci
-- cd ..
 build_script:
-- cd frontend
-- ng build --configuration production 
-- cd ..
-- cd backend
-- npm run grunt ts
-- cd ..
-test_script:
-- cd frontend
-- ng test --watch false --browsers ChromeHeadless --code-coverage
-- codecov --disable=gcov
-- cd ..
-- cd backend
-- npm test
-- codecov --disable=gcov
-- cd ..
-after_test:
-- cd frontend
-- npx ng lint frontend --format html --output-file=eslint.html
-- cd ..
-- cd backend
-- npm run grunt eslint -- --format=html --output-file=eslint.html
-- cd ..
+- cmd: rebuild.cmd
 artifacts:
 - path: frontend/coverage/index.html
   name: Frontend Coverage

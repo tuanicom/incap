@@ -11,25 +11,7 @@ services:
   - xvfb
 before_script:
  - npm install -g @angular/cli
-script:
- - cd frontend
- - npm ci
- - npm install coveralls
- - ng build --configuration production
- - ng test --watch false --browsers ChromeHeadless --code-coverage
- - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-frontend
- - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js 
- - npx ng lint frontend --format json --output-file eslint.json
- - cd ../backend
- - npm ci
- - npm install coveralls
- - npm run grunt ts
- - npm test
- - export COVERALLS_SERVICE_JOB_ID=$TRAVIS_JOB_ID-backend
- - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js 
- - npm run grunt eslint -- --format=json --output-file=eslint.json
- - cd ..
- - sonar-scanner
+script: bash rebuild.sh
 cache: npm
 notifications:
  webhooks: "https://coveralls.io/webhook"

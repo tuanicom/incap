@@ -18,13 +18,19 @@ spec:
         io.kompose.service: incap-backend
     spec:
       containers:
-      - env:
-        - name: MONGO_DB_URL
-          value: mongodb:27017
-        image: tuanicom/incap-backend
-        name: incap-backend
-        ports:
-        - containerPort: 4000
-        resources: {}
+        - env:
+            - name: MONGO_DB_URL
+              value: mongodb:27017
+          image: tuanicom/incap-backend
+          name: incap-backend
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop:
+                - all
+          ports:
+            - containerPort: 4000
+          resources: {}
       restartPolicy: Always
 status: {}

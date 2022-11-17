@@ -13,7 +13,8 @@
     "snyk": "snyk auth & snyk wizard",
     "snyk-test": "snyk test",
     "snyk-protect": "snyk-protect",
-    "prepare": "npm run snyk-protect"
+    "prepare": "npm run snyk-protect",
+    "preinstall": "npx npm-force-resolutions"
   },
   "private": true,
   "repository": {
@@ -43,6 +44,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.2.0",
     "@fortawesome/free-solid-svg-icons": "^6.2.0",
     "@ng-bootstrap/ng-bootstrap": "^13.0.0",
+    "@popperjs/core": "^2.11.6",
     "@snyk/protect": "^1.1020.0",
     "bootstrap": "^5.2.2",
     "core-js": "^3.25.5",
@@ -85,6 +87,10 @@
     "ts-node": "~10.9.1",
     "tslint": "~6.1.3",
     "typescript": "4.8.3"
+  },
+  "resolutions": {
+    "tslintk": "6.1.3",
+    "@angular/localize":"15.0.0"
   },
   "snyk": true
 }

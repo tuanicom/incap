@@ -15,7 +15,7 @@ describe('AppComponent', () => {
         HttpClientModule,
         CategoriesModule,
         NgbModule,
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+        RouterModule.forRoot([], {})
       ],
       declarations: [
         AppComponent

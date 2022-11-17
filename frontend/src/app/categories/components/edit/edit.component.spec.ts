@@ -37,7 +37,7 @@ describe('EditComponent', () => {
         BrowserModule,
         HttpClientModule,
         NgbModule,
-        RouterModule.forRoot([], { relativeLinkResolution: 'legacy' })
+        RouterModule.forRoot([], {})
       ],
       providers: [
         { provide: CategoryService, useValue: categoryServiceSpy },

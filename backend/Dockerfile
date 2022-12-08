@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 # Copy files
 COPY . .
 # Install dependencies
-RUN npm install
+RUN npm ci
 # Build
 RUN npm run grunt ts:default
 

@@ -10,7 +10,7 @@ RUN npm ci --legacy-peer-deps
 RUN npm run build
 
 # In order to clean from building, we restarted from the original image (multi-stage build)
-FROM nginx:1.22.1-alpine as runner
+FROM nginx:1.23.3-alpine as runner
 # Clean the directory where our app will be placed
 RUN rm -rf /usr/share/nginx/html/*
 # Copy files

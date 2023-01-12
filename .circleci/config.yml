@@ -22,18 +22,23 @@ jobs:
             chromedriver --version
           name: Check install
       - run: npm install --prefix=$HOME/.local -g @angular/cli sonar-scanner
-      - checkout
+      - run: mkdir /home/circleci/project/incap
+      - checkout:
+          path: /home/circleci/project/incap
       - restore_cache:
-          key: frontend-{{ .Branch }}-{{ checksum "frontend/package-lock.json" }}
+          key: frontend-{{ .Branch }}-{{ checksum "incap/frontend/package-lock.json" }}
       - restore_cache:
-          key: backend-{{ .Branch }}-{{ checksum "backend/package-lock.json" }}
-      - run: bash rebuild.sh
+          key: backend-{{ .Branch }}-{{ checksum "incap/backend/package-lock.json" }}
+      - run: 
+          command: bash rebuild.sh
+          name: rebuild.sh
+          working_directory: /home/circleci/project/incap
       - save_cache:
-          key: frontend-{{ .Branch }}-{{ checksum "frontend/package-lock.json" }}
+          key: frontend-{{ .Branch }}-{{ checksum "incap/frontend/package-lock.json" }}
           paths:
             - "node_modules"
       - save_cache:
-          key: backend-{{ .Branch }}-{{ checksum "backend/package-lock.json" }}
+          key: backend-{{ .Branch }}-{{ checksum "incap/backend/package-lock.json" }}
           paths:
             - "node_modules"
 # Invoke jobs via workflows

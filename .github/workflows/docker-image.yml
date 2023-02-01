@@ -8,20 +8,24 @@ on:
   release:
     types: [published]
 jobs:
-  build:
-
+  build-frontend:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Build the Frontend Docker image    
-      run: docker build frontend --file frontend/Dockerfile --tag tuanicom/incap-frontend:latest   
+      run: docker build frontend --file frontend/Dockerfile --tag tuanicom/incap-frontend:latest
+    - name: Login to Docker
+      run: echo $DOCKER_HUB_PASSWORD | docker login --username=tuanicom --password-stdin
+    - name: Push Frontend Docker image
+      run: docker push tuanicom/incap-frontend:latest  
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2   
     - name: Build the Backend Docker image
       run: docker build backend --file backend/Dockerfile --tag tuanicom/incap-backend:latest
     - name: Login to Docker
       run: echo $DOCKER_HUB_PASSWORD | docker login --username=tuanicom --password-stdin
-    - name: Push Frontend Docker image
-      run: docker push tuanicom/incap-frontend:latest
     - name: Push Backend Docker image
       run: docker push tuanicom/incap-backend:latest
 env:

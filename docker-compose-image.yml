@@ -1,0 +1,9 @@
+version: '3' # specify docker-compose version
+
+# Define the services/containers to be run
+services:
+  frontend: # name of the first service
+    image: tuanicom/incap-frontend # specify the docker image
+
+  backend: #name of the second service
+    build: tuanicom/incap-backend # specify the docker image

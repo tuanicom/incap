@@ -3,18 +3,10 @@ version: '3' # specify docker-compose version
 # Define the services/containers to be run
 services:
   frontend: # name of the first service
-    ports:
-      - "8080:8080" # specify port forewarding
-    environment:
-      CATEGORIES_API_URL: http://backend:4000/categories
-    depends_on:
-      - backend
+    build: frontend # specify the directory of the Dockerfile
 
   backend: #name of the second service
-    environment:
-      MONGO_DB_URL: mongodb:27017
-    depends_on:
-      - mongodb
+    build: backend # specify the directory of the Dockerfile
 
   mongodb: # name of the third service
     image: mongo # specify image to build container from

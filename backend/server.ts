@@ -49,7 +49,7 @@ export class Server {
     private dbConnection() {
         const mongoDbUrl = process.env.MONGO_DB_URL || "localhost:27017";
         mongoose.connect(`mongodb://${mongoDbUrl}/incap`);
-
+        mongoose.set('strictQuery', false);
         const connection = mongoose.connection;
 
         connection.once("open", () => {

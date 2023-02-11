@@ -1,5 +1,5 @@
-<table class="table table-striped table-hover">
-  <caption>Categories table</caption>
+<table class="table table-striped table-hover table-sm caption-top">
+  <caption>Categories list</caption>
   <thead class="thead-dark">
     <tr>
       <th id="categoryId">Title</th>
@@ -7,16 +7,19 @@
       <th id="categoryActions">&nbsp;</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="table-group-divider">
     <tr *ngFor="let category of categories$ | async">
       <td>{{category.title}}</td>
       <td>{{category.description}}</td>
-      <td class="btn-group"><button class="btn btn-light" (click)="editCategory(category._id)">
-        <fa-icon [icon]="icons['edit']"></fa-icon>
-        </button>
-        <button class="btn btn-light" (click)="deleteCategory(category._id)">
-          <fa-icon [icon]="icons['trash']"></fa-icon>
-        </button>
+      <td>
+        <div class="btn-group d-md-flex justify-content-md-end">
+          <button class="btn btn-light flex-shrink-1" (click)="editCategory(category._id)">
+            <fa-icon [icon]="icons['edit']"></fa-icon>
+          </button>
+          <button class="btn btn-light flex-shrink-1" (click)="deleteCategory(category._id)">
+            <fa-icon [icon]="icons['trash']"></fa-icon>
+          </button>
+        </div>
       </td>
     </tr>
   </tbody>

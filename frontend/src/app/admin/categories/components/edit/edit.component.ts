@@ -44,6 +44,6 @@ export class EditComponent implements OnInit {
   }
 
   goBackToList(): void {
-    this.router.navigate(['/categories']);
+    this.router.navigate(['list'], { relativeTo: this.route.parent });
   }
 }

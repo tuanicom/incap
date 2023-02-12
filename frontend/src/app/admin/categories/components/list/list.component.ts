@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faPlus, faEdit, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-
 
 @Component({
   selector: 'app-categories-list',
@@ -19,7 +18,7 @@ export class ListComponent implements OnInit {
     trash: faTrash,
   };
 
-  constructor(private categoryService: CategoryService, private router: Router) { }
+  constructor(private categoryService: CategoryService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getCategories();
@@ -30,11 +29,11 @@ export class ListComponent implements OnInit {
   }
 
   addCategory(): void {
-    this.router.navigate(['/categories/add']);
+    this.router.navigate(['../add'], { relativeTo: this.route });
   }
 
   editCategory(id: string): void {
-    this.router.navigate([`/categories/edit/${id}`]);
+    this.router.navigate([`../edit/${id}`], { relativeTo: this.route });
   }
 
   deleteCategory(id: string): void {

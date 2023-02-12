@@ -20,8 +20,7 @@ describe('CategoriesComponent', () => {
         EditComponent
       ],
       imports: [
-        FontAwesomeModule
-,
+        FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,

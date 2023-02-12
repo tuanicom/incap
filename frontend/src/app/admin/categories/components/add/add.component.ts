@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../models/category';
 import { FormGroup, FormControl } from '@angular/forms';
 
@@ -11,7 +11,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class AddComponent {
 
-  constructor(private categoryService: CategoryService, private router: Router) { }
+  constructor(private categoryService: CategoryService, private router: Router, private route: ActivatedRoute) { }
 
   addCategoryForm = new FormGroup({
     title: new FormControl(''),
@@ -29,6 +29,6 @@ export class AddComponent {
   }
 
   goBackToList(): void {
-    this.router.navigate(['/categories']);
+    this.router.navigate(['../list'], { relativeTo: this.route });
   }
 }

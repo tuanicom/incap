@@ -6,3 +6,4 @@ bail: true
 timeout: 10000
 spec:
   - 'categories/*.spec.ts'
+  - 'users/*.spec.ts'

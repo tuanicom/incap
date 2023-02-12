@@ -1,3 +1,4 @@
 {
-  "categoriesApiUrl":"/api/categories"
+  "categoriesApiUrl":"/api/categories",
+  "usersApiUrl":"/api/users"
 }

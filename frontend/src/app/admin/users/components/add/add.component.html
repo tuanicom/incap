@@ -1,0 +1,11 @@
+<h5 class="card-title">Add new user</h5>
+<form [formGroup]="addUserForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>
+      Name:
+      <input type="text" class="form-control" formControlName="name">
+    </label>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button (click)="goBackToList()" class="btn btn-secondary">Cancel</button>
+</form>

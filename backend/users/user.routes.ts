@@ -2,7 +2,7 @@ import * as express from 'express';
 import UserController from './user.controller';
 import * as asyncHandler from 'express-async-handler';
 
-export class USerRoutes {
+export class UserRoutes {
     private _router: express.Router;
 
     constructor() {
@@ -40,4 +40,4 @@ export class USerRoutes {
         }));
     }
 }
-export default new USerRoutes().router;
+export default new UserRoutes().router;

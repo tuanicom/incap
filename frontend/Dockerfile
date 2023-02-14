@@ -20,6 +20,7 @@ COPY src/assets/settings.prod.json /usr/share/nginx/html/assets/settings.json
 # Expose the port the app runs in
 EXPOSE 8080
 ENV CATEGORIES_API_URL=http://localhost/api/categories
+ENV USERS_API_URL=http://localhost/api/users
 # Serve the app
-CMD ["/bin/sh",  "-c",  "envsubst '${CATEGORIES_API_URL}' < nginx.tpl.conf > /etc/nginx/nginx.conf && cat  /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"]
+CMD ["/bin/sh",  "-c",  "envsubst '$CATEGORIES_API_URL,$USERS_API_URL' < nginx.tpl.conf > /etc/nginx/nginx.conf && cat  /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"]
 

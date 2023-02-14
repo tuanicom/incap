@@ -1,0 +1,15 @@
+{
+  "files.exclude": {
+    ".nyc_output": true,
+    ".tscache": true,
+    ".vscode": true,
+    "**/*.js": {
+      "when": "$(basename).ts"
+    },
+    "**/*.js.map": true,
+    "coverage": true,
+    "dist": true,
+    "node_modules": true,
+    "tests": true
+  }
+}

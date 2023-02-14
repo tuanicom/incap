@@ -1,4 +1,5 @@
 {
   "categoriesApiUrl":"http://localhost:4000/categories",
-  "usersApiUrl":"http://localhost:4000/users"
+  "usersApiUrl":"http://localhost:4000/users",
+  "articlesApiUrl":"http://localhost:4000/articles"
 }

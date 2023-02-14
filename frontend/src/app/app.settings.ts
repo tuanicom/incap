@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class AppSettings {
   categoriesApiUrl: string;
+  usersApiUrl: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -18,7 +19,7 @@ export class AppSettingsService {
 @Injectable({ providedIn: 'root' })
 export class AppSettingsHttpService {
 
-  constructor(private http: HttpClient, private appSettingsService: AppSettingsService) {  }
+  constructor(private http: HttpClient, private appSettingsService: AppSettingsService) { }
 
   public initializeApp(): void {
     this.http.get('assets/settings.json').subscribe((res: AppSettings) => this.appSettingsService.settings = res);

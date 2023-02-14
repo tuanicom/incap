@@ -103,7 +103,7 @@ describe('CategoryService', () => {
       service = TestBed.inject(CategoryService);
     });
 
-    it('should call http://localhost:4000/categories with no parameter', () => {
+    it('should call http://localhost:4000/categories with id parameter', () => {
 
       service.getCategoryById('1234');
 

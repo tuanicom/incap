@@ -14,6 +14,7 @@ describe('AppSettings', () => {
   beforeEach(waitForAsync(() => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get']);
     appSettings.categoriesApiUrl = 'http://localhost:4000/categories';
+    appSettings.usersApiUrl = 'http://localhost:4000/users';
 
     TestBed.configureTestingModule({
       imports: [
@@ -23,7 +24,7 @@ describe('AppSettings', () => {
         AppSettingsService,
         AppSettingsHttpService,
         { provide: HttpClient, useValue: httpClientSpy },
-        { provide: AppSettingsService, useValue: { settings: { categoriesApiUrl: 'http://localhost:4000/categories' } } },
+        { provide: AppSettingsService, useValue: { settings: appSettings } },
         { provide: APP_BASE_HREF, useValue: '/' }
       ],
     });

@@ -1,0 +1,30 @@
+<table class="table table-striped table-hover table-sm caption-top">
+  <caption>Users list</caption>
+  <thead class="thead-dark">
+    <tr>
+      <th id="userId">Name</th>
+      <th id="userActions">&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+    <tr *ngFor="let user of users$ | async">
+      <td>{{user.name}}</td>
+      <td>
+        <div class="btn-group d-md-flex justify-content-md-end">
+          <button class="btn btn-light flex-shrink-1" (click)="deleteUser(user._id)">
+            <fa-icon [icon]="icons['trash']"></fa-icon>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">
+        <button class="btn btn-light" (click)="addUser()">
+          <fa-icon [icon]="icons['plus']"></fa-icon>
+        </button>
+      </td>
+    </tr>
+  </tfoot>
+</table>

@@ -5,6 +5,7 @@ import * as cors from "cors";
 import * as mongoose from "mongoose";
 import * as morgan from "morgan";
 import CategoryRoutes from "./categories/category.routes";
+import UserRoutes from "./users/user.routes";
 
 /**
  * The server.
@@ -59,6 +60,7 @@ export class Server {
 
     private routes() {
         this.router.use('/categories', CategoryRoutes);
+        this.router.use('/users', UserRoutes);
     }
 }
 

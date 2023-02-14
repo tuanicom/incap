@@ -7,6 +7,7 @@ services:
       - "8080:8080" # specify port forewarding
     environment:
       CATEGORIES_API_URL: http://backend:4000/categories
+      USERS_API_URL: http://backend:4000/users
     depends_on:
       - backend
 

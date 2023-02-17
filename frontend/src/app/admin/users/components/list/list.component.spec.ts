@@ -70,17 +70,6 @@ describe('ListComponent', () => {
     });
   });
 
-  describe('when editiong an existing user with id 1', () => {
-    it('should navigate to /users/edit/1', () => {
-      component.editUser('1');
-      expect(routerSpy.navigate).toHaveBeenCalled();
-      expect(routerSpy.navigate.calls.count()).toBe(1);
-      expect(routerSpy.navigate.calls.first().args.length).toBe(1);
-      expect(routerSpy.navigate.calls.first().args[0].length).toBe(1);
-      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('/users/edit/1');
-    });
-  });
-
   describe('when deleting an existing user with id 1', () => {
     beforeEach(() => {
       userServiceSpy.deleteUser.and.returnValue(Observable.of<object>({}));

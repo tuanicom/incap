@@ -74,12 +74,12 @@ describe('ArticleService', () => {
 
     it('should call http://localhost:4000/articles with no parameter', () => {
 
-      service.getArticles();
+      service.getArticles('test');
 
       expect(httpClientSpy.get).toHaveBeenCalled();
       expect(httpClientSpy.get.calls.count()).toBe(1);
       expect(httpClientSpy.get.calls.first().args.length).toBe(1);
-      expect(httpClientSpy.get.calls.first().args[0]).toBe('http://localhost:4000/articles');
+      expect(httpClientSpy.get.calls.first().args[0]).toBe('http://localhost:4000/articles?category=test');
     });
 
     it('should return a list of articles', waitForAsync(inject([ArticleService], (articleService) => {

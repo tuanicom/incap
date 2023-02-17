@@ -58,7 +58,7 @@ describe('EditComponent', () => {
     articleServiceSpy.getArticleById.and.returnValue(Observable.of<Article>({
       id: articleId,
       title: 'test',
-      description: 'test'
+      content: 'test'
     } as Article));
     component.ngOnInit();
   });
@@ -80,7 +80,7 @@ describe('EditComponent', () => {
   describe('when submitting the form', () => {
 
     beforeEach(() => {
-      component.editArticleForm.get('description').setValue('test2');
+      component.editArticleForm.get('content').setValue('test2');
       articleServiceSpy.updateArticle.and.returnValue(Observable.of<Article>({} as Article));
       component.onSubmit();
     });
@@ -91,7 +91,7 @@ describe('EditComponent', () => {
       expect(articleServiceSpy.updateArticle.calls.first().args.length).toBe(1);
       expect((articleServiceSpy.updateArticle.calls.first().args[0] as Article).id).toBe(articleId);
       expect((articleServiceSpy.updateArticle.calls.first().args[0] as Article).title).toBe('test');
-      expect((articleServiceSpy.updateArticle.calls.first().args[0] as Article).description).toBe('test2');
+      expect((articleServiceSpy.updateArticle.calls.first().args[0] as Article).content).toBe('test2');
     });
 
     it('should redirect to the list after', () => {

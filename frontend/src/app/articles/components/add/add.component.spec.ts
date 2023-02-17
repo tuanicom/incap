@@ -63,7 +63,7 @@ describe('AddComponent', () => {
 
     beforeEach(() => {
       component.addArticleForm.get('title').setValue('test');
-      component.addArticleForm.get('description').setValue('test');
+      component.addArticleForm.get('content').setValue('test');
       articleServiceSpy.addArticle.and.returnValue(Observable.of<object>({}));
       component.onSubmit();
     });
@@ -76,7 +76,7 @@ describe('AddComponent', () => {
     it('should add a article with the values of the form', () => {
       expect(articleServiceSpy.addArticle.calls.first().args.length).toBe(1);
       expect((articleServiceSpy.addArticle.calls.first().args[0] as Article).title).toBe('test');
-      expect((articleServiceSpy.addArticle.calls.first().args[0] as Article).description).toBe('test');
+      expect((articleServiceSpy.addArticle.calls.first().args[0] as Article).content).toBe('test');
     });
 
     it('should redirect to the list after', () => {

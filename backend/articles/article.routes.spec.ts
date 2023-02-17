@@ -33,28 +33,27 @@ describe("ArticleRoutes", () => {
     afterEach(() => rewiremock.disable());
 
     describe(`get ${routePrefix}/`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "getAll", () => Promise.resolve(articles)));
-
-        it("should get the list from controller and return json", () => {
-            request(app)
-                .get(routePrefix + "/")
-                .expect('Content-Type', /json/)
-                .expect(200, function (err, res) {
-                    chai.expect(res.body).to.deep.equal(articles);
-                });
+        let getAllSpy: any;
+        before(() => getAllSpy = chai.spy.on(controllerMock, "getAll", () => Promise.resolve(articles)));
+        describe('with no parameters', () => {
+            it("should get the list from controller and return json", () => {
+                request(app)
+                    .get(routePrefix + "/")
+                    .expect('Content-Type', /json/)
+                    .expect(200, function (err, res) {
+                        chai.expect(res.body).to.deep.equal(articles);
+                    });
+            });
         });
-    });
-
-    describe(`get ${routePrefix}/?category=test`, () => {
-        // beforeEach(() => chai.spy.on(controllerMock, "getAll", () => Promise.resolve(articles)));
-
-        it("should get the list from controller and return json", () => {
-            request(app)
-                .get(routePrefix + "/?category=test")
-                .expect('Content-Type', /json/)
-                .expect(200, function (err, res) {
-                    chai.expect(res.body).to.deep.equal(articles);
-                });
+        describe('with category parameters', () => {
+            it("should get the list from controller and return json", () => {
+                request(app)
+                    .get(routePrefix + "/?category=test")
+                    .expect('Content-Type', /json/)
+                    .expect(200, function (err, res) {
+                        chai.expect(res.body).to.deep.equal(articles);
+                    });
+            });
         });
     });
 

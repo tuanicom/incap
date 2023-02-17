@@ -1,0 +1,17 @@
+<h5 class="card-title">Add new article</h5>
+<form [formGroup]="addArticleForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>
+      Title:
+      <input type="text" class="form-control" formControlName="title">
+    </label>
+  </div>
+  <div class="form-group">
+    <label for="articleContent">
+      Content:
+    </label>
+    <textarea class="form-control" id="articleContent"  formControlName="content" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button (click)="goBackToList()" class="btn btn-secondary">Cancel</button>
+</form>

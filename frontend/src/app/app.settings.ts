@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 export class AppSettings {
   categoriesApiUrl: string;
   usersApiUrl: string;
+  articlesApiUrl: string;
 }
 
 @Injectable({ providedIn: 'root' })

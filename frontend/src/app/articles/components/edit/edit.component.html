@@ -1,0 +1,11 @@
+<h5 class="card-title">Editing {{ (article$ | async)?.title }}</h5>
+<form [formGroup]="editArticleForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="articleContent">
+      Content:
+    </label>
+    <textarea class="form-control" id="articleContent"  formControlName="content" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <button (click)="goBackToList()" class="btn btn-secondary">Cancel</button>
+</form>

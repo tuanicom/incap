@@ -10,3 +10,5 @@
 .sonarlint
 .nyc_output
 coverage
+eslint.json
+/tests-results/tests-results.xml

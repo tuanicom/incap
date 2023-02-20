@@ -6,11 +6,13 @@ orbs:
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 jobs:
-  build:
+  build-frontend:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/node:16.13.1-browsers
+      - image: cimg/node:current-browsers
+    environment:
+      CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
@@ -21,29 +23,133 @@ jobs:
             google-chrome --version
             chromedriver --version
           name: Check install
-      - run: npm install --prefix=$HOME/.local -g @angular/cli sonar-scanner
+      - run: npm install --prefix=$HOME/.local -g @angular/cli coveralls
       - run: mkdir /home/circleci/project/incap
       - checkout:
           path: /home/circleci/project/incap
       - restore_cache:
           key: frontend-{{ .Branch }}-{{ checksum "incap/frontend/package-lock.json" }}
-      - restore_cache:
-          key: backend-{{ .Branch }}-{{ checksum "incap/backend/package-lock.json" }}
-      - run: 
-          command: bash rebuild.sh
-          name: rebuild.sh
+      - run:
+          command: bash rebuild.sh frontend
+          name: rebuild.sh frontend
           working_directory: /home/circleci/project/incap
+      - run:
+          command: |
+            export COVERALLS_SERVICE_NAME=circleci
+            export COVERALLS_GIT_BRANCH=$CIRCLE_BRANCH
+            export COVERALLS_SERVICE_NUMBER=$CIRCLE_PIPELINE_NUMBER
+            export COVERALLS_SERVICE_JOB_ID=$CIRCLE_WORKFLOW_JOB_ID
+            export COVERALLS_FLAG_NAME="frontend"
+            export COVERALLS_PARALLEL=true
+            cat coverage/lcov.info | coveralls --verbose
+          name: Upload coverage report to Coveralls
+          working_directory: /home/circleci/project/incap/frontend
+      - run:
+          command: |
+            curl -Ls https://coverage.codacy.com/get.sh > get.sh
+            source get.sh report -r coverage/lcov.info -t $CODACY_PROJECT_TOKEN --partial
+          name: Upload coverage report to Codacy
+          working_directory: /home/circleci/project/incap/frontend
       - save_cache:
           key: frontend-{{ .Branch }}-{{ checksum "incap/frontend/package-lock.json" }}
           paths:
             - "node_modules"
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root:
+            /home/circleci/project/incap/
+            # Must be relative path from root
+          paths:
+            - frontend/coverage/lcov.info
+      - store_test_results:
+          path: incap/frontend/tests-results
+      - store_artifacts:
+          path: incap/frontend/eslint.json
+      - store_artifacts:
+          path: incap/frontend/coverage/index.html
+  build-backend:
+    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
+    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+    docker:
+      - image: "cimg/node:current"
+    environment:
+      CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
+    # Add steps to the job
+    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+    steps:
+      - run: npm install --prefix=$HOME/.local -g coveralls
+      - run: mkdir /home/circleci/project/incap
+      - checkout:
+          path: /home/circleci/project/incap
+      - restore_cache:
+          key: backend-{{ .Branch }}-{{ checksum "incap/backend/package-lock.json" }}
+      - run:
+          command: bash rebuild.sh backend
+          name: rebuild.sh backend
+          working_directory: /home/circleci/project/incap
+      - run:
+          command: |
+            export COVERALLS_SERVICE_NAME=circleci
+            export COVERALLS_GIT_BRANCH=$CIRCLE_BRANCH
+            export COVERALLS_SERVICE_NUMBER=$CIRCLE_PIPELINE_NUMBER
+            export COVERALLS_SERVICE_JOB_ID=$CIRCLE_WORKFLOW_JOB_ID
+            export COVERALLS_FLAG_NAME="frontend"
+            export COVERALLS_PARALLEL=true
+            cat coverage/lcov.info | coveralls --verbose
+          name: Upload coverage report to Coveralls
+          working_directory: /home/circleci/project/incap/backend
+      - run:
+          command: |
+            curl -Ls https://coverage.codacy.com/get.sh > get.sh
+            source get.sh report -r coverage/lcov.info -t $CODACY_PROJECT_TOKEN --partial
+          name: Upload coverage report to Codacy
+          working_directory: /home/circleci/project/incap/backend
       - save_cache:
           key: backend-{{ .Branch }}-{{ checksum "incap/backend/package-lock.json" }}
           paths:
             - "node_modules"
+      - persist_to_workspace:
+          # Must be an absolute path, or relative path from working_directory. This is a directory on the container which is
+          # taken to be the root directory of the workspace.
+          root: /home/circleci/project/incap/
+          # Must be relative path from root
+          paths:
+            - backend/coverage/lcov.info
+      - store_test_results:
+          path: incap/backend/tests-results
+      - store_artifacts:
+          path: incap/backend/eslint.json
+      - store_artifacts:
+          path: incap/frontend/coverage/lcov-report/index.html
+  finalize:
+    docker:
+      - image: "cimg/node:current"
+    environment:
+      CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
+    steps:
+      - run: mkdir /home/circleci/project/incap
+      - attach_workspace:
+          # Must be absolute path or relative path from working_directory
+          at: /home/circleci/project/incap
+      - run:
+          command: |
+            curl "https://coveralls.io/webhook?repo_token=$COVERALLS_REPO_TOKEN" \
+                -d "payload[build_num]=$CIRCLE_PIPELINE_NUMBER&payload[status]=done"
+          name: Finalize coverage on Coveralls
+      - run:
+          command: |
+              curl -Ls https://coverage.codacy.com/get.sh > get.sh
+              source get.sh final -t $CODACY_PROJECT_TOKEN
+          name: Finalize coverage on Codacy
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
-  build:
+  builds:
     jobs:
-      - build
+      - build-frontend
+      - build-backend
+      - finalize:
+          requires:
+            - build-frontend
+            - build-backend

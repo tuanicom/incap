@@ -8,3 +8,6 @@ spec:
   - 'articles/*.spec.ts'
   - 'categories/*.spec.ts'
   - 'users/*.spec.ts'
+reporter: mocha-junit-reporter
+reporter-option:
+  - mochaFile=./tests-results/tests-results.xml

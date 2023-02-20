@@ -5,12 +5,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
 import * as Observable from 'rxjs';
 
-describe('AddComponent', () => {
+describe('Articles > AddComponent', () => {
   let component: AddComponent;
   let fixture: ComponentFixture<AddComponent>;
   let articleServiceSpy: {
@@ -31,16 +31,22 @@ describe('AddComponent', () => {
       ],
       imports: [
         FontAwesomeModule
-,
+        ,
         ReactiveFormsModule,
         BrowserModule,
         HttpClientModule,
         NgbModule,
-        RouterModule.forRoot([], {})
       ],
       providers: [
         { provide: ArticleService, useValue: articleServiceSpy },
-        { provide: Router, useValue: routerSpy }
+        { provide: Router, useValue: routerSpy },
+        {
+          provide: ActivatedRoute, useValue: {
+            parent: {
+              params: Observable.from([{ category: 'test' }])
+            }
+          }
+        }
       ],
     });
   }));
@@ -82,9 +88,9 @@ describe('AddComponent', () => {
     it('should redirect to the list after', () => {
       expect(routerSpy.navigate).toHaveBeenCalled();
       expect(routerSpy.navigate.calls.count()).toBe(1);
-      expect(routerSpy.navigate.calls.first().args.length).toBe(1);
+      expect(routerSpy.navigate.calls.first().args.length).toBe(2);
       expect(routerSpy.navigate.calls.first().args[0].length).toBe(1);
-      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('/articles');
+      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('../list');
     });
   });
 });

@@ -16,7 +16,7 @@ export class ArticleRoutes {
 
     public declareRoutes() {
         this.router.route('/').get(asyncHandler(async (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const articles = await ArticleController.getAll(_req.query.category.toString());
+            const articles = await ArticleController.getAll(_req.query.category as string);
             res.json(articles);
         }));
         this.router.route('/:id').get(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {

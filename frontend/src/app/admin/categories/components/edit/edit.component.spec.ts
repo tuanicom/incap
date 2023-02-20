@@ -10,7 +10,7 @@ import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import * as Observable from 'rxjs';
 
-describe('EditComponent', () => {
+describe('Categories > EditComponent', () => {
   let component: EditComponent;
   let fixture: ComponentFixture<EditComponent>;
   let categoryServiceSpy: {
@@ -97,9 +97,9 @@ describe('EditComponent', () => {
     it('should redirect to the list after', () => {
       expect(routerSpy.navigate).toHaveBeenCalled();
       expect(routerSpy.navigate.calls.count()).toBe(1);
-      expect(routerSpy.navigate.calls.first().args.length).toBe(1);
+      expect(routerSpy.navigate.calls.first().args.length).toBe(2);
       expect(routerSpy.navigate.calls.first().args[0].length).toBe(1);
-      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('/categories');
+      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('list');
     });
   });
 });

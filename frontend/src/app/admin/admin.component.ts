@@ -7,10 +7,5 @@ import { Router } from '@angular/router';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent {
-  constructor(
-    private readonly router: Router,
-  ) {
-    router.events
-      .subscribe(console.log)
-  }
+  constructor() { }
 }

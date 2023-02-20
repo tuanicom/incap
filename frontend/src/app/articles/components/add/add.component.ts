@@ -16,7 +16,6 @@ export class AddComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.parent.params.subscribe((params: Params) => {
-      console.log(params);
       this.category = params.category;
     });
   }

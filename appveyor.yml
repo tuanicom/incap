@@ -1,26 +1,35 @@
 version: 1.0.{build}
-image: Visual Studio 2019
+image: Visual Studio 2022
 environment: 
   nodejs_version: Current   
   matrix:
     - nodejs_version: Current
 install:
 - ps: Install-Product node $env:nodejs_version
-- npm install codecov -g
+- npm install sonar-scanner -g
 - npm install -g snyk
 - npm install -g @angular/cli
+- curl -o codecov.exe https://uploader.codecov.io/latest/windows/codecov.exe 
 cache: 
   - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
   - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
   - frontend\node_modules -> package.json                               # local npm modules
 build_script:
 - cmd: rebuild.cmd
+after_build:
+- curl -F "file=@backend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"
+- curl -F "file=@frontend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"
+- codecov.exe
+- set JAVA_HOME=C:\Program Files\Java\jdk19
+- set PATH=%JAVA_HOME%\bin;%PATH%
+- if defined APPVEYOR_PULL_REQUEST_NUMBER ( set "SONAR_ARGS=-Dsonar.pullrequest.base=%APPVEYOR_REPO_BRANCH% -Dsonar.pullrequest.branch=%APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH% -Dsonar.pullrequest.key=%APPVEYOR_PULL_REQUEST_NUMBER%" ) else ( set "SONAR_ARGS=-Dsonar.branch.name=%APPVEYOR_REPO_BRANCH%" )
+- call sonar-scanner %SONAR_ARGS%
 artifacts:
 - path: frontend/coverage/index.html
   name: Frontend Coverage
 - path: backend/coverage/lcov-report/index.html
   name: Backend Coverage
-- path: frontend/eslint.html
+- path: frontend/eslint.json
   name: Frontend Linting
-- path: backend/eslint.html
+- path: backend/eslint.json
   name: Backend Linting

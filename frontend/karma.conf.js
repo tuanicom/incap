@@ -10,7 +10,8 @@ module.exports = function (config) {
       require('karma-chrome-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular-devkit/build-angular/plugins/karma'),
+      require('karma-junit-reporter'),
     ],
     client: {
       jasmine: {
@@ -33,7 +34,12 @@ module.exports = function (config) {
         { type: 'lcov' }
       ]
     },
-    reporters: ['progress', 'kjhtml'],
+    junitReporter: {
+      outputDir:'tests-results',
+      outputFile:'tests-results.xml',
+      useBrowserName: false
+    },
+    reporters: ['progress', 'kjhtml','junit'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,

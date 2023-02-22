@@ -21,7 +21,7 @@ export class ListComponent implements OnInit {
   constructor(private articleService: ArticleService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.parent.params.subscribe((params: Params) => {console.log(params);
+    this.route.parent.params.subscribe((params: Params) => {
       this.category = params.category;
       this.getArticles();
     });

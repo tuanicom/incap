@@ -10,7 +10,7 @@ import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
 import * as Observable from 'rxjs';
 
-describe('EditComponent', () => {
+describe('Articles > EditComponent', () => {
   let component: EditComponent;
   let fixture: ComponentFixture<EditComponent>;
   let articleServiceSpy: {
@@ -97,9 +97,9 @@ describe('EditComponent', () => {
     it('should redirect to the list after', () => {
       expect(routerSpy.navigate).toHaveBeenCalled();
       expect(routerSpy.navigate.calls.count()).toBe(1);
-      expect(routerSpy.navigate.calls.first().args.length).toBe(1);
+      expect(routerSpy.navigate.calls.first().args.length).toBe(2);
       expect(routerSpy.navigate.calls.first().args[0].length).toBe(1);
-      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('/articles');
+      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('list');
     });
   });
 });

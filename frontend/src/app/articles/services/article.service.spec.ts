@@ -72,14 +72,16 @@ describe('ArticleService', () => {
       service = TestBed.inject(ArticleService);
     });
 
-    it('should call http://localhost:4000/articles with no parameter', () => {
+    it('should call http://localhost:4000/articles?category=test', () => {
 
       service.getArticles('test');
 
       expect(httpClientSpy.get).toHaveBeenCalled();
       expect(httpClientSpy.get.calls.count()).toBe(1);
-      expect(httpClientSpy.get.calls.first().args.length).toBe(1);
-      expect(httpClientSpy.get.calls.first().args[0]).toBe('http://localhost:4000/articles?category=test');
+      expect(httpClientSpy.get.calls.first().args.length).toBe(2);
+      expect(httpClientSpy.get.calls.first().args[0]).toBe('http://localhost:4000/articles');
+      expect(httpClientSpy.get.calls.first().args[1].params.keys()).toEqual(['category']);
+      expect(httpClientSpy.get.calls.first().args[1].params.get('category')).toBe('test');
     });
 
     it('should return a list of articles', waitForAsync(inject([ArticleService], (articleService) => {

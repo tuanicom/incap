@@ -8,6 +8,7 @@ services:
     environment:
       CATEGORIES_API_URL: http://backend:4000/categories
       USERS_API_URL: http://backend:4000/users
+      ARTICLES_API_URL: http://backend:4000/articles
     depends_on:
       - backend
 

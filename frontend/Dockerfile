@@ -10,18 +10,18 @@ RUN npm ci --legacy-peer-deps
 RUN npm run build
 
 # In order to clean from building, we restarted from the original image (multi-stage build)
-FROM nginx:1.23.3-alpine as runner
+FROM nginx:alpine as runner
 # Clean the directory where our app will be placed
 RUN rm -rf /usr/share/nginx/html/*
 # Copy files
 COPY nginx.conf nginx.tpl.conf
 COPY --from=builder /usr/src/app/dist/frontend /usr/share/nginx/html
-COPY src/assets/settings.prod.json /usr/share/nginx/html/assets/settings.json
 # Expose the port the app runs in
 EXPOSE 8080
+# ENV to specify REST API urls
 ENV CATEGORIES_API_URL=http://localhost/api/categories
 ENV USERS_API_URL=http://localhost/api/users
 ENV ARTICLES_API_URL=http://localhost/api/articles
 # Serve the app
-CMD ["/bin/sh",  "-c",  "envsubst '$CATEGORIES_API_URL,$USERS_API_URL,$ARTICLES_API_URL' < nginx.tpl.conf > /etc/nginx/nginx.conf && cat  /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"]
+CMD ["/bin/sh",  "-c",  "envsubst '$CATEGORIES_API_URL,$USERS_API_URL,$ARTICLES_API_URL' < nginx.tpl.conf > /etc/nginx/nginx.conf && cat /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"]
 

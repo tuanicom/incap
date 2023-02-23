@@ -17,8 +17,10 @@ WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/package.json .
 COPY --from=builder /usr/src/app/.snyk .
 COPY --from=builder /usr/src/app/dist .
+# Remove map files
+RUN find . -name "*.js.map" -type f -delete
 # Install only dependencies (not dev)
-RUN npm install --ignore-scripts --only=prod --cache-min 999999 --force 
+RUN npm install --ignore-scripts --only=prod --cache-min 999999 --force
 # Expose the port the app runs in
 EXPOSE 4000
 ENV MONGO_DB_URL=localhost:27017

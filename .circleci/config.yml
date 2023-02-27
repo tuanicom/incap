@@ -39,9 +39,9 @@ jobs:
             export COVERALLS_SERVICE_JOB_ID=$CIRCLE_WORKFLOW_JOB_ID
             export COVERALLS_FLAG_NAME="frontend"
             export COVERALLS_PARALLEL=true
-            cat coverage/lcov.info | coveralls --verbose
+            cat frontend/coverage/lcov.info | sed 's/SF:/SF:frontend\//' | coveralls --verbose 
           name: Upload coverage report to Coveralls
-          working_directory: /home/circleci/project/incap/frontend
+          working_directory: /home/circleci/project/incap
       - run:
           command: |
             curl -Ls https://coverage.codacy.com/get.sh > get.sh
@@ -90,11 +90,11 @@ jobs:
           command: |
             export COVERALLS_SERVICE_NUMBER=$CIRCLE_PIPELINE_NUMBER
             export COVERALLS_SERVICE_JOB_ID=$CIRCLE_WORKFLOW_JOB_ID
-            export COVERALLS_FLAG_NAME="frontend"
+            export COVERALLS_FLAG_NAME="backend"
             export COVERALLS_PARALLEL=true
-            cat coverage/lcov.info | coveralls --verbose
+            cat backend/coverage/lcov.info | sed 's/SF:/SF:backend\//' | coveralls  
           name: Upload coverage report to Coveralls
-          working_directory: /home/circleci/project/incap/backend
+          working_directory: /home/circleci/project/incap/
       - run:
           command: |
             curl -Ls https://coverage.codacy.com/get.sh > get.sh

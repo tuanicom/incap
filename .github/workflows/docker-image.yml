@@ -1,32 +1,29 @@
-name: Docker Image CI
-
+name: Publish Docker Images
 on:
   push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+    branches: [master]
   release:
     types: [published]
 jobs:
-  build-frontend:
+  docker-build-frontend:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Frontend Docker image    
-      run: docker build frontend --file frontend/Dockerfile --tag tuanicom/incap-frontend:latest
-    - name: Login to Docker
-      run: echo $DOCKER_HUB_PASSWORD | docker login --username=tuanicom --password-stdin
-    - name: Push Frontend Docker image
-      run: docker push tuanicom/incap-frontend:latest  
-  build-backend:
+      - uses: actions/checkout@v2
+      - name: Build the Frontend Docker image
+        run: docker build frontend --file frontend/Dockerfile --tag tuanicom/incap-frontend:latest
+      - name: Login to Docker
+        run: echo $DOCKER_HUB_PASSWORD | docker login --username=tuanicom --password-stdin
+      - name: Push Frontend Docker image
+        run: docker push tuanicom/incap-frontend:latest
+  docker-build-backend:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2   
-    - name: Build the Backend Docker image
-      run: docker build backend --file backend/Dockerfile --tag tuanicom/incap-backend:latest
-    - name: Login to Docker
-      run: echo $DOCKER_HUB_PASSWORD | docker login --username=tuanicom --password-stdin
-    - name: Push Backend Docker image
-      run: docker push tuanicom/incap-backend:latest
+      - uses: actions/checkout@v2
+      - name: Build the Backend Docker image
+        run: docker build backend --file backend/Dockerfile --tag tuanicom/incap-backend:latest
+      - name: Login to Docker
+        run: echo $DOCKER_HUB_PASSWORD | docker login --username=tuanicom --password-stdin
+      - name: Push Backend Docker image
+        run: docker push tuanicom/incap-backend:latest
 env:
-   DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+  DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}

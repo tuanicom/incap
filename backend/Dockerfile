@@ -11,6 +11,8 @@ RUN npm run grunt ts:default
 
 # In order to clean from building, we restarted from the original image (multi-stage build)
 FROM node:alpine AS runner
+# Upgrade image packages
+RUN apk update && apk upgrade --no-cache
 # Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
 # Copy files

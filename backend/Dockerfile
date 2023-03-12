@@ -23,6 +23,10 @@ COPY --from=builder /usr/src/app/dist .
 RUN find . -name "*.js.map" -type f -delete
 # Install only dependencies (not dev)
 RUN npm install --ignore-scripts --only=prod --cache-min 999999 --force
+# Fix SonarQube: The node image runs with root as the default user
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot
+USER nonroot
 # Expose the port the app runs in
 EXPOSE 4000
 ENV MONGO_DB_URL=localhost:27017

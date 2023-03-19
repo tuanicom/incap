@@ -10,7 +10,7 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/node:current-browsers
+      - image: cimg/node:lts-browsers
     environment:
       CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
     # Add steps to the job
@@ -70,7 +70,7 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: "cimg/node:current"
+      - image: "cimg/node:lts"
     environment:
       CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
     # Add steps to the job
@@ -120,7 +120,7 @@ jobs:
           path: incap/frontend/coverage/lcov-report/index.html
   finalize:
     docker:
-      - image: "cimg/node:current"
+      - image: "cimg/node:lts"
     environment:
       CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
     steps:

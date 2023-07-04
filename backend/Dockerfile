@@ -5,7 +5,7 @@ WORKDIR /usr/src/app
 # Copy files
 COPY . .
 # Install dependencies
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 # Build
 RUN npm run grunt ts:default
 

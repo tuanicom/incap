@@ -1,5 +1,5 @@
 # Create image based on the official Node 8 image from the dockerhub
-FROM node:alpine AS builder
+FROM node:alpine3.17 AS builder
 # Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
 # Copy files
@@ -10,7 +10,7 @@ RUN npm ci --legacy-peer-deps
 RUN npm run build
 
 # In order to clean from building, we restarted from the original image (multi-stage build)
-FROM nginx:1-perl AS runner
+FROM nginx:1.25.1-alpine AS runner
 # Upgrade image packages
 # RUN apk update && apk upgrade --no-cache
 # Clean the directory where our app will be placed

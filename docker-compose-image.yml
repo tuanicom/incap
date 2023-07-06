@@ -4,6 +4,9 @@ version: '3' # specify docker-compose version
 services:
   frontend: # name of the first service
     image: tuanicom/incap-frontend # specify the docker image
+    pull_policy: always
 
   backend: #name of the second service
-    image: tuanicom/incap-backend # specify the docker image
+    image: tuanicom/incap-backend # specify the docker image    
+    pull_policy: always
+

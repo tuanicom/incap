@@ -13,7 +13,7 @@ cache:
   - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
   - frontend\node_modules -> package.json                               # local npm modules
 build_script:
-- cmd: rebuild.cmd
+- ps: .\rebuild.ps1
 after_build:
 - curl -F "file=@backend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"
 - curl -F "file=@frontend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"

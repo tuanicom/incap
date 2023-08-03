@@ -2,6 +2,7 @@ version: 1.0.{build}
 image: Visual Studio 2022
 environment: 
   nodejs_version: LTS
+skip_branch_with_pr: true
 install:
 - ps: Install-Product node $env:nodejs_version
 - npm install sonar-scanner -g

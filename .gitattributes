@@ -1,0 +1,99 @@
+#Default all files it determins as text, normalize them.
+* text=auto eol=lf
+
+# These files are text and should be normalized (convert crlf => lf)
+# Git Files
+.gitattributes text eol=lf
+.gitignore text eol=lf
+.gitconfig text eol=lf
+
+# cSharp / Visual Studio
+*.bat     text eol=crlf
+*.cmd     text eol=crlf
+*.cs      text eol=crlf diff=csharp 
+*.csproj  text eol=crlf
+*.h       text eol=crlf
+*.msbuild text eol=crlf
+*.ps1     text eol=crlf
+*.sdf     binary
+*.sln     text eol=crlf
+*.tt      text eol=crlf
+*.xaml    text eol=crlf
+*.resx    text eol=crlf
+*.tpl     text eol=crlf
+
+# Web
+*.css     text eol=lf
+*.map     text eol=lf
+*.less    text eol=lf
+*.sass    text eol=lf
+*.json    text eol=lf
+*.js      text eol=lf
+*.ts      text eol=lf
+*.htm     text eol=lf
+*.html    text eol=lf
+*.cshtml  text eol=lf
+*.xml     text eol=lf
+*.svg     text eol=lf
+
+# Images & Media
+*.png     binary
+*.jpg     binary
+*.jpeg    binary
+*.gif     binary
+*.ico     binary
+*.mov     binary
+*.ico     binary
+*.pdf     binary
+
+# Compression
+*.gz      binary
+*.zip     binary
+*.7z      binary
+*.nupkg   binary
+
+# Fonts
+*.ttf       binary
+*.eot       binary
+*.woff      binary
+
+# Config
+*.yaml   text eol=crlf
+*.yml    text eol=crlf
+*.config text eol=lf
+
+# Documents
+# *.doc  diff=astextplain 
+# *.DOC  diff=astextplain
+# *.docx diff=astextplain
+# *.DOCX diff=astextplain
+# *.dot  diff=astextplain
+# *.DOT  diff=astextplain
+# *.pdf  diff=astextplain
+# *.PDF  diff=astextplain
+# *.rtf  diff=astextplain
+# *.RTF  diff=astextplain
+
+# Texts
+*.txt text eol=lf
+*.md text eol=lf
+*.adoc text eol=lf
+*.csv text eol=lf
+*.sql text eol=lf
+
+# Compiled Dynamic libraries
+*.dll     binary
+*.pdb     binary
+
+# Compiled Static libraries
+*.lib   binary
+
+# Executables
+*.exe binary
+
+# Misc
+*.docpub  text eol=crlf
+*.nunit   text eol=crlf
+*.nsi     text eol=crlf
+*.py      text eol=crlf
+*.rb      text eol=crlf

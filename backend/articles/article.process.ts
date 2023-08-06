@@ -18,8 +18,8 @@ export class ArticleProcess implements IArticleProcess {
         return article.findById(id).exec();
     }
 
-    public async save(newCategory: IArticle): Promise<IArticle> {
-        return newCategory.save();
+    public async save(newArticle: IArticle): Promise<IArticle> {
+        return newArticle.save();
     }
 
     public async delete(id: string): Promise<IArticle> {

@@ -17,8 +17,8 @@ export class UserProcess implements IUserProcess {
         return user.findById(id).exec();
     }
 
-    public async save(newCategory: IUser): Promise<IUser> {
-        return newCategory.save();
+    public async save(newUser: IUser): Promise<IUser> {
+        return newUser.save();
     }
 
     public async delete(id: string): Promise<IUser> {

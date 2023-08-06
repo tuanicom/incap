@@ -10,6 +10,8 @@
     "coverage": true,
     "dist": true,
     "node_modules": true,
-    "tests": true
+    "tests": true,
+	".tests": true,
+	"tests-results": true
   }
 }

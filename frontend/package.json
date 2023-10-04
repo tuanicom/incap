@@ -56,7 +56,7 @@
     "sass": "^1.66.1",
     "snyk": "^1.1205.0",
     "tslib": "^2.6.0",
-    "zone.js": "~0.13.1"
+    "zone.js": "~0.13.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.1.3",

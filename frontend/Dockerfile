@@ -1,5 +1,5 @@
 # Create image based on the official Node 8 image from the dockerhub
-FROM node:alpine3.17 AS builder
+FROM node:lts-alpine3.17 AS builder
 # Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
 # Copy files

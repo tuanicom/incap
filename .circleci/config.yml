@@ -10,7 +10,7 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: cimg/node:lts-browsers
+      - image: cimg/node:18.10-browsers
     environment:
       CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
     # Add steps to the job
@@ -18,12 +18,15 @@ jobs:
     steps:
       - browser-tools/install-chrome
       - browser-tools/install-chromedriver
+      - run: npm install --prefix=$HOME/.local -g @angular/cli@latest coveralls
       - run:
           command: |
             google-chrome --version
             chromedriver --version
+            node --version
+            npm --version 
+            ng version
           name: Check install
-      - run: npm install --prefix=$HOME/.local -g @angular/cli coveralls
       - run: mkdir /home/circleci/project/incap
       - checkout:
           path: /home/circleci/project/incap
@@ -70,13 +73,18 @@ jobs:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
     docker:
-      - image: "cimg/node:lts"
+      - image: "cimg/node:18.10"
     environment:
       CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
     steps:
       - run: npm install --prefix=$HOME/.local -g coveralls
+      - run:
+          command: |
+            node --version
+            npm --version
+          name: Check install
       - run: mkdir /home/circleci/project/incap
       - checkout:
           path: /home/circleci/project/incap
@@ -120,7 +128,7 @@ jobs:
           path: incap/frontend/coverage/lcov-report/index.html
   finalize:
     docker:
-      - image: "cimg/node:lts"
+      - image: "cimg/base:current"
     environment:
       CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
     steps:

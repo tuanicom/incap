@@ -5,16 +5,17 @@ install:
 - ps: Update-NodeJsInstallation 20.9.0
 - node -v
 - npm -v
-- npm install sonar-scanner -g
+- npm install -g sonar-scanner 
 - npm install -g snyk
-- npm install -g @angular/cli
+- npm install -g @angular/cli@latest
+- ng version
 - curl -o codecov.exe https://uploader.codecov.io/latest/windows/codecov.exe 
 # cache: 
 #   - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
 #   - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
 #   - frontend\node_modules -> package.json                               # local npm modules
 build_script:
-- ps: .\rebuild.ps1
+- rebuild.cmd
 after_build:
 - curl -F "file=@backend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"
 - curl -F "file=@frontend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"

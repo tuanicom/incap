@@ -2,6 +2,7 @@ version: 1.0.{build}
 image: Visual Studio 2022
 skip_branch_with_pr: true
 install:
+- ps: Update-NodeJsInstallation 20.9.0
 - node -v
 - npm -v
 - npm install sonar-scanner -g

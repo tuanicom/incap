@@ -127,7 +127,7 @@ jobs:
           path: incap/frontend/coverage/lcov-report/index.html
   finalize:
     docker:
-      - image: "cimg/node:20.9"
+      - image: "cimg/base:current"
     environment:
       CIRCLE_PIPELINE_NUMBER: << pipeline.number >>
     steps:

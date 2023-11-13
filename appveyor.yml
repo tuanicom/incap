@@ -1,10 +1,8 @@
 version: 1.0.{build}
 image: Visual Studio 2022
-environment: 
-  nodejs_version: LTS
 skip_branch_with_pr: true
 install:
-- ps: Install-Product node $env:nodejs_version
+- ps: Update-NodeJsInstallation 20.9.0 x64
 - npm install sonar-scanner -g
 - npm install -g snyk
 - npm install -g @angular/cli

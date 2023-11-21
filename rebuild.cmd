@@ -12,7 +12,7 @@ if /I "%1"=="backend" (
 )
 IF "%build_frontend%"=="true" (
     cd frontend
-    call npm ci --legacy-peer-deps 
+    call npm ci 
     call ng build --configuration production
     call ng test --watch false --browsers ChromeHeadless --code-coverage
     call npx ng lint frontend --format json --output-file eslint.json
@@ -20,7 +20,7 @@ IF "%build_frontend%"=="true" (
 )
 IF "%build_backend%"=="true" (
     cd backend
-    call npm ci --legacy-peer-deps
+    call npm ci 
     call npm run grunt ts
     call npm test
     call npm run grunt eslint -- --format=json --output-file=eslint.json

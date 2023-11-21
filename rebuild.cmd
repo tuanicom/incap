@@ -11,18 +11,24 @@ if /I "%1"=="backend" (
     set "build_backend=true"
 )
 IF "%build_frontend%"=="true" (
-    cd frontend
-    call npm ci --legacy-peer-deps 
-    call ng build --configuration production
-    call ng test --watch false --browsers ChromeHeadless --code-coverage
-    call npx ng lint frontend --format json --output-file eslint.json
-    cd ..
+    pushd frontend
+    call :RunCommand npm ci 
+    call :RunCommand ng build --configuration production 
+    call :RunCommand ng test --watch false --browsers ChromeHeadless --code-coverage 
+    call :RunCommand npx ng lint frontend --format json --output-file eslint.json
+    popd
 )
 IF "%build_backend%"=="true" (
-    cd backend
-    call npm ci --legacy-peer-deps
-    call npm run grunt ts
-    call npm test
-    call npm run grunt eslint -- --format=json --output-file=eslint.json
-    cd ..
+    pushd backend
+    call :RunCommand npm ci 
+    call :RunCommand npm run grunt ts 
+    call :RunCommand npm test 
+    call :RunCommand npm run grunt eslint -- --format=json --output-file=eslint.json     
+    popd
 )
+goto :eof
+
+:RunCommand
+echo -------------> Run command: %* 
+call %*
+IF %errorlevel% NEQ 0 cmd /k

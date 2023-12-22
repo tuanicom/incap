@@ -22,7 +22,7 @@ export class UserProcess implements IUserProcess {
     }
 
     public async delete(id: string): Promise<IUser> {
-        return user.findOneAndDelete({ _id: id }).exec();
+        return user.findOneAndDelete({ _id: id }).exec().then(res => res.value);
     }
 }
 

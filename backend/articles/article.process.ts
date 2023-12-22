@@ -23,7 +23,7 @@ export class ArticleProcess implements IArticleProcess {
     }
 
     public async delete(id: string): Promise<IArticle> {
-        return article.findOneAndDelete({ _id: id }).exec();
+        return article.findOneAndDelete({ _id: id }).exec().then(res => res.value);
     }
 }
 

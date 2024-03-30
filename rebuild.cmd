@@ -29,6 +29,6 @@ IF "%build_backend%"=="true" (
 goto :eof
 
 :RunCommand
-echo -------------> Run command: %* 
+echo ------------- Run command: %* -------------
 call %*
 IF %errorlevel% NEQ 0 cmd /k

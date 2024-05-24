@@ -3,7 +3,7 @@ import { AddComponent } from './add.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
@@ -26,29 +26,26 @@ describe('Articles > AddComponent', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         AddComponent
-      ],
-      imports: [
-        FontAwesomeModule
-        ,
+    ],
+    imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        HttpClientModule,
-        NgbModule,
-      ],
-      providers: [
+        NgbModule],
+    providers: [
         { provide: ArticleService, useValue: articleServiceSpy },
         { provide: Router, useValue: routerSpy },
         {
-          provide: ActivatedRoute, useValue: {
-            parent: {
-              params: Observable.from([{ category: 'test' }])
+            provide: ActivatedRoute, useValue: {
+                parent: {
+                    params: Observable.from([{ category: 'test' }])
+                }
             }
-          }
-        }
-      ],
-    });
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
   }));
 
   beforeEach(() => {

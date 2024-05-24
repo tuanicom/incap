@@ -3,7 +3,7 @@ import { EditComponent } from './edit.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
@@ -27,24 +27,21 @@ describe('Categories > EditComponent', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         EditComponent
-      ],
-      imports: [
-        FontAwesomeModule
-        ,
+    ],
+    imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        HttpClientModule,
         NgbModule,
-        RouterModule.forRoot([], {})
-      ],
-      providers: [
+        RouterModule.forRoot([], {})],
+    providers: [
         { provide: CategoryService, useValue: categoryServiceSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: ActivatedRoute, useValue: { params: Observable.of<Params>({ id: categoryId }) } }
-      ],
-    });
+        { provide: ActivatedRoute, useValue: { params: Observable.of<Params>({ id: categoryId }) } },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
   }));
 
   beforeEach(() => {

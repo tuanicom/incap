@@ -1,5 +1,5 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
@@ -12,19 +12,17 @@ describe('AdminComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        BrowserModule,
-        HttpClientModule,
-        NgbModule,
-        RouterModule.forRoot([], {})
-      ],
-      declarations: [
+    declarations: [
         AdminComponent
-      ],
-      providers: [
-        { provide: APP_BASE_HREF, useValue: '/' }
-      ],
-    }).compileComponents();
+    ],
+    imports: [BrowserModule,
+        NgbModule,
+        RouterModule.forRoot([], {})],
+    providers: [
+        { provide: APP_BASE_HREF, useValue: '/' },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+}).compileComponents();
 
     fixture = TestBed.createComponent(AdminComponent);
     component = fixture.componentInstance;

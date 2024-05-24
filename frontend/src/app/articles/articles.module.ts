@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ArticlesRoutingModule } from './articles-routing.module';
 import { ArticlesComponent } from './articles.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -13,21 +13,14 @@ import { ListComponent } from './components/list/list.component';
 import { ArticleService } from './services/article.service';
 
 
-@NgModule({
-  declarations: [
-    ArticlesComponent,
-    ListComponent,
-    EditComponent,
-    AddComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgbModule,
-    ArticlesRoutingModule,
-    FontAwesomeModule
-  ],
-  providers: [ArticleService]
-})
+@NgModule({ declarations: [
+        ArticlesComponent,
+        ListComponent,
+        EditComponent,
+        AddComponent
+    ], imports: [CommonModule,
+        ReactiveFormsModule,
+        NgbModule,
+        ArticlesRoutingModule,
+        FontAwesomeModule], providers: [ArticleService, provideHttpClient(withInterceptorsFromDi())] })
 export class ArticlesModule { }

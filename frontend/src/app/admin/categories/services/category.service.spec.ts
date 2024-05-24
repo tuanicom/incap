@@ -5,7 +5,7 @@ import { CategoriesComponent } from '../categories.component';
 import { ListComponent } from '../components/list/list.component';
 import { EditComponent } from '../components/edit/edit.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
@@ -28,27 +28,24 @@ describe('CategoryService', () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'put', 'delete']);
 
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         CategoriesComponent,
         ListComponent,
         EditComponent
-      ],
-      imports: [
-        FontAwesomeModule
-        ,
+    ],
+    imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        HttpClientModule,
         NgbModule,
-        RouterModule.forRoot([], {})
-      ],
-      providers: [
+        RouterModule.forRoot([], {})],
+    providers: [
         CategoryService,
         { provide: HttpClient, useValue: httpClientSpy },
         { provide: AppSettingsService, useValue: { settings: { categoriesApiUrl: 'http://localhost:4000/categories' } } },
-        { provide: APP_BASE_HREF, useValue: '/' }
-      ],
-    });
+        { provide: APP_BASE_HREF, useValue: '/' },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
   }));
 
   it('should be created', () => {

@@ -5,7 +5,7 @@ import { ArticlesComponent } from '../articles.component';
 import { ListComponent } from '../components/list/list.component';
 import { EditComponent } from '../components/edit/edit.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
@@ -28,27 +28,24 @@ describe('ArticleService', () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'put', 'delete']);
 
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         ArticlesComponent,
         ListComponent,
         EditComponent
-      ],
-      imports: [
-        FontAwesomeModule
-        ,
+    ],
+    imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        HttpClientModule,
         NgbModule,
-        RouterModule.forRoot([], {})
-      ],
-      providers: [
+        RouterModule.forRoot([], {})],
+    providers: [
         ArticleService,
         { provide: HttpClient, useValue: httpClientSpy },
         { provide: AppSettingsService, useValue: { settings: { articlesApiUrl: 'http://localhost:4000/articles' } } },
-        { provide: APP_BASE_HREF, useValue: '/' }
-      ],
-    });
+        { provide: APP_BASE_HREF, useValue: '/' },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
   }));
 
   it('should be created', () => {

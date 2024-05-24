@@ -1,7 +1,7 @@
 import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListComponent } from './list.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
@@ -30,24 +30,22 @@ describe('Articles > ListComponent', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         ListComponent
-      ],
-      imports: [
-        FontAwesomeModule,
+    ],
+    imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        HttpClientModule,
-        NgbModule,
-      ],
-      providers: [
+        NgbModule],
+    providers: [
         { provide: ArticleService, useValue: articleServiceSpy },
         { provide: Router, useValue: routerSpy },
         {
-          provide: ActivatedRoute, useValue: route
-        }
-      ],
-    });
+            provide: ActivatedRoute, useValue: route
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
   }));
 
   beforeEach(() => {

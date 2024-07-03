@@ -10,7 +10,7 @@ RUN npm ci
 RUN npm run build
 
 # In order to clean from building, we restarted from the original image (multi-stage build)
-FROM nginx:1.26.0-bookworm AS runner
+FROM nginx:stable-bookworm AS runner
 # Upgrade image packages
 # RUN apk update && apk upgrade --no-cache
 # Clean the directory where our app will be placed

@@ -1,5 +1,5 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppSettingsHttpService, AppSettingsService, AppSettings } from './app.settings';
 import { APP_BASE_HREF } from '@angular/common';
 import * as Observable from 'rxjs';
@@ -17,17 +17,15 @@ describe('AppSettings', () => {
     appSettings.usersApiUrl = 'http://localhost:4000/users';
 
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-      ],
-      providers: [
+    imports: [],
+    providers: [
         AppSettingsService,
         AppSettingsHttpService,
         { provide: HttpClient, useValue: httpClientSpy },
         { provide: AppSettingsService, useValue: { settings: appSettings } },
         { provide: APP_BASE_HREF, useValue: '/' }
-      ],
-    });
+    ]
+});
     appSettingsHttpService = TestBed.inject(AppSettingsHttpService);
     appSettingsService = TestBed.inject(AppSettingsService);
   }));

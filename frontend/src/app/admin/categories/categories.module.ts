@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { CategoriesComponent } from './categories.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListComponent } from './components/list/list.component';
@@ -11,22 +11,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CategoriesRoutingModule } from './categories-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
-@NgModule({
-  declarations: [
-    CategoriesComponent,
-    ListComponent,
-    EditComponent,
-    AddComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    NgbModule,
-    CategoriesRoutingModule,
-    FontAwesomeModule
-  ],
-  providers: [CategoryService]
-})
+@NgModule({ declarations: [
+        CategoriesComponent,
+        ListComponent,
+        EditComponent,
+        AddComponent
+    ], imports: [CommonModule,
+        ReactiveFormsModule,
+        NgbModule,
+        CategoriesRoutingModule,
+        FontAwesomeModule], providers: [CategoryService, provideHttpClient(withInterceptorsFromDi())] })
 export class CategoriesModule {
 }

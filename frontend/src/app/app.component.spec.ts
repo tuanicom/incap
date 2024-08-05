@@ -2,26 +2,24 @@ import { TestBed, waitForAsync } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { APP_BASE_HREF } from '@angular/common';
 
 describe('AppComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        BrowserModule,
-        HttpClientModule,
-        NgbModule,
-        RouterModule.forRoot([], {})
-      ],
-      declarations: [
+    declarations: [
         AppComponent
-      ],
-      providers: [
-        { provide: APP_BASE_HREF, useValue: '/' }
-      ],
-    }).compileComponents();
+    ],
+    imports: [BrowserModule,
+        NgbModule,
+        RouterModule.forRoot([], {})],
+    providers: [
+        { provide: APP_BASE_HREF, useValue: '/' },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+}).compileComponents();
   }));
 
   it('should create the app', () => {

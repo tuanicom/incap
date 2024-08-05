@@ -4,7 +4,7 @@ import { UserService } from './user.service';
 import { UsersComponent } from '../users.component';
 import { ListComponent } from '../components/list/list.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
@@ -27,26 +27,22 @@ describe('UserService', () => {
     httpClientSpy = jasmine.createSpyObj('HttpClient', ['get', 'post', 'put', 'delete']);
 
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         UsersComponent,
         ListComponent,
-      ],
-      imports: [
-        FontAwesomeModule
-        ,
+    ],
+    imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        HttpClientModule,
         NgbModule,
-        RouterModule.forRoot([], {})
-      ],
-      providers: [
+        RouterModule.forRoot([], {})],
+    providers: [
         UserService,
         { provide: HttpClient, useValue: httpClientSpy },
         { provide: AppSettingsService, useValue: { settings: { usersApiUrl: 'http://localhost:4000/users' } } },
         { provide: APP_BASE_HREF, useValue: '/' }
-      ],
-    });
+    ]
+});
   }));
 
   it('should be created', () => {

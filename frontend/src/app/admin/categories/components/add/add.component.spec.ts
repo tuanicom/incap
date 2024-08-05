@@ -3,7 +3,7 @@ import { AddComponent } from './add.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
@@ -26,23 +26,20 @@ describe('Categories > AddComponent', () => {
     routerSpy = jasmine.createSpyObj('Router', ['navigate']);
 
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         AddComponent
-      ],
-      imports: [
-        FontAwesomeModule
-,
+    ],
+    imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        HttpClientModule,
-        NgbModule,
-      ],
-      providers: [
+        NgbModule],
+    providers: [
         { provide: CategoryService, useValue: categoryServiceSpy },
         { provide: Router, useValue: routerSpy },
-        { provide: ActivatedRoute, useValue: {} }
-      ],
-    });
+        { provide: ActivatedRoute, useValue: {} },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+});
   }));
 
   beforeEach(() => {

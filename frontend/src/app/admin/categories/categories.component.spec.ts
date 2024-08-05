@@ -3,7 +3,7 @@ import { CategoriesComponent } from './categories.component';
 import { ListComponent } from './components/list/list.component';
 import { EditComponent } from './components/edit/edit.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from './services/category.service';
@@ -14,24 +14,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 describe('CategoriesComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [
+    declarations: [
         CategoriesComponent,
         ListComponent,
         EditComponent
-      ],
-      imports: [
-        FontAwesomeModule,
+    ],
+    imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        HttpClientModule,
         NgbModule,
-        RouterModule.forRoot([], {})
-      ],
-      providers: [
+        RouterModule.forRoot([], {})],
+    providers: [
         CategoryService,
-        { provide: APP_BASE_HREF, useValue: '/' }
-      ],
-    }).compileComponents();
+        { provide: APP_BASE_HREF, useValue: '/' },
+        provideHttpClient(withInterceptorsFromDi())
+    ]
+}).compileComponents();
   }));
 
   it('should create the app', () => {

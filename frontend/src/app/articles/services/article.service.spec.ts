@@ -42,8 +42,7 @@ describe('ArticleService', () => {
         ArticleService,
         { provide: HttpClient, useValue: httpClientSpy },
         { provide: AppSettingsService, useValue: { settings: { articlesApiUrl: 'http://localhost:4000/articles' } } },
-        { provide: APP_BASE_HREF, useValue: '/' },
-        provideHttpClient(withInterceptorsFromDi())
+        { provide: APP_BASE_HREF, useValue: '/' }
     ]
 });
   }));

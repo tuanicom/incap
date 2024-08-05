@@ -40,8 +40,7 @@ describe('UserService', () => {
         UserService,
         { provide: HttpClient, useValue: httpClientSpy },
         { provide: AppSettingsService, useValue: { settings: { usersApiUrl: 'http://localhost:4000/users' } } },
-        { provide: APP_BASE_HREF, useValue: '/' },
-        provideHttpClient(withInterceptorsFromDi())
+        { provide: APP_BASE_HREF, useValue: '/' }
     ]
 });
   }));

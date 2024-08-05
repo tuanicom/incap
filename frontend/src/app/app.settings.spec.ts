@@ -23,8 +23,7 @@ describe('AppSettings', () => {
         AppSettingsHttpService,
         { provide: HttpClient, useValue: httpClientSpy },
         { provide: AppSettingsService, useValue: { settings: appSettings } },
-        { provide: APP_BASE_HREF, useValue: '/' },
-        provideHttpClient(withInterceptorsFromDi())
+        { provide: APP_BASE_HREF, useValue: '/' }
     ]
 });
     appSettingsHttpService = TestBed.inject(AppSettingsHttpService);

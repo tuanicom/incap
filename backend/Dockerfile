@@ -1,5 +1,5 @@
 # Create image based on the official Node 8 image from the dockerhub
-FROM node:lts-alpine3.17 AS builder
+FROM node:alpine AS builder
 # Change directory so that our commands run inside this new directory
 WORKDIR /usr/src/app
 # Copy files
@@ -10,7 +10,7 @@ RUN npm ci
 RUN npm run grunt ts:default
 
 # In order to clean from building, we restarted from the original image (multi-stage build)
-FROM node:lts-alpine3.17 AS runner
+FROM node:alpine AS runner
 # Upgrade image packages
 RUN apk update && apk upgrade --no-cache
 # Change directory so that our commands run inside this new directory

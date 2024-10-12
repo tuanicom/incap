@@ -33,7 +33,7 @@ describe("UserRoutes", () => {
     afterEach(() => rewiremock.disable());
 
     describe(`get ${routePrefix}/`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "getAll", () => Promise.resolve(categories)));
+        beforeEach(() => spy.on(controllerMock, "getAll", () => Promise.resolve(categories)));
 
         it("should get the list from controller and return json", () => {
             request(app)
@@ -46,7 +46,7 @@ describe("UserRoutes", () => {
     });
 
     describe(`get ${routePrefix}/123`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "getById", () => Promise.resolve(categories[0])));
+        beforeEach(() => spy.on(controllerMock, "getById", () => Promise.resolve(categories[0])));
 
         it("should get the item from controller and return json", () => {
             request(app)
@@ -60,7 +60,7 @@ describe("UserRoutes", () => {
 
     describe(`post ${routePrefix}/`, () => {
 
-        beforeEach(() => chai.spy.on(controllerMock, "add", () => Promise.resolve(categories[0])));
+        beforeEach(() => spy.on(controllerMock, "add", () => Promise.resolve(categories[0])));
 
         it("should add the item from controller and return json", () => {
             request(app)
@@ -74,7 +74,7 @@ describe("UserRoutes", () => {
     });
 
     describe(`put ${routePrefix}/`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "update", () => Promise.resolve(categories[0])));
+        beforeEach(() => spy.on(controllerMock, "update", () => Promise.resolve(categories[0])));
 
         it("should update the item from controller and return json", () => {
             request(app)
@@ -88,7 +88,7 @@ describe("UserRoutes", () => {
     });
 
     describe(`delete ${routePrefix}/123`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "delete", () => Promise.resolve(categories[0])));
+        beforeEach(() => spy.on(controllerMock, "delete", () => Promise.resolve(categories[0])));
 
         it("should delete the item from controller and return json", () => {
             request(app)

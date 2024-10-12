@@ -10,7 +10,7 @@ chai.use(spy);
 describe("CategoryController", () => {
     let controller: ICategoryController;
     const processMock = <ICategoryProcess>{};
-    const sandbox = chai.spy.sandbox();
+    const sandbox = spy.sandbox();
 
     // rewiremock
     before(() => {

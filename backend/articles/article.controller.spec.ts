@@ -10,7 +10,7 @@ chai.use(spy);
 describe("ArticleController", () => {
     let controller: IArticleController;
     const processMock = <IArticleProcess>{};
-    const sandbox = chai.spy.sandbox();
+    const sandbox = spy.sandbox();
 
     // rewiremock
     before(() => {

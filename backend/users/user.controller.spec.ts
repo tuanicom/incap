@@ -10,7 +10,7 @@ chai.use(spy);
 describe("UserController", () => {
     let controller: IUserController;
     const processMock = <IUserProcess>{};
-    const sandbox = chai.spy.sandbox();
+    const sandbox = spy.sandbox();
 
     // rewiremock
     before(() => {

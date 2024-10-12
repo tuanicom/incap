@@ -10,7 +10,7 @@ chai.use(spy);
 describe("ArticleProcess", () => {
     let process: IArticleProcess;
     const daoMock = <Model<IArticle>>{};
-    const sandbox = chai.spy.sandbox();
+    const sandbox = spy.sandbox();
 
     // rewiremock
     before(() => {

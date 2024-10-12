@@ -10,7 +10,7 @@ chai.use(spy);
 describe("CategoryProcess", () => {
     let process: ICategoryProcess;
     const daoMock = <Model<ICategory>>{};
-    const sandbox = chai.spy.sandbox();
+    const sandbox = spy.sandbox();
 
     // rewiremock
     before(() => {

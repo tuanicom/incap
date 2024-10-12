@@ -34,7 +34,7 @@ describe("ArticleRoutes", () => {
 
     describe(`get ${routePrefix}/`, () => {
         let getAllSpy: any;
-        before(() => getAllSpy = chai.spy.on(controllerMock, "getAll", () => Promise.resolve(articles)));
+        before(() => getAllSpy = spy.on(controllerMock, "getAll", () => Promise.resolve(articles)));
         describe('with no parameters', () => {
             it("should get the list from controller and return json", () => {
                 request(app)
@@ -58,7 +58,7 @@ describe("ArticleRoutes", () => {
     });
 
     describe(`get ${routePrefix}/123`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "getById", () => Promise.resolve(articles[0])));
+        beforeEach(() => spy.on(controllerMock, "getById", () => Promise.resolve(articles[0])));
 
         it("should get the item from controller and return json", () => {
             request(app)
@@ -72,7 +72,7 @@ describe("ArticleRoutes", () => {
 
     describe(`post ${routePrefix}/`, () => {
 
-        beforeEach(() => chai.spy.on(controllerMock, "add", () => Promise.resolve(articles[0])));
+        beforeEach(() => spy.on(controllerMock, "add", () => Promise.resolve(articles[0])));
 
         it("should add the item from controller and return json", () => {
             request(app)
@@ -86,7 +86,7 @@ describe("ArticleRoutes", () => {
     });
 
     describe(`put ${routePrefix}/`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "update", () => Promise.resolve(articles[0])));
+        beforeEach(() => spy.on(controllerMock, "update", () => Promise.resolve(articles[0])));
 
         it("should update the item from controller and return json", () => {
             request(app)
@@ -100,7 +100,7 @@ describe("ArticleRoutes", () => {
     });
 
     describe(`delete ${routePrefix}/123`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "delete", () => Promise.resolve(articles[0])));
+        beforeEach(() => spy.on(controllerMock, "delete", () => Promise.resolve(articles[0])));
 
         it("should delete the item from controller and return json", () => {
             request(app)

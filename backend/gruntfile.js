@@ -24,7 +24,7 @@ module.exports = function (grunt) {
             options: {
                 format: grunt.option('format') || 'stylish',
                 outputFile: grunt.option('output-file') || '',
-                overrideConfigFile: '.eslintrc.json'
+                overrideConfigFile: 'eslint.config.mjs'
             }
         },
         watch: {

@@ -1,38 +1,30 @@
-import user, { IUser } from "./user.model";
+import userModel, { User } from "./user.model";
 import UserProcess from "./user.process";
 
-export interface IUserController {
-    getAll(): Promise<IUser[]>;
-    getById(id: string): Promise<IUser>;
-    add(input: any): Promise<IUser>;
-    update(input: any): Promise<IUser>;
-    delete(id: string): Promise<IUser>;
-}
+export class UserController {
 
-export class UserController implements IUserController {
-
-    public async getAll(): Promise<IUser[]> {
+    public async getAll(): Promise<User[]> {
         return UserProcess.getAll();
     }
 
-    public async getById(id: string): Promise<IUser> {
+    public async getById(id: string): Promise<User> {
         return UserProcess.getById(id);
     }
 
-    public async add(input: any): Promise<IUser> {
-        const newUser = new user(input);
+    public async add(input: any): Promise<User> {
+        const newUser = new userModel(input);
         return UserProcess.save(newUser);
     }
 
-    public async update(input: any): Promise<IUser> {
+    public async update(input: any): Promise<User> {
         const userToUpdate = await UserProcess.getById(input._id);
-        userToUpdate.name = input.title;
+        userToUpdate.name = input.name;
         return UserProcess.save(userToUpdate);
     }
 
-    public async delete(id: string): Promise<IUser> {
+    public async delete(id: string): Promise<User> {
         return UserProcess.delete(id);
     }
 }
 
-export default new UserController() as IUserController;
+export default new UserController();

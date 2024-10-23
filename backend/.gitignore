@@ -6,9 +6,10 @@
 *.js
 *.js.map
 !gruntfile.js
-
+dist
 .sonarlint
 .nyc_output
 coverage
 eslint.json
-/tests-results/tests-results.xml
+tests
+tests-results

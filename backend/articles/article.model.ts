@@ -1,6 +1,6 @@
 import { Schema, Document, model } from 'mongoose';
 
-export interface IArticle extends Document {
+export interface Article extends Document {
     title: string;
     content: string;
     category: string;
@@ -21,5 +21,5 @@ export const articleSchema = new Schema({
         type: String
     }
 });
-const article = model<IArticle>('Article', articleSchema);
-export default article;
+const articleModel = model<Article>('Article', articleSchema);
+export default articleModel;

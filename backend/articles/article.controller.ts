@@ -1,39 +1,31 @@
-import article, { IArticle } from "./article.model";
+import articleModel, { Article } from "./article.model";
 import ArticleProcess from "./article.process";
 
-export interface IArticleController {
-    getAll(category?: string): Promise<IArticle[]>;
-    getById(id: string): Promise<IArticle>;
-    add(input: any): Promise<IArticle>;
-    update(input: any): Promise<IArticle>;
-    delete(id: string): Promise<IArticle>;
-}
+export class ArticleController {
 
-export class ArticleController implements IArticleController {
-
-    public async getAll(category?: string): Promise<IArticle[]> {
+    public async getAll(category?: string): Promise<Article[]> {
         return ArticleProcess.getAll(category);
     }
 
-    public async getById(id: string): Promise<IArticle> {
+    public async getById(id: string): Promise<Article> {
         return ArticleProcess.getById(id);
     }
 
-    public async add(input: any): Promise<IArticle> {
-        const newArticle = new article(input);
+    public async add(input: any): Promise<Article> {
+        const newArticle = new articleModel(input);
         return ArticleProcess.save(newArticle);
     }
 
-    public async update(input: any): Promise<IArticle> {
+    public async update(input: any): Promise<Article> {
         const articleToUpdate = await ArticleProcess.getById(input._id);
         articleToUpdate.title = input.title;
         articleToUpdate.content = input.content;
         return ArticleProcess.save(articleToUpdate);
     }
 
-    public async delete(id: string): Promise<IArticle> {
+    public async delete(id: string): Promise<Article> {
         return ArticleProcess.delete(id);
     }
 }
 
-export default new ArticleController() as IArticleController;
+export default new ArticleController();

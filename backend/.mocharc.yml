@@ -4,6 +4,8 @@ require:
 full-trace: true
 bail: true
 timeout: 10000
+extension:
+  - 'ts'
 spec:
   - 'articles/*.spec.ts'
   - 'categories/*.spec.ts'

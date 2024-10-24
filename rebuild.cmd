@@ -1,5 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
+set "build_frontend=false"
+set "build_backend=false"
+
 if /I "%1"=="" (
     set "build_frontend=true"
     set "build_backend=true"
@@ -10,6 +13,7 @@ if /I "%1"=="frontend" (
 if /I "%1"=="backend" (
     set "build_backend=true"
 )
+
 IF "%build_frontend%"=="true" (
     pushd frontend
     call :RunCommand npm ci 

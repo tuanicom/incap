@@ -1,30 +1,23 @@
-import article, { IArticle } from "./article.model";
+import articleModel, { Article } from "./article.model";
 
-export interface IArticleProcess {
-    getAll(category?: string): Promise<IArticle[]>;
-    getById(id: string): Promise<IArticle>;
-    save(newCategory: IArticle): Promise<IArticle>;
-    delete(id: string): Promise<IArticle>;
-}
+export class ArticleProcess {
 
-export class ArticleProcess implements IArticleProcess {
-
-    public async getAll(category?: string): Promise<IArticle[]> {
+    public async getAll(category?: string): Promise<Article[]> {
         const criteria = category !== undefined ? {category: category} : {};
-        return article.find(criteria).exec();
+        return articleModel.find(criteria).exec();
     }
 
-    public async getById(id: string): Promise<IArticle> {
-        return article.findById(id).exec();
+    public async getById(id: string): Promise<Article> {
+        return articleModel.findById(id).exec().then(res => res as Article);
     }
 
-    public async save(newCategory: IArticle): Promise<IArticle> {
-        return newCategory.save();
+    public async save(newArticle: Article): Promise<Article> {
+        return newArticle.save();
     }
 
-    public async delete(id: string): Promise<IArticle> {
-        return article.findOneAndDelete({ _id: id }).exec().then(res => res);
+    public async delete(id: string): Promise<Article> {
+        return articleModel.findOneAndDelete({ _id: id }).exec().then(res => res as Article);
     }
 }
 
-export default new ArticleProcess() as IArticleProcess;
+export default new ArticleProcess();

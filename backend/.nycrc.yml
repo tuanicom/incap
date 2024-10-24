@@ -1,18 +1,19 @@
-extension: 
+extension:
   - ".ts"
 extends: "@istanbuljs/nyc-config-typescript"
 all: true
-include: 
+include:
  - "**/*.ts"
-exclude: 
+exclude:
  - "server.ts"
  - "**/*.d.ts"
  - "**/*.spec.ts"
-require: 
+require:
  - "ts-node/register"
-reporter: 
+reporter:
  - "lcov"
  - "text"
  - "html"
+check-coverage: true
 sourceMap: true
 instrument: true

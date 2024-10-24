@@ -1,114 +1,126 @@
 import * as chai from 'chai';
-import * as spy from 'chai-spies';
+import * as sinon from 'sinon';
 import * as request from 'supertest';
 import rewiremock from 'rewiremock';
 import * as express from 'express';
-import { IArticleController } from './article.controller';
-import { IArticle } from './article.model';
-
-chai.use(spy);
+import ArticleController from './article.controller';
 
 describe("ArticleRoutes", () => {
-    const app = express();
-    const controllerMock = <IArticleController>{};
-    const routePrefix = "/categories";
+  const route = "/articles";
+  const id = "123";
+  const app = express();
+  let controllerMock: sinon.SinonMock = sinon.mock(ArticleController);
 
-    const articles = [
-        <IArticle>{_id: "123", title: "article1"},
-        <IArticle>{_id: "456", title: "article2"}
-    ];
-    // rewiremock
-    before(() => {
-        rewiremock.around(
-            () => import('./article.routes'),
-            mock => {
-                mock(() => import('./article.controller'))
-                    .withDefault(controllerMock);
-            }
-        ).then((value: any) => {
-            app.use(routePrefix, value.default);
-        });
+  const articles = [
+    { _id: "123", title: "article1" },
+    { _id: "456", title: "article2" }
+  ];
+
+  // rewiremock
+  before(() => {
+    rewiremock.around(
+      () => import('./article.routes'),
+      mock => {
+        mock(() => import('./article.controller')).withDefault(ArticleController);
+      }
+    ).then((value: any) => {
+      app.use(route, value.default);
     });
-    beforeEach(() => rewiremock.enable());
-    afterEach(() => rewiremock.disable());
+  });
 
-    describe(`get ${routePrefix}/`, () => {
-        let getAllSpy: any;
-        before(() => getAllSpy = chai.spy.on(controllerMock, "getAll", () => Promise.resolve(articles)));
-        describe('with no parameters', () => {
-            it("should get the list from controller and return json", () => {
-                request(app)
-                    .get(routePrefix + "/")
-                    .expect('Content-Type', /json/)
-                    .expect(200, function (err, res) {
-                        chai.expect(res.body).to.deep.equal(articles);
-                    });
-            });
-        });
-        describe('with category parameters', () => {
-            it("should get the list from controller and return json", () => {
-                request(app)
-                    .get(routePrefix + "/?category=test")
-                    .expect('Content-Type', /json/)
-                    .expect(200, function (err, res) {
-                        chai.expect(res.body).to.deep.equal(articles);
-                    });
-            });
-        });
+  beforeEach(() => rewiremock.enable());
+  afterEach(() => rewiremock.disable());
+
+  beforeEach(() => controllerMock = sinon.mock(ArticleController));
+  afterEach(() => controllerMock.restore());
+
+  describe(`get ${route}/`, () => {
+
+    before(() => controllerMock.expects("getAll").twice().resolves(articles));
+    after(() => controllerMock.verify());
+
+    describe('with no parameters', () => {
+      it("should get the list from controller and return json", () => {
+        request(app)
+          .get(`${route}/`)
+          .expect('Content-Type', /json/)
+          .expect(200, function (err, res) {
+            chai.expect(res.body).to.deep.equal(articles);
+          });
+      });
     });
 
-    describe(`get ${routePrefix}/123`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "getById", () => Promise.resolve(articles[0])));
+    describe('with category parameters', () => {
+      it("should get the list from controller and return json", () => {
+        request(app)
+          .get(`${route}/?category=test`)
+          .expect('Content-Type', /json/)
+          .expect(200, function (err, res) {
+            chai.expect(res.body).to.deep.equal(articles);
+          });
+      });
+    });
+  });
 
-        it("should get the item from controller and return json", () => {
-            request(app)
-                .get(routePrefix + "/123")
-                .expect('Content-Type', /json/)
-                .expect(200, function (err, res) {
-                    chai.expect(res.body).to.deep.equal(articles[0]);
-                });
+  describe(`get ${route}/${id}`, () => {
+
+    before(() => controllerMock.expects("getById").once().withArgs(id).resolves(articles[0]));
+    after(() => controllerMock.verify());
+
+    it("should get the item from controller and return json", () => {
+      request(app)
+        .get(`${route}/${id}`)
+        .expect('Content-Type', /json/)
+        .expect(200, function (err, res) {
+          chai.expect(res.body).to.deep.equal(articles[0]);
         });
     });
+  });
 
-    describe(`post ${routePrefix}/`, () => {
+  describe(`post ${route}`, () => {
 
-        beforeEach(() => chai.spy.on(controllerMock, "add", () => Promise.resolve(articles[0])));
+    before(() => controllerMock.expects("add").once().resolves(articles[0]));
+    after(() => controllerMock.verify());
 
-        it("should add the item from controller and return json", () => {
-            request(app)
-                .post(routePrefix + "/")
-                .send(articles[0])
-                .expect('Content-Type', /json/)
-                .expect(200, function (err, res) {
-                    chai.expect(res.body).to.deep.equal(articles[0]);
-                });
+    it("should add the item from controller and return json", () => {
+      request(app)
+        .post(`${route}/`)
+        .send(articles[0])
+        .expect('Content-Type', /json/)
+        .expect(200, function (err, res) {
+          chai.expect(res.body).to.deep.equal(articles[0]);
         });
     });
+  });
 
-    describe(`put ${routePrefix}/`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "update", () => Promise.resolve(articles[0])));
+  describe(`put ${route}/`, () => {
 
-        it("should update the item from controller and return json", () => {
-            request(app)
-                .put(routePrefix + "/")
-                .send(articles[0])
-                .expect('Content-Type', /json/)
-                .expect(200, function (err, res) {
-                    chai.expect(res.body).to.deep.equal(articles[0]);
-                });
+    before(() => controllerMock.expects("update").once().resolves(articles[0]));
+    after(() => controllerMock.verify());
+
+    it("should update the item from controller and return json", () => {
+      request(app)
+        .put(`${route}/`)
+        .send(articles[0])
+        .expect('Content-Type', /json/)
+        .expect(200, function (err, res) {
+          chai.expect(res.body).to.deep.equal(articles[0]);
         });
     });
+  });
 
-    describe(`delete ${routePrefix}/123`, () => {
-        beforeEach(() => chai.spy.on(controllerMock, "delete", () => Promise.resolve(articles[0])));
+  describe(`delete ${route}/${id}`, () => {
 
-        it("should delete the item from controller and return json", () => {
-            request(app)
-                .delete(routePrefix + "/123")
-                .expect('Content-Type', /json/)
-                .expect(200, function (err, res) {
-                    chai.expect(res.body).to.deep.equal(articles[0]);
-                });
+    before(() => controllerMock.expects("delete").once().withArgs(id).resolves(articles[0]));
+    after(() => controllerMock.verify());
+
+    it("should delete the item from controller and return json", () => {
+      request(app)
+        .delete(`${route}/${id}`)
+        .expect('Content-Type', /json/)
+        .expect(200, function (err, res) {
+          chai.expect(res.body).to.deep.equal(articles[0]);
         });
     });
+  });
 });

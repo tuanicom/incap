@@ -1,96 +1,100 @@
 import * as chai from 'chai';
-import * as spy from 'chai-spies';
+import * as sinon from 'sinon';
 import rewiremock from 'rewiremock';
-import { ICategoryProcess } from './category.process';
-import { ICategory } from './category.model';
-import { Model } from 'mongoose';
-
-chai.use(spy);
+import { CategoryProcess } from './category.process';
+import categoryModel, { Category } from './category.model';
 
 describe("CategoryProcess", () => {
-    let process: ICategoryProcess;
-    const daoMock = <Model<ICategory>>{};
-    const sandbox = chai.spy.sandbox();
+  let process: CategoryProcess;
+  let modelMock: sinon.SinonMock;
 
-    // rewiremock
-    before(() => {
-        rewiremock.around(
-            () => import('./category.process'),
-            mock => {
-            mock(() => import('./category.model'))
-              .withDefault(daoMock);
-            }
-          ).then((value: any) => {
-                process = value.default;
-          });
+  // rewiremock
+  before(() => {
+    rewiremock.around(
+      () => import('./category.process'),
+      mock => {
+        mock(() => import('./category.model'))
+          .withDefault(categoryModel);
+      }
+    ).then((value: any) => {
+      process = value.default;
     });
-    beforeEach(() => rewiremock.enable());
-    afterEach(() => rewiremock.disable());
+  });
+  beforeEach(() => rewiremock.enable());
+  afterEach(() => rewiremock.disable());
 
-    describe("getAll()", () => {
-        let findSpy;
-        const query = {};
+  beforeEach(() => modelMock = sinon.mock(categoryModel));
+  afterEach(() => modelMock.restore());
 
-        beforeEach(() => {
-            findSpy = sandbox.on(daoMock, "find", () => query);
-            sandbox.on(query, "exec");
-        });
-        afterEach(() => sandbox.restore());
+  describe("getAll()", () => {
+    let findSpy: sinon.SinonExpectation;
+    let execSpy: sinon.SinonSpy;
+    const query = { exec: () => { } };
 
-        it("should call the find() method of the model", () => {
-            process.getAll().then(() => chai.expect(findSpy).to.have.been.called());
-        });
+    beforeEach(() => {
+      findSpy = modelMock.expects("find").once()
+      const stub = findSpy.returns(query);
+      execSpy = sinon.spy(query, "exec");
     });
 
-    describe("getById(\"123\")", () => {
-        let findByIdSpy;
-        const id = "123";
-        const query = {};
+    it("should call the find() method of the model", () => {
+      process.getAll().then(() => {
+        findSpy.verify();
+        chai.expect(execSpy.calledOnce).to.be.true;
+      });
+    });
+  });
 
-        beforeEach(() => {
-            findByIdSpy = sandbox.on(daoMock, "findById", () => query);
-            sandbox.on(query, "exec");
-        });
-        afterEach(() => sandbox.restore());
+  describe("getById(\"123\")", () => {
+    let findByIdSpy: sinon.SinonExpectation;
+    let execSpy: sinon.SinonSpy;
+    const query = { exec: () => { } };
+    const id = "123";
 
-        it("should get the item with id \"123\" from model using findById ", () => {
-            process.getById(id).then(() => {
-                chai.expect(findByIdSpy).to.have.been.called();
-                chai.expect(findByIdSpy).to.have.been.called.with(id);
-            });
-        });
+    beforeEach(() => {
+      findByIdSpy = modelMock.expects("findById").once().withArgs(id);
+      findByIdSpy.returns(query);
+      sinon.spy(query, "exec");
     });
 
-    describe("save()", () => {
-        let saveSpy;
-        const input = <ICategory>{_id: "123", title: "test", description: "test"};
+    it("should get the item with id \"123\" from model using findById ", () => {
+      process.getById(id).then(() => {
+        findByIdSpy.verify();
+        chai.expect(execSpy.calledOnce).to.be.true;
+      });
+    });
+  });
 
-        beforeEach(() => saveSpy = sandbox.on(input, "save"));
-        afterEach(() => sandbox.restore());
+  describe("save()", () => {
+    let saveSpy: sinon.SinonSpy;
+    const input = <Category>{ _id: "123", title: "test", description: "test", save: () => { } };
 
-        it("should call the save function of the model", () => {
-            process.save(input).then(() => {
-                chai.expect(saveSpy).to.have.been.called();
-            });
-        });
+    beforeEach(() => saveSpy = sinon.spy(input, "save"));
+
+    it("should call the save function of the model", () => {
+      process.save(input).then(() => {
+        chai.expect(saveSpy.calledOnce).to.be.true;
+      });
+    });
+  });
+
+  describe("delete(\"123\")", () => {
+    let findOneAndDeleteSpy: sinon.SinonExpectation;
+    let execSpy: sinon.SinonSpy;
+    const query = { exec: () => { } };
+    const id = "123";
+
+    beforeEach(() => {
+      findOneAndDeleteSpy = modelMock.expects("findOneAndDelete").once().withArgs({ _id: id });
+      findOneAndDeleteSpy.returns(query);
+      execSpy = sinon.spy(query, "exec");
     });
 
-    describe("delete(\"123\")", () => {
-        let findOneAndDeleteSpy;
-        const id = "123";
-        const query = {};
-
-        beforeEach(() => {
-            findOneAndDeleteSpy = sandbox.on(daoMock, "findOneAndDelete", () => query);
-            sandbox.on(query, "exec");
-        });
-        afterEach(() => sandbox.restore());
-
-        it("should delete the item with id \"123\" in model using findOneAndDelete", () => {
-            process.delete(id).then(() => {
-                chai.expect(findOneAndDeleteSpy).to.have.been.called();
-                chai.expect(findOneAndDeleteSpy).to.have.been.called.with({_id: id});
-            });
-        });
+    it(`should delete the item with id "${id}" in model using findOneAndDelete`, () => {
+      process.delete(id).then(() => {
+        findOneAndDeleteSpy.verify();
+        chai.expect(execSpy.calledOnce).to.be.true;
+      });
     });
+  });
 });

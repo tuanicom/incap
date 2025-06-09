@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/tuanicom/incap#readme",
   "dependencies": {
-    "@snyk/protect": "^1.1296.2",
+    "@snyk/protect": "^1.1297.1",
     "body-parser": "^1.20.3",
     "cors": "^2.8.5",
     "express": "^4.21.2",

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, inject, provideAppInitializer } from '@angular/core';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -20,7 +20,10 @@ export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => 
         RouterModule,
         NgbModule,
         FontAwesomeModule], providers: [
-        { provide: APP_INITIALIZER, useFactory: app_Init, deps: [AppSettingsHttpService], multi: true },
+        provideAppInitializer(() => {
+        const initializerFn = (app_Init)(inject(AppSettingsHttpService));
+        return initializerFn();
+      }),
         provideHttpClient(withInterceptorsFromDi())
     ] })
 export class AppModule {

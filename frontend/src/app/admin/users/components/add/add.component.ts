@@ -5,9 +5,10 @@ import { User } from '../../models/user';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-users-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+    selector: 'app-users-add',
+    templateUrl: './add.component.html',
+    styleUrls: ['./add.component.scss'],
+    standalone: false
 })
 export class AddComponent {
 

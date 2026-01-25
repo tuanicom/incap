@@ -6,9 +6,10 @@ import { Observable } from 'rxjs';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
 @Component({
-  selector: 'app-articles-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+    selector: 'app-articles-edit',
+    templateUrl: './edit.component.html',
+    styleUrls: ['./edit.component.scss'],
+    standalone: false
 })
 export class EditComponent implements OnInit {
   public article$: Observable<Article>;

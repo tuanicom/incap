@@ -5,9 +5,10 @@ import { Article } from '../../models/article';
 import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-articles-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+    selector: 'app-articles-add',
+    templateUrl: './add.component.html',
+    styleUrls: ['./add.component.scss'],
+    standalone: false
 })
 export class AddComponent implements OnInit {
 

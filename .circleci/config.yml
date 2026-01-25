@@ -19,8 +19,10 @@ jobs:
       - run:
           name: apt update for installing chrome
           command:  sudo apt-get update
-      - browser-tools/install-chrome
-      - browser-tools/install-chromedriver
+      - browser-tools/install_chrome:
+          timeout: 5m
+      - browser-tools/install_chromedriver:
+          timeout: 5m
       - run:
           command: |
             node -v

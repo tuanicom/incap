@@ -20,7 +20,7 @@ export class ArticleRoutes {
             res.json(articles);
         }));
         this.router.route('/:id').get(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const article = await ArticleController.getById(req.params.id);
+            const article = await ArticleController.getById(req.params.id as string);
             res.json(article);
         }));
 
@@ -35,7 +35,7 @@ export class ArticleRoutes {
         }));
 
         this.router.route('/:id').delete(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const article = await ArticleController.delete(req.params.id);
+            const article = await ArticleController.delete(req.params.id as string);
             res.json(article);
         }));
     }

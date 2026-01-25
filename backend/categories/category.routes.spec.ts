@@ -15,15 +15,14 @@ describe("CategoryRoutes", () => {
     { _id: "456", title: "cat2", description: "desc cat 2" }
   ];
   // rewiremock
-  before(() => {
-    rewiremock.around(
+  before(async () => {
+    const value: any = await rewiremock.around(
       () => import('./category.routes'),
       mock => {
         mock(() => import('./category.controller')).withDefault(CategoryController);
       }
-    ).then((value: any) => {
-      app.use(routePrefix, value.default);
-    });
+    );
+    app.use(routePrefix, value.default);
   });
   beforeEach(() => rewiremock.enable());
   afterEach(() => rewiremock.disable());

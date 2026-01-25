@@ -9,15 +9,14 @@ describe("UserController", () => {
   let processMock: sinon.SinonMock;
 
   // rewiremock
-  before(() => {
-    rewiremock.around(
+  before(async () => {
+    const value: any = await rewiremock.around(
       () => import('./user.controller'),
       mock => {
         mock(() => import('./user.process')).withDefault(UserProcess);
       }
-    ).then((value: any) => {
-      controller = value.default;
-    });
+    );
+    controller = value.default;
   });
 
   beforeEach(() => rewiremock.enable());

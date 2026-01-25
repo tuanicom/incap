@@ -17,15 +17,14 @@ describe("ArticleRoutes", () => {
   ];
 
   // rewiremock
-  before(() => {
-    rewiremock.around(
+  before(async () => {
+    const value: any = await rewiremock.around(
       () => import('./article.routes'),
       mock => {
         mock(() => import('./article.controller')).withDefault(ArticleController);
       }
-    ).then((value: any) => {
-      app.use(route, value.default);
-    });
+    );
+    app.use(route, value.default);
   });
 
   beforeEach(() => rewiremock.enable());

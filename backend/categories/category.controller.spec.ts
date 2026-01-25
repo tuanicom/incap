@@ -9,15 +9,14 @@ describe("CategoryController", () => {
   let processMock: sinon.SinonMock;
 
   // rewiremock
-  before(() => {
-    rewiremock.around(
+  before(async () => {
+    const value: any = await rewiremock.around(
       () => import('./category.controller'),
       mock => {
         mock(() => import('./category.process')).withDefault(CategoryProcess);
       }
-    ).then((value: any) => {
-      controller = value.default;
-    });
+    );
+    controller = value.default;
   });
 
   beforeEach(() => rewiremock.enable());

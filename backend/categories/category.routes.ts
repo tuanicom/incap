@@ -20,7 +20,7 @@ export class CategoryRoutes {
             res.json(categories);
         }));
         this.router.route('/:id').get(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const category = await CategoryController.getById(req.params.id);
+            const category = await CategoryController.getById(req.params.id as string);
             res.json(category);
         }));
 
@@ -35,7 +35,7 @@ export class CategoryRoutes {
         }));
 
         this.router.route('/:id').delete(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const category = await CategoryController.delete(req.params.id);
+            const category = await CategoryController.delete(req.params.id as string);
             res.json(category);
         }));
     }

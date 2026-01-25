@@ -8,12 +8,12 @@ import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
-    AdminComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    AdminComponent
   ]
 })
 export class AdminModule { }

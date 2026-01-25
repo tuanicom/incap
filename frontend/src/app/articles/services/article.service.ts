@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Article } from '../models/article';
 import { Observable } from 'rxjs';
@@ -8,11 +8,12 @@ import { AppSettingsService } from 'src/app/app.settings';
   providedIn: 'root'
 })
 export class ArticleService {
+  private http = inject(HttpClient);
+  private appSettings = inject(AppSettingsService);
+
   private get apiUrl(): string {
     return this.appSettings.settings.articlesApiUrl;
   }
-
-  constructor(private http: HttpClient, private appSettings: AppSettingsService) { }
 
   public getArticles(category: string): Observable<Article[]> {
     let queryParams = new HttpParams();

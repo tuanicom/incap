@@ -13,11 +13,11 @@ describe('AdminComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
     declarations: [
-        AdminComponent
     ],
     imports: [BrowserModule,
         NgbModule,
-        RouterModule.forRoot([], {})],
+        RouterModule.forRoot([], {}),
+        AdminComponent],
     providers: [
         { provide: APP_BASE_HREF, useValue: '/' },
         provideHttpClient(withInterceptorsFromDi())

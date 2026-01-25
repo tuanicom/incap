@@ -29,15 +29,15 @@ describe('ArticleService', () => {
 
     TestBed.configureTestingModule({
     declarations: [
-        ArticlesComponent,
-        ListComponent,
-        EditComponent
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
         NgbModule,
-        RouterModule.forRoot([], {})],
+        RouterModule.forRoot([], {}),
+        ArticlesComponent,
+        ListComponent,
+        EditComponent],
     providers: [
         ArticleService,
         { provide: HttpClient, useValue: httpClientSpy },

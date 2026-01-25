@@ -19,15 +19,15 @@ describe('UsersComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
     declarations: [
-        UsersComponent,
-        ListComponent,
-        AddComponent
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
         NgbModule,
-        RouterModule.forRoot([], {})],
+        RouterModule.forRoot([], {}),
+        UsersComponent,
+        ListComponent,
+        AddComponent],
     providers: [
         UserService,
         { provide: APP_BASE_HREF, useValue: '/' },

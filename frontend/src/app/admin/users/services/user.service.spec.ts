@@ -28,14 +28,14 @@ describe('UserService', () => {
 
     TestBed.configureTestingModule({
     declarations: [
-        UsersComponent,
-        ListComponent,
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
         NgbModule,
-        RouterModule.forRoot([], {})],
+        RouterModule.forRoot([], {}),
+        UsersComponent,
+        ListComponent],
     providers: [
         UserService,
         { provide: HttpClient, useValue: httpClientSpy },

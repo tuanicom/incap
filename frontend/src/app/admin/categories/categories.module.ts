@@ -12,14 +12,14 @@ import { CategoriesRoutingModule } from './categories-routing.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({ declarations: [
-        CategoriesComponent,
-        ListComponent,
-        EditComponent,
-        AddComponent
     ], imports: [CommonModule,
         ReactiveFormsModule,
         NgbModule,
         CategoriesRoutingModule,
-        FontAwesomeModule], providers: [CategoryService, provideHttpClient(withInterceptorsFromDi())] })
+        FontAwesomeModule,
+        CategoriesComponent,
+        ListComponent,
+        EditComponent,
+        AddComponent], providers: [CategoryService, provideHttpClient(withInterceptorsFromDi())] })
 export class CategoriesModule {
 }

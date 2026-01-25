@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../models/category';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-categories-add',
     templateUrl: './add.component.html',
     styleUrls: ['./add.component.scss'],
-    standalone: false
+    imports: [ReactiveFormsModule]
 })
 export class AddComponent {
-
-  constructor(private categoryService: CategoryService, private router: Router, private route: ActivatedRoute) { }
+  private categoryService = inject(CategoryService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   addCategoryForm = new FormGroup({
     title: new FormControl(''),

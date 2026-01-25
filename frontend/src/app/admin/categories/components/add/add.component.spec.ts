@@ -27,12 +27,12 @@ describe('Categories > AddComponent', () => {
 
     TestBed.configureTestingModule({
     declarations: [
-        AddComponent
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        NgbModule],
+        NgbModule,
+        AddComponent],
     providers: [
         { provide: CategoryService, useValue: categoryServiceSpy },
         { provide: Router, useValue: routerSpy },

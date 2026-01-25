@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
     selector: 'app-users-add',
     templateUrl: './add.component.html',
     styleUrls: ['./add.component.scss'],
-    standalone: false
+    imports: [ReactiveFormsModule]
 })
 export class AddComponent {
-
-  constructor(private userService: UserService, private router: Router, private route: ActivatedRoute) { }
+  private userService = inject(UserService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   addUserForm = new FormGroup({
     name: new FormControl(''),

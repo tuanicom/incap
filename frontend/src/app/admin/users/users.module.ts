@@ -14,13 +14,13 @@ import { RouterModule } from '@angular/router';
 
 
 @NgModule({ declarations: [
-        UsersComponent,
-        ListComponent,
-        AddComponent
     ], imports: [CommonModule,
         ReactiveFormsModule,
         NgbModule,
         RouterModule,
         UsersRoutingModule,
-        FontAwesomeModule], providers: [UserService, provideHttpClient(withInterceptorsFromDi())] })
+        FontAwesomeModule,
+        UsersComponent,
+        ListComponent,
+        AddComponent], providers: [UserService, provideHttpClient(withInterceptorsFromDi())] })
 export class UsersModule { }

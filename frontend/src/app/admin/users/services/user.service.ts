@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user';
 import { Observable } from 'rxjs';
@@ -8,11 +8,12 @@ import { AppSettingsService } from 'src/app/app.settings';
   providedIn: 'root'
 })
 export class UserService {
+  private http = inject(HttpClient);
+  private appSettings = inject(AppSettingsService);
+
   private get apiUrl(): string {
     return this.appSettings.settings.usersApiUrl;
   }
-
-  constructor(private http: HttpClient, private appSettings: AppSettingsService) { }
 
   public getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.apiUrl);

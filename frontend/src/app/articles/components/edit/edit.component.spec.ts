@@ -28,13 +28,13 @@ describe('Articles > EditComponent', () => {
 
     TestBed.configureTestingModule({
     declarations: [
-        EditComponent
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
         NgbModule,
-        RouterModule.forRoot([], {})],
+        RouterModule.forRoot([], {}),
+        EditComponent],
     providers: [
         { provide: ArticleService, useValue: articleServiceSpy },
         { provide: Router, useValue: routerSpy },

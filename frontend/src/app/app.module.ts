@@ -13,13 +13,13 @@ export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => 
 }
 
 @NgModule({ declarations: [
-        AppComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         RouterModule,
         NgbModule,
-        FontAwesomeModule], providers: [
+        FontAwesomeModule,
+        AppComponent], providers: [
         provideAppInitializer(() => {
         const initializerFn = (app_Init)(inject(AppSettingsHttpService));
         return initializerFn();

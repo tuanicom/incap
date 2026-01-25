@@ -8,20 +8,22 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let category of categories$ | async">
-      <td>{{category.title}}</td>
-      <td>{{category.description}}</td>
-      <td>
-        <div class="btn-group d-md-flex justify-content-md-end">
-          <button class="btn btn-light flex-shrink-1" (click)="editCategory(category._id)">
-            <fa-icon [icon]="icons['edit']"></fa-icon>
-          </button>
-          <button class="btn btn-light flex-shrink-1" (click)="deleteCategory(category._id)">
-            <fa-icon [icon]="icons['trash']"></fa-icon>
-          </button>
-        </div>
-      </td>
-    </tr>
+    @for (category of categories$ | async; track category) {
+      <tr>
+        <td>{{category.title}}</td>
+        <td>{{category.description}}</td>
+        <td>
+          <div class="btn-group d-md-flex justify-content-md-end">
+            <button class="btn btn-light flex-shrink-1" (click)="editCategory(category._id)">
+              <fa-icon [icon]="icons['edit']"></fa-icon>
+            </button>
+            <button class="btn btn-light flex-shrink-1" (click)="deleteCategory(category._id)">
+              <fa-icon [icon]="icons['trash']"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    }
   </tbody>
   <tfoot>
     <tr>

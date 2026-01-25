@@ -10,7 +10,7 @@ RUN npm ci
 RUN npm run build
 
 # In order to clean from building, we restarted from the original image (multi-stage build)
-FROM nginx:alpine AS runner
+FROM nginx:1.29.4-alpine3.23-slim AS runner
 # Upgrade image packages
 # RUN apk update && apk upgrade --no-cache
 # Clean the directory where our app will be placed

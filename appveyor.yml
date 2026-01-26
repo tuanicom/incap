@@ -5,12 +5,14 @@ install:
 - ps: Update-NodeJsInstallation 24.13.0 x64
 - npm install sonar-scanner -g
 - npm install -g snyk
-- npm install -g @angular/cli
+- npm install -g @angular/cli@latest
 - curl -o codecov.exe https://uploader.codecov.io/latest/windows/codecov.exe 
 cache: 
   - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
   - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
   - frontend\node_modules -> package.json                               # local npm modules
+before_build:
+  - ng version
 build_script:
 - ps: .\rebuild.ps1
 after_build:

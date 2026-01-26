@@ -10,7 +10,7 @@ jobs:
   docker-build-frontend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6.0.1
       - name: Build the Frontend Docker image
         run: docker build frontend --file frontend/Dockerfile --tag tuanicom/incap-frontend:latest
       - name: Login to Docker
@@ -22,7 +22,7 @@ jobs:
   docker-build-backend:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v6.0.1
       - name: Build the Backend Docker image
         run: docker build backend --file backend/Dockerfile --tag tuanicom/incap-backend:latest
       - name: Login to Docker

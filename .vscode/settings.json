@@ -1,5 +1,6 @@
 {
     "circleci.persistedProjectSelection": [
         "gh/tuanicom/incap"
-    ]
+    ],
+    "snyk.advanced.autoSelectOrganization": true
 }

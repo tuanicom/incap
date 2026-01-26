@@ -27,12 +27,12 @@ describe('Users > AddComponent', () => {
 
     TestBed.configureTestingModule({
     declarations: [
-        AddComponent
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        NgbModule],
+        NgbModule,
+        AddComponent],
     providers: [
         { provide: UserService, useValue: userServiceSpy },
         { provide: Router, useValue: routerSpy },

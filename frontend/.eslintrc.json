@@ -3,9 +3,6 @@
   "ignorePatterns": [
     "projects/**/*"
   ],
-  "parserOptions": {
-    "tsconfigRootDir": "."
-  },
   "overrides": [
     {
       "files": [

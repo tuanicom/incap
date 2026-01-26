@@ -18,11 +18,12 @@ describe('ArticlesComponent', () => {
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [ArticlesComponent],
+    declarations: [],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        NgbModule],
+        NgbModule,
+        ArticlesComponent],
     providers: [
         {
             provide: ActivatedRoute, useValue: route

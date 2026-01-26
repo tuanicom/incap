@@ -9,15 +9,14 @@ describe("ArticleController", () => {
   let processMock: sinon.SinonMock;
   const id = "123";
   // rewiremock
-  before(() => {
-    rewiremock.around(
+  before(async () => {
+    const value: any = await rewiremock.around(
       () => import('./article.controller'),
       mock => {
         mock(() => import('./article.process')).withDefault(ArticleProcess);
       }
-    ).then((value: any) => {
-      controller = value.default;
-    });
+    );
+    controller = value.default;
   });
 
   beforeEach(() => rewiremock.enable());

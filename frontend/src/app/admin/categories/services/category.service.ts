@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../models/category';
 import { Observable } from 'rxjs';
@@ -8,11 +8,12 @@ import { AppSettingsService } from 'src/app/app.settings';
   providedIn: 'root'
 })
 export class CategoryService {
+  private http = inject(HttpClient);
+  private appSettings = inject(AppSettingsService);
+
   private get apiUrl(): string {
     return this.appSettings.settings.categoriesApiUrl;
   }
-
-  constructor(private http: HttpClient, private appSettings: AppSettingsService) { }
 
   public getCategories(): Observable<Category[]> {console.log(this.http, this.apiUrl)
     return this.http.get<Category[]>(this.apiUrl);

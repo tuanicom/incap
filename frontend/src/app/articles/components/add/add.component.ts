@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Article } from '../../models/article';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-articles-add',
-  templateUrl: './add.component.html',
-  styleUrls: ['./add.component.scss']
+    selector: 'app-articles-add',
+    templateUrl: './add.component.html',
+    styleUrls: ['./add.component.scss'],
+    imports: [ReactiveFormsModule]
 })
 export class AddComponent implements OnInit {
-
+  private articleService = inject(ArticleService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private category: string;
-  constructor(private articleService: ArticleService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.parent.params.subscribe((params: Params) => {

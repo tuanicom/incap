@@ -14,13 +14,13 @@ import { ArticleService } from './services/article.service';
 
 
 @NgModule({ declarations: [
-        ArticlesComponent,
-        ListComponent,
-        EditComponent,
-        AddComponent
     ], imports: [CommonModule,
         ReactiveFormsModule,
         NgbModule,
         ArticlesRoutingModule,
-        FontAwesomeModule], providers: [ArticleService, provideHttpClient(withInterceptorsFromDi())] })
+        FontAwesomeModule,
+        ArticlesComponent,
+        ListComponent,
+        EditComponent,
+        AddComponent], providers: [ArticleService, provideHttpClient(withInterceptorsFromDi())] })
 export class ArticlesModule { }

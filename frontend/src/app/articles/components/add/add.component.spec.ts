@@ -27,12 +27,12 @@ describe('Articles > AddComponent', () => {
 
     TestBed.configureTestingModule({
     declarations: [
-        AddComponent
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        NgbModule],
+        NgbModule,
+        AddComponent],
     providers: [
         { provide: ArticleService, useValue: articleServiceSpy },
         { provide: Router, useValue: routerSpy },

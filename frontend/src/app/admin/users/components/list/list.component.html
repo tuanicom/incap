@@ -7,16 +7,18 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    <tr *ngFor="let user of users$ | async">
-      <td>{{user.name}}</td>
-      <td>
-        <div class="btn-group d-md-flex justify-content-md-end">
-          <button class="btn btn-light flex-shrink-1" (click)="deleteUser(user._id)">
-            <fa-icon [icon]="icons['trash']"></fa-icon>
-          </button>
-        </div>
-      </td>
-    </tr>
+    @for (user of users$ | async; track user) {
+      <tr>
+        <td>{{user.name}}</td>
+        <td>
+          <div class="btn-group d-md-flex justify-content-md-end">
+            <button class="btn btn-light flex-shrink-1" (click)="deleteUser(user._id)">
+              <fa-icon [icon]="icons['trash']"></fa-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    }
   </tbody>
   <tfoot>
     <tr>

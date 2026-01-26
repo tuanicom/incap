@@ -15,15 +15,15 @@ describe('CategoriesComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
     declarations: [
-        CategoriesComponent,
-        ListComponent,
-        EditComponent
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
         NgbModule,
-        RouterModule.forRoot([], {})],
+        RouterModule.forRoot([], {}),
+        CategoriesComponent,
+        ListComponent,
+        EditComponent],
     providers: [
         CategoryService,
         { provide: APP_BASE_HREF, useValue: '/' },

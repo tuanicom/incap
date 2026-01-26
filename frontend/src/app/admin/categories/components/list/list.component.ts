@@ -1,24 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faPlus, faEdit, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { CommonModule } from '@angular/common';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @Component({
-  selector: 'app-categories-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+    selector: 'app-categories-list',
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.scss'],
+    imports: [CommonModule, FontAwesomeModule]
 })
 export class ListComponent implements OnInit {
   public categories$: Observable<Category[]>;
+  private categoryService = inject(CategoryService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
   public icons: { [id: string]: IconDefinition; } = {
     plus: faPlus,
     edit: faEdit,
     trash: faTrash,
   };
-
-  constructor(private categoryService: CategoryService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.getCategories();

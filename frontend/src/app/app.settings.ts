@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export class AppSettings {
@@ -19,8 +19,8 @@ export class AppSettingsService {
 
 @Injectable({ providedIn: 'root' })
 export class AppSettingsHttpService {
-
-  constructor(private http: HttpClient, private appSettingsService: AppSettingsService) { }
+  private http = inject(HttpClient);
+  private appSettingsService = inject(AppSettingsService);
 
   public initializeApp(): void {
     this.http.get('assets/settings.json').subscribe((res: AppSettings) => this.appSettingsService.settings = res);

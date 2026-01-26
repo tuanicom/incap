@@ -31,12 +31,12 @@ describe('Articles > ListComponent', () => {
 
     TestBed.configureTestingModule({
     declarations: [
-        ListComponent
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        NgbModule],
+        NgbModule,
+        ListComponent],
     providers: [
         { provide: ArticleService, useValue: articleServiceSpy },
         { provide: Router, useValue: routerSpy },

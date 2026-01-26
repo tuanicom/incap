@@ -15,15 +15,14 @@ describe("UserRoutes", () => {
     { _id: "456", name: "user2" }
   ];
   // rewiremock
-  before(() => {
-    rewiremock.around(
+  before(async () => {
+    const value: any = await rewiremock.around(
       () => import('./user.routes'),
       mock => {
         mock(() => import('./user.controller')).withDefault(UserController);
       }
-    ).then((value: any) => {
-      app.use(routePrefix, value.default);
-    });
+    );
+    app.use(routePrefix, value.default);
   });
   beforeEach(() => rewiremock.enable());
   afterEach(() => rewiremock.disable());

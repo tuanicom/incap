@@ -1,20 +1,23 @@
 <p>
   <button class="btn btn-light" (click)="addArticle()">Add</button>
 </p>
-<div class="card text-dark bg-light mb-3" style="max-width: 18rem;" *ngFor="let article of articles$ | async">
-  <div class="card-header">{{article.title}}</div>
-  <div class="card-body">
-    <p class="card-text">
-      {{article.content}}
-    </p>
-  </div>
-  <div class="card-footer">
-    <div class="btn-group d-md-flex justify-content-md-end">
-      <button class="btn btn-light flex-shrink-1" (click)="editArticle(article._id)">
-        <fa-icon [icon]="icons['edit']"></fa-icon>
-      </button>
-      <button class="btn btn-light flex-shrink-1" (click)="deleteArticle(article._id)">
-        <fa-icon [icon]="icons['trash']"></fa-icon>
-      </button>
+@for (article of articles$ | async; track article._id) {
+  <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+    <div class="card-header">{{article.title}}</div>
+    <div class="card-body">
+      <p class="card-text">
+        {{article.content}}
+      </p>
+    </div>
+    <div class="card-footer">
+      <div class="btn-group d-md-flex justify-content-md-end">
+        <button class="btn btn-light flex-shrink-1" (click)="editArticle(article._id)">
+          <fa-icon [icon]="icons['edit']"></fa-icon>
+        </button>
+        <button class="btn btn-light flex-shrink-1" (click)="deleteArticle(article._id)">
+          <fa-icon [icon]="icons['trash']"></fa-icon>
+        </button>
+      </div>
     </div>
   </div>
+}

@@ -1,23 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { Component, OnInit, inject } from '@angular/core';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router, Params } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-categories-edit',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+    selector: 'app-categories-edit',
+    templateUrl: './edit.component.html',
+    styleUrls: ['./edit.component.scss'],
+    imports: [ReactiveFormsModule, CommonModule]
 })
 export class EditComponent implements OnInit {
   public category$: Observable<Category>;
+  private categoryService = inject(CategoryService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
 
   editCategoryForm = new FormGroup({
     description: new FormControl(''),
   });
-
-  constructor(private categoryService: CategoryService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {

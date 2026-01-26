@@ -29,15 +29,15 @@ describe('CategoryService', () => {
 
     TestBed.configureTestingModule({
     declarations: [
-        CategoriesComponent,
-        ListComponent,
-        EditComponent
     ],
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
         NgbModule,
-        RouterModule.forRoot([], {})],
+        RouterModule.forRoot([], {}),
+        CategoriesComponent,
+        ListComponent,
+        EditComponent],
     providers: [
         CategoryService,
         { provide: HttpClient, useValue: httpClientSpy },

@@ -16,7 +16,7 @@ if /I "%1"=="backend" (
 
 IF "%build_frontend%"=="true" (
     pushd frontend
-    call :RunCommand npm ci 
+    call :RunCommand npm install 
     call :RunCommand ng build --configuration production 
     call :RunCommand ng test --no-watch --browsers ChromeHeadless --code-coverage 
     call :RunCommand ng lint frontend --format json --output-file eslint.json

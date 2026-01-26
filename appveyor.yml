@@ -12,6 +12,7 @@ cache:
   - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
   - frontend\node_modules -> package.json                               # local npm modules
 before_build:
+  - npm cache clear -f
   - ng version
 build_script:
 - ps: .\rebuild.ps1

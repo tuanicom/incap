@@ -126,4 +126,28 @@ export default [{
             markers: ["/"],
         }],
     },
+}, {
+    files: ["**/*.spec.ts"],
+    plugins: {
+        import: fixupPluginRules(_import),
+        jsdoc,
+        "@typescript-eslint": typescriptEslint,
+    },
+    languageOptions: {
+        globals: {
+            ...globals.browser,
+            ...globals.node,
+        },
+        parser: tsParser,
+        ecmaVersion: 5,
+        sourceType: "module",
+        parserOptions: {
+            project: "tsconfig.json",
+        },
+    },
+    rules: {
+        "@typescript-eslint/no-unused-expressions": "off",
+        "no-unused-expressions": "off",
+        "arrow-body-style": "off",
+    },
 }];

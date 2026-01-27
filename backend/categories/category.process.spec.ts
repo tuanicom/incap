@@ -31,13 +31,13 @@ describe("CategoryProcess", () => {
         const query = { exec: () => { } };
 
         beforeEach(() => {
-            findSpy = modelMock.expects("find").once()
-            const stub = findSpy.returns(query);
+            findSpy = modelMock.expects("find").once();
+            findSpy.returns(query);
             execSpy = sinon.spy(query, "exec");
         });
 
         it("should call the find() method of the model", () => {
-            process.getAll().then(() => {
+            void process.getAll().then(() => {
                 findSpy.verify();
                 chai.expect(execSpy.calledOnce).to.be.true;
             });
@@ -57,7 +57,7 @@ describe("CategoryProcess", () => {
         });
 
         it("should get the item with id \"123\" from model using findById ", () => {
-            process.getById(id).then(() => {
+            void process.getById(id).then(() => {
                 findByIdSpy.verify();
                 chai.expect(execSpy.calledOnce).to.be.true;
             });
@@ -76,7 +76,7 @@ describe("CategoryProcess", () => {
         beforeEach(() => saveSpy = sinon.spy(input, "save"));
 
         it("should call the save function of the model", () => {
-            process.save(input as Category).then(() => {
+            void process.save(input as Category).then(() => {
                 chai.expect(saveSpy.calledOnce).to.be.true;
             });
         });
@@ -95,7 +95,7 @@ describe("CategoryProcess", () => {
         });
 
         it(`should delete the item with id "${id}" in model using findOneAndDelete`, () => {
-            process.delete(id).then(() => {
+            void process.delete(id).then(() => {
                 findOneAndDeleteSpy.verify();
                 chai.expect(execSpy.calledOnce).to.be.true;
             });

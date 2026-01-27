@@ -3,7 +3,7 @@ import CategoryController from './category.controller';
 import * as asyncHandler from 'express-async-handler';
 
 export class CategoryRoutes {
-    private _router: express.Router;
+    private readonly _router: express.Router;
 
     constructor() {
         this._router = express.Router();

@@ -1,4 +1,4 @@
-module.exports = function (grunt) {
+module.exports = function gruntConfig(grunt) {
     "use strict";
 
     grunt.initConfig({
@@ -17,9 +17,9 @@ module.exports = function (grunt) {
         },
         eslint: {
             target: [
-                "\*\*/\*.ts",
-                "!\*\*/\*.spec.ts",
-                "!node_modules/\*\*/\*.ts"
+                "**/*.ts",
+                "!**/*.spec.ts",
+                "!node_modules/**/*.ts"
             ],
             options: {
                 format: grunt.option('format') || 'stylish',
@@ -29,7 +29,7 @@ module.exports = function (grunt) {
         },
         watch: {
             ts: {
-                files: ["\*\*/\*.ts", "!node_modules/\*\*/\*.ts"],
+                files: ["**/*.ts", "!node_modules/**/*.ts"],
                 tasks: ["ts", "tslint"]
             }
         },

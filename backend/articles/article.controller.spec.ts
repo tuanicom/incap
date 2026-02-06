@@ -1,104 +1,82 @@
-import * as chai from 'chai';
+import { expect } from 'chai';
 import sinon from "sinon";
 import { ArticleController } from './article.controller';
-import ArticleProcess from './article.process';
-import rewiremock from 'rewiremock';
+import { ArticleProcess } from './article.process';
 
 describe("ArticleController", () => {
   let controller: ArticleController;
-  let processMock: sinon.SinonMock;
+  let processMock: sinon.SinonStubbedInstance<ArticleProcess>;
   const id = "123";
-  // rewiremock
-  before(async () => {
-    const value: any = await rewiremock.around(
-      () => import('./article.controller'),
-      mock => {
-        mock(() => import('./article.process')).withDefault(ArticleProcess);
-      }
-    );
-    controller = value.default;
+
+  beforeEach(() => {
+    processMock = sinon.createStubInstance(ArticleProcess);
+    controller = new ArticleController(processMock);
   });
 
-  beforeEach(() => rewiremock.enable());
-  afterEach(() => rewiremock.disable());
-
-  beforeEach(() => processMock = sinon.mock(ArticleProcess));
-  afterEach(() => processMock.verify());
+  afterEach(() => {
+    sinon.restore();
+  });
 
   describe("getAll()", () => {
-    let getAllSpy: sinon.SinonExpectation;
-
-    beforeEach(() => getAllSpy = processMock.expects("getAll").once());
-
-    it("should get the list from process", () => {
-      controller.getAll().then(() => getAllSpy.verify());
+    it("should get the list from process", async () => {
+      processMock.getAll.resolves([]);
+      await controller.getAll();
+      expect(processMock.getAll.calledOnce).to.be.true;
     });
   });
 
   describe("getAll(category)", () => {
-    let getAllSpy: sinon.SinonExpectation;
-
-    beforeEach(() => getAllSpy = processMock.expects("getAll").once().withArgs("category"));
-
-    it("should get the list from process", () => {
-      controller.getAll("category").then(() => getAllSpy.verify());
+    it("should get the list from process with category parameter", async () => {
+      processMock.getAll.resolves([]);
+      await controller.getAll("category");
+      expect(processMock.getAll.calledWith("category")).to.be.true;
     });
   });
 
   describe(`getById("${id}")`, () => {
-    let getByIdSpy: sinon.SinonExpectation;
-
-    beforeEach(() => getByIdSpy = processMock.expects("getById").once().withArgs(id));
-
-    it(`should get the item with id "${id}" from process`, () => {
-      controller.getById(id).then(() => getByIdSpy.verify());
+    it(`should get the item with id "${id}" from process`, async () => {
+      processMock.getById.resolves({} as any);
+      await controller.getById(id);
+      expect(processMock.getById.calledWith(id)).to.be.true;
     });
   });
 
   describe("add()", () => {
-    let saveSpy: sinon.SinonExpectation;
     const input = { title: "test", description: "test" };
 
-    beforeEach(() => saveSpy = processMock.expects("save").once());
-
-    it("should call the save function of the process", () => {
-      controller.add(input).then(() => saveSpy.verify());
+    it("should call the save function of the process", async () => {
+      processMock.save.resolves({} as any);
+      await controller.add(input);
+      expect(processMock.save.calledOnce).to.be.true;
     });
   });
 
   describe("update()", () => {
-    let saveSpy: sinon.SinonExpectation;
-    let getByIdSpy: sinon.SinonExpectation;
-
     const article = { _id: id, title: "test", content: "test", category: "test", author: "test" };
     const input = { _id: id, title: "test2", content: "test2", category: "test2", author: "test2" };
 
-    beforeEach(() => {
-      getByIdSpy = processMock.expects("getById").once().withArgs(id);
-      getByIdSpy.resolves(article);
-      saveSpy = processMock.expects("save").once().withArgs(article);
-    });
-
     it(`should call the getById function of the process with "${id}"`, async () => {
+      processMock.getById.resolves(article as any);
+      processMock.save.resolves(article as any);
       await controller.update(input);
-      getByIdSpy.verify();
+      expect(processMock.getById.calledWith(id)).to.be.true;
     });
 
     it("should call the save function of the process", async () => {
+      processMock.getById.resolves(article as any);
+      processMock.save.resolves(article as any);
       await controller.update(input);
-      chai.expect(article.title).to.equal(input.title);
-      chai.expect(article.content).to.equal(input.content);
-      saveSpy.verify();
+      expect(article.title).to.equal(input.title);
+      expect(article.content).to.equal(input.content);
+      expect(processMock.save.calledOnce).to.be.true;
     });
   });
 
   describe(`delete("${id}")`, () => {
-    let deleteSpy: any;
-
-    beforeEach(() => deleteSpy = processMock.expects("delete").once().withArgs(id));
-
-    it(`should delete the item with id "${id}" in process`, () => {
-      controller.delete(id).then(() => deleteSpy.verify());
+    it(`should delete the item with id "${id}" in process`, async () => {
+      processMock.delete.resolves({} as any);
+      await controller.delete(id);
+      expect(processMock.delete.calledWith(id)).to.be.true;
     });
   });
 });

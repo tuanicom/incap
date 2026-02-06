@@ -41,6 +41,7 @@ export class Server {
     }
 
     private config() {
+        this.app.disable('x-powered-by');
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(morgan('combined'));

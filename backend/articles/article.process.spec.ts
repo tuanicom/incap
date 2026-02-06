@@ -1,123 +1,75 @@
-import chai from 'chai';
+import { expect } from 'chai';
 import sinon from 'sinon';
-import rewiremock from 'rewiremock';
 import { ArticleProcess } from './article.process';
 import articleModel, { Article } from './article.model';
 
 describe("ArticleProcess", () => {
     let process: ArticleProcess;
-    let modelMock: sinon.SinonMock;
+    let modelStub: sinon.SinonStubbedInstance<typeof articleModel>;
     const id = "123";
 
-    // rewiremock
-    before(async () => {
-        const value: any = await rewiremock.around(
-            () => import('./article.process'),
-            mock => {
-                mock(() => import('./article.model')).withDefault(articleModel);
-            }
-        );
-        process = value.default;
+    beforeEach(() => {
+        modelStub = sinon.stub(articleModel);
+        process = new ArticleProcess();
     });
-    beforeEach(() => rewiremock.enable());
-    afterEach(() => rewiremock.disable());
 
-    beforeEach(() => modelMock = sinon.mock(articleModel));
-    afterEach(() => modelMock.verify());
+    afterEach(() => {
+        sinon.restore();
+    });
 
     describe("getAll()", () => {
-        let findSpy: sinon.SinonExpectation;
-        let execSpy: sinon.SinonSpy;
-        const query = { exec: () => { } };
+        it("should call the find() method of the model", async () => {
+            const query = { exec: sinon.stub().resolves([]) };
+            (modelStub.find as sinon.SinonStub).returns(query);
 
-        beforeEach(() => {
-            findSpy = modelMock.expects("find").once()
-            const stub = findSpy.returns(query);
-            execSpy = sinon.spy(query, "exec");
-        });
-
-        it("should call the find() method of the model", () => {
-            process.getAll().then(() => {
-                findSpy.verify();
-                chai.expect(execSpy.calledOnce).to.be.true;
-            });
+            await process.getAll();
+            expect((modelStub.find as sinon.SinonStub).calledOnce).to.be.true;
         });
     });
 
     describe("getAll(category)", () => {
-        let findSpy: sinon.SinonExpectation;
-        let execSpy: sinon.SinonSpy;
-        const query = { exec: () => { } };
+        it("should call the find() method of the model with category parameter", async () => {
+            const query = { exec: sinon.stub().resolves([]) };
+            (modelStub.find as sinon.SinonStub).returns(query);
 
-        beforeEach(() => {
-            findSpy = modelMock.expects("find").once().withArgs({ category: "category" });
-            const stub = findSpy.returns(query);
-            execSpy = sinon.spy(query, "exec");
-        });
-
-        it("should call the find() method of the model with category parameter", () => {
-            process.getAll("category").then(() => {
-                findSpy.verify();
-                chai.expect(execSpy.calledOnce).to.be.true;
-            });
+            await process.getAll("category");
+            expect((modelStub.find as sinon.SinonStub).calledWith({ category: "category" })).to.be.true;
         });
     });
 
     describe(`getById("${id}")`, () => {
-        let findByIdSpy: sinon.SinonExpectation;
-        let execSpy: sinon.SinonSpy;
-        const query = { exec: () => { } };
+        it(`should get the item with id "${id}" from model using findById `, async () => {
+            const query = { exec: sinon.stub().resolves({} as Article) };
+            (modelStub.findById as sinon.SinonStub).returns(query);
 
-        beforeEach(() => {
-            findByIdSpy = modelMock.expects("findById").once().withArgs(id);
-            findByIdSpy.returns(query);
-            execSpy = sinon.spy(query, "exec");
-        });
-
-        it(`should get the item with id "${id}" from model using findById `, () => {
-            process.getById(id).then(() => {
-                findByIdSpy.verify();
-                chai.expect(execSpy.calledOnce).to.be.true;
-            });
+            await process.getById(id);
+            expect((modelStub.findById as sinon.SinonStub).calledWith(id)).to.be.true;
         });
     });
 
     describe("save()", () => {
-        let saveSpy: sinon.SinonSpy;
-        const input: Partial<Article> = {
-            _id: id,
-            title: "test",
-            content: "test",
-            category: "test",
-            author: "test",
-            save: async function () { return this as Article; }
-        };
+        it("should call the save function of the model", async () => {
+            const input: Article = {
+                _id: id,
+                title: "test",
+                content: "test",
+                category: "test",
+                author: "test",
+                save: sinon.stub().resolves({} as Article)
+            } as any;
 
-        beforeEach(() => saveSpy = sinon.spy(input, "save"));
-
-        it("should call the save function of the model", () => {
-            process.save(input as Article).then(() => {
-                chai.expect(saveSpy.calledOnce).to.be.true;
-            });
+            await process.save(input);
+            expect((input.save as sinon.SinonStub).calledOnce).to.be.true;
         });
     });
 
     describe(`delete("${id}")`, () => {
-        let findOneAndDeleteSpy: sinon.SinonExpectation;
-        let execSpy: sinon.SinonSpy;
-        const query = { exec: () => { } };
+        it(`should delete the item with id "${id}" in model using findOneAndDelete`, async () => {
+            const query = { exec: sinon.stub().resolves({} as Article) };
+            (modelStub.findOneAndDelete as sinon.SinonStub).returns(query);
 
-        beforeEach(() => {
-            findOneAndDeleteSpy = modelMock.expects("findOneAndDelete").once().withArgs({ _id: id });
-            findOneAndDeleteSpy.returns(query);
-            execSpy = sinon.spy(query, "exec");
-        });
-
-        it(`should delete the item with id "${id}" in model using findOneAndDelete`, () => {
-            process.delete(id).then(() => {
-                findOneAndDeleteSpy.verify();
-                chai.expect(execSpy.calledOnce).to.be.true;
-            });
+            await process.delete(id);
+            expect((modelStub.findOneAndDelete as sinon.SinonStub).calledWith({ _id: id })).to.be.true;
         });
     });
 });

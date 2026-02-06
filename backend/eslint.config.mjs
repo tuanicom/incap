@@ -12,19 +12,21 @@ export default [{
         "@typescript-eslint": typescriptEslint,
     },
     files: ["**/*.ts"],
-
+    ignores: [
+      "**/*.spec.ts",
+      "**/node_modules/**/*.ts",
+      "**/dist/**",
+      "**/*.js"
+    ],
     languageOptions: {
         globals: {
             ...globals.browser,
             ...globals.node,
         },
-
         parser: tsParser,
-        ecmaVersion: 5,
-        sourceType: "module",
-
+        ecmaVersion: 6,
         parserOptions: {
-            project: "tsconfig.json",
+            project: true,
         },
     },
 
@@ -125,29 +127,5 @@ export default [{
         "spaced-comment": ["error", "always", {
             markers: ["/"],
         }],
-    },
-}, {
-    files: ["**/*.spec.ts"],
-    plugins: {
-        import: fixupPluginRules(_import),
-        jsdoc,
-        "@typescript-eslint": typescriptEslint,
-    },
-    languageOptions: {
-        globals: {
-            ...globals.browser,
-            ...globals.node,
-        },
-        parser: tsParser,
-        ecmaVersion: 5,
-        sourceType: "module",
-        parserOptions: {
-            project: "tsconfig.json",
-        },
-    },
-    rules: {
-        "@typescript-eslint/no-unused-expressions": "off",
-        "no-unused-expressions": "off",
-        "arrow-body-style": "off",
     },
 }];

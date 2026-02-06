@@ -12,8 +12,8 @@ if [ $# -eq 0 ] ||  [ "$1" = "backend" ];
     then 
     cd backend
     npm ci 
-    npm run grunt ts 
+    npm run build 
     npm test 
-    npm run grunt eslint -- --format=json --output-file=eslint.json
+    npm run lint -- --format=json --output-file=eslint.json
     cd ..
 fi

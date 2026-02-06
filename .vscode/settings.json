@@ -2,5 +2,10 @@
     "circleci.persistedProjectSelection": [
         "gh/tuanicom/incap"
     ],
-    "snyk.advanced.autoSelectOrganization": true
+    "snyk.advanced.autoSelectOrganization": true,
+    "sonarlint.connectedMode.project": {
+        "connectionId": "tuanicom-github",
+        "projectKey": "tuanicom_incap"
+    },
+    "snyk.advanced.organization": "ef791ef8-bfb8-4653-9bcc-99c9231e5a63"
 }

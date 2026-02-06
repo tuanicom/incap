@@ -1,6 +1,6 @@
-import * as express from 'express';
+import express from 'express';
 import CategoryController from './category.controller';
-import * as asyncHandler from 'express-async-handler';
+import asyncHandler from 'express-async-handler';
 
 export class CategoryRoutes {
     private readonly _router: express.Router;

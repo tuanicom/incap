@@ -1,5 +1,5 @@
 import * as chai from 'chai';
-import * as sinon from "sinon";
+import sinon from "sinon";
 import { ArticleController } from './article.controller';
 import ArticleProcess from './article.process';
 import rewiremock from 'rewiremock';

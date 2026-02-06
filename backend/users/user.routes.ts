@@ -1,9 +1,9 @@
-import * as express from 'express';
+import express from 'express';
 import UserController from './user.controller';
-import * as asyncHandler from 'express-async-handler';
+import asyncHandler from 'express-async-handler';
 
 export class UserRoutes {
-    private _router: express.Router;
+    private readonly _router: express.Router;
 
     constructor() {
         this._router = express.Router();

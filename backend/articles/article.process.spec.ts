@@ -1,5 +1,5 @@
-import * as chai from 'chai';
-import * as sinon from 'sinon';
+import chai from 'chai';
+import sinon from 'sinon';
 import rewiremock from 'rewiremock';
 import { ArticleProcess } from './article.process';
 import articleModel, { Article } from './article.model';

@@ -1,0 +1,71 @@
+import request from 'supertest';
+import express from 'express';
+import { ArticleRoutes } from './article.routes';
+
+describe("ArticleRoutes", () => {
+  const route = "/articles";
+  const id = "123";
+  const app = express();
+
+  const articles = [
+    { _id: "123", title: "article1" },
+    { _id: "456", title: "article2" }
+  ];
+
+  before(() => {
+    const routes = new ArticleRoutes();
+    app.use(route, routes.router);
+  });
+
+  describe(`get ${route}/`, () => {
+    describe('with no parameters', () => {
+      it("should get the list from controller and return json", (done) => {
+        request(app)
+          .get(`${route}/`)
+          .expect(200, done);
+      });
+    });
+
+    describe('with category parameters', () => {
+      it("should get the list from controller and return json", (done) => {
+        request(app)
+          .get(`${route}/?category=test`)
+          .expect(200, done);
+      });
+    });
+  });
+
+  describe(`get ${route}/${id}`, () => {
+    it("should get the item from controller and return json", (done) => {
+      request(app)
+        .get(`${route}/${id}`)
+        .expect(200, done);
+    });
+  });
+
+  describe(`post ${route}`, () => {
+    it("should add the item from controller and return json", (done) => {
+      request(app)
+        .post(`${route}/`)
+        .send(articles[0])
+        .expect(200, done);
+    });
+  });
+
+  describe(`put ${route}/`, () => {
+    it("should update the item from controller and return json", (done) => {
+      request(app)
+        .put(`${route}/`)
+        .send(articles[0])
+        .expect(200, done);
+    });
+  });
+
+  describe(`delete ${route}/${id}`, () => {
+    it("should delete the item from controller and return json", (done) => {
+      request(app)
+        .delete(`${route}/${id}`)
+        .expect(200, done);
+    });
+  });
+});

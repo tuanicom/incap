@@ -25,9 +25,9 @@ IF "%build_frontend%"=="true" (
 IF "%build_backend%"=="true" (
     pushd backend
     call :RunCommand npm ci 
-    call :RunCommand npm run grunt ts 
+    call :RunCommand npm run build 
     call :RunCommand npm test 
-    call :RunCommand npm run grunt eslint -- --format=json --output-file=eslint.json     
+    call :RunCommand npm run lint -- --format=json --output-file=eslint.json     
     popd
 )
 goto :eof

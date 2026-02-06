@@ -1,31 +1,30 @@
 import articleModel, { Article } from "./article.model";
-import ArticleProcess from "./article.process";
+import { ArticleProcess } from "./article.process";
 
 export class ArticleController {
+    constructor(private readonly process: ArticleProcess) {}
 
     public async getAll(category?: string): Promise<Article[]> {
-        return ArticleProcess.getAll(category);
+        return this.process.getAll(category);
     }
 
     public async getById(id: string): Promise<Article> {
-        return ArticleProcess.getById(id);
+        return this.process.getById(id);
     }
 
     public async add(input: any): Promise<Article> {
         const newArticle = new articleModel(input);
-        return ArticleProcess.save(newArticle);
+        return this.process.save(newArticle);
     }
 
     public async update(input: any): Promise<Article> {
-        const articleToUpdate = await ArticleProcess.getById(input._id);
+        const articleToUpdate = await this.process.getById(input._id);
         articleToUpdate.title = input.title;
         articleToUpdate.content = input.content;
-        return ArticleProcess.save(articleToUpdate);
+        return this.process.save(articleToUpdate);
     }
 
     public async delete(id: string): Promise<Article> {
-        return ArticleProcess.delete(id);
+        return this.process.delete(id);
     }
 }
-
-export default new ArticleController();

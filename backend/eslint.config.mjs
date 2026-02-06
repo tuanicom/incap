@@ -5,26 +5,33 @@ import { fixupPluginRules } from "@eslint/compat";
 import globals from "globals";
 import tsParser from "@typescript-eslint/parser";
 
-export default [{
+export default [
+    {
+        ignores: [
+            "**/*.js",
+            "**/*.spec.ts",
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/coverage/**",
+            ".tscache/**"
+        ]
+    },
+    {
     plugins: {
         import: fixupPluginRules(_import),
         jsdoc,
         "@typescript-eslint": typescriptEslint,
     },
     files: ["**/*.ts"],
-
     languageOptions: {
         globals: {
             ...globals.browser,
             ...globals.node,
         },
-
         parser: tsParser,
-        ecmaVersion: 5,
-        sourceType: "module",
-
+        ecmaVersion: 6,
         parserOptions: {
-            project: "tsconfig.json",
+            project: true,
         },
     },
 

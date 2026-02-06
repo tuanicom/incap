@@ -1,9 +1,9 @@
 "use strict";
 
-import * as express from "express";
-import * as cors from "cors";
-import * as mongoose from "mongoose";
-import * as morgan from "morgan";
+import express from "express";
+import cors from "cors";
+import mongoose from "mongoose";
+import morgan from "morgan";
 import CategoryRoutes from "./categories/category.routes";
 import UserRoutes from "./users/user.routes";
 import ArticleRoutes from "./articles/article.routes";
@@ -15,7 +15,7 @@ import ArticleRoutes from "./articles/article.routes";
 export class Server {
 
     public app: express.Application;
-    private router: express.Router;
+    private readonly router: express.Router;
 
     /**
      * Constructor.
@@ -41,6 +41,7 @@ export class Server {
     }
 
     private config() {
+        this.app.disable('x-powered-by');
         this.app.use(cors());
         this.app.use(express.json());
         this.app.use(morgan('combined'));

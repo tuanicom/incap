@@ -1,31 +1,30 @@
 import categoryModel, { Category } from "./category.model";
-import CategoryProcess from "./category.process";
+import { CategoryProcess } from "./category.process";
 
 export class CategoryController {
+    constructor(private readonly process: CategoryProcess) {}
 
     public async getAll(): Promise<Category[]> {
-        return CategoryProcess.getAll();
+        return this.process.getAll();
     }
 
     public async getById(id: string): Promise<Category> {
-        return CategoryProcess.getById(id);
+        return this.process.getById(id);
     }
 
     public async add(input: any): Promise<Category> {
         const newCategory = new categoryModel(input);
-        return CategoryProcess.save(newCategory);
+        return this.process.save(newCategory);
     }
 
     public async update(input: any): Promise<Category> {
-        const categoryToUpdate = await CategoryProcess.getById(input._id);
+        const categoryToUpdate = await this.process.getById(input._id);
         categoryToUpdate.title = input.title;
         categoryToUpdate.description = input.description;
-        return CategoryProcess.save(categoryToUpdate);
+        return this.process.save(categoryToUpdate);
     }
 
     public async delete(id: string): Promise<Category> {
-        return CategoryProcess.delete(id);
+        return this.process.delete(id);
     }
 }
-
-export default new CategoryController();

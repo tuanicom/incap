@@ -3,12 +3,10 @@ import sinon from 'sinon';
 
 describe("UserProcess", () => {
     let process: any;
-    const id = "123";
 
     beforeEach(async () => {
-        // Dynamically import AFTER vitest setup to avoid early model compilation
-        const { default: UserProcessModule } = await import('./user.process');
-        process = UserProcessModule;
+        const { UserProcess } = await import('./user.process');
+        process = new UserProcess();
     });
 
     afterEach(() => {
@@ -16,55 +14,71 @@ describe("UserProcess", () => {
     });
 
     describe("getAll()", () => {
-        it("should return array from getAll", async () => {
+        it("should return array or throw error", async () => {
             try {
                 const result = await process.getAll();
                 expect(Array.isArray(result)).to.be.true;
             } catch (err: any) {
-                // Expected if no DB connection
                 expect(err).to.exist;
             }
-        }, 15000);  // Allow 15 seconds for potential DB handshake
+        }, 15000);
     });
 
-    describe("getById(\"123\")", () => {
-        it("should handle getById", async () => {
+    describe("getById()", () => {
+        it("should handle getById or throw error", async () => {
             try {
-                const result = await process.getById(id);
+                const result = await process.getById("507f1f77bcf86cd799439011");
                 if (result) {
                     expect(result).to.be.an('object');
                 }
             } catch (err: any) {
-                // Expected if no DB
                 expect(err).to.exist;
             }
-        });
+        }, 5000);
     });
 
     describe("save()", () => {
-        it("should call save on input", async () => {
+        it("should call save on input object", async () => {
             const input: any = {
-                name: "test",
-                save: sinon.stub().resolves({ _id: "abc", name: "test" })
+                name: "test user",
+                save: sinon.stub().resolves({ _id: "abc", name: "test user" })
             };
 
             const result = await process.save(input);
             expect((input.save as sinon.SinonStub).calledOnce).to.be.true;
             expect(result).to.exist;
         });
+
+        it("should handle save with complex user data", async () => {
+            const input: any = {
+                name: "John Doe",
+                email: "john@example.com",
+                role: "admin",
+                save: sinon.stub().resolves({
+                    _id: "def",
+                    name: "John Doe",
+                    email: "john@example.com",
+                    role: "admin"
+                })
+            };
+
+            const result = await process.save(input);
+            expect(result.name).to.equal("John Doe");
+            expect(result.email).to.equal("john@example.com");
+        });
     });
 
-    describe("delete(\"123\")", () => {
-        it("should call delete", async () => {
+    describe("delete()", () => {
+        it("should handle delete or throw error", async () => {
             try {
-                const result = await process.delete(id);
+                const result = await process.delete("507f1f77bcf86cd799439011");
                 if (result) {
                     expect(result).to.be.an('object');
                 }
             } catch (err: any) {
-                // Expected if no DB or invalid ID
                 expect(err).to.exist;
             }
-        });
+        }, 5000);
     });
 });
+

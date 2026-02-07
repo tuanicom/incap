@@ -38,19 +38,19 @@ function getArticleModel(): Model<Article> {
     }
 }
 
-function ArticleModelFactory(this: any, ...args: any[]) {
+function articleModelFactory(this: any, ...args: any[]) {
     const M = getArticleModel();
-    // eslint-disable-next-line new-cap
+
     return new (M as any)(...args);
 }
 
 const staticMethods = ['find', 'findById', 'findOneAndDelete', 'findOne', 'create', 'findByIdAndUpdate', 'findOneAndUpdate', 'deleteOne'];
 for (const name of staticMethods) {
     // assign a function that delegates to the real model at call time
-    (ArticleModelFactory as any)[name] = (...args: any[]) => {
+    (articleModelFactory as any)[name] = (...args: any[]) => {
         const M = getArticleModel();
         return (M as any)[name](...args);
     };
 }
 
-export default (ArticleModelFactory as unknown) as Model<Article>;
+export default (articleModelFactory as unknown) as Model<Article>;

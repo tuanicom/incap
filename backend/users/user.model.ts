@@ -10,33 +10,33 @@ export const userSchema = new Schema({
     }
 });
 function getUserModel(): Model<User> {
-  if ((mongoose as any).models && (mongoose as any).models.User) {
-    return (mongoose as any).models.User as Model<User>;
-  }
-  if (mongoose.modelNames && mongoose.modelNames().includes && mongoose.modelNames().includes('User')) {
+    if ((mongoose as any).models && (mongoose as any).models.User) {
+        return (mongoose as any).models.User as Model<User>;
+    }
+    if (mongoose.modelNames && mongoose.modelNames().includes && mongoose.modelNames().includes('User')) {
     }
     try {
-    return model<User>('User', userSchema);
-  } catch (err: any) {
-    if (err && err.name === 'OverwriteModelError') {
-      return (mongoose as any).models.User as Model<User>;
+        return model<User>('User', userSchema);
+    } catch (err: any) {
+        if (err && err.name === 'OverwriteModelError') {
+            return (mongoose as any).models.User as Model<User>;
+        }
+        throw err;
     }
-    throw err;
-  }
 }
 
-function UserModelFactory(this: any, ...args: any[]) {
+function userModelFactory(this: any, ...args: any[]) {
     const M = getUserModel();
-    // eslint-disable-next-line new-cap
+
     return new (M as any)(...args);
 }
 
 const staticMethods = ['find', 'findById', 'findOneAndDelete', 'findOne', 'create', 'findByIdAndUpdate', 'findOneAndUpdate', 'deleteOne'];
 for (const name of staticMethods) {
-    (UserModelFactory as any)[name] = (...args: any[]) => {
+    (userModelFactory as any)[name] = (...args: any[]) => {
         const M = getUserModel();
         return (M as any)[name](...args);
     };
 }
 
-export default (UserModelFactory as unknown) as Model<User>;
+export default (userModelFactory as unknown) as Model<User>;

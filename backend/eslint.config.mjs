@@ -13,7 +13,8 @@ export default [
             "**/node_modules/**",
             "**/dist/**",
             "**/coverage/**",
-            ".tscache/**"
+            ".tscache/**",
+            "vitest.*.ts"
         ]
     },
     {

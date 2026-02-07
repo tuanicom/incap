@@ -3,13 +3,12 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/spec",
+    "typeRoots": ["./node_modules/@types", "./node_modules"],
     "types": [
-      "jasmine"
-    ]
+      "vitest/globals"
+    ],
+    "skipLibCheck": true
   },
-  "files": [
-    "src/test.ts"
-  ],
   "include": [
     "src/**/*.spec.ts",
     "src/**/*.d.ts"

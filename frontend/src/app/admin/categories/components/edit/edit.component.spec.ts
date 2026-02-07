@@ -1,4 +1,5 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import type { Mock } from "vitest";
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditComponent } from './edit.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -11,92 +12,96 @@ import { Category } from '../../models/category';
 import * as Observable from 'rxjs';
 
 describe('Categories > EditComponent', () => {
-  let component: EditComponent;
-  let fixture: ComponentFixture<EditComponent>;
-  let categoryServiceSpy: {
-    getCategoryById: jasmine.Spy,
-    updateCategory: jasmine.Spy,
-  };
-  let routerSpy: {
-    navigate: jasmine.Spy,
-  };
-  const categoryId = '123';
+    let component: EditComponent;
+    let fixture: ComponentFixture<EditComponent>;
+    let categoryServiceSpy: {
+        getCategoryById: Mock;
+        updateCategory: Mock;
+    };
+    let routerSpy: {
+        navigate: Mock;
+    };
+    const categoryId = '123';
 
-  beforeEach(waitForAsync(() => {
-    categoryServiceSpy = jasmine.createSpyObj('CategoryService', ['getCategoryById', 'updateCategory']);
-    routerSpy = jasmine.createSpyObj('Router', ['navigate']);
+    beforeEach(async () => {
+        categoryServiceSpy = {
+            getCategoryById: vi.fn().mockName("CategoryService.getCategoryById"),
+            updateCategory: vi.fn().mockName("CategoryService.updateCategory")
+        };
+        routerSpy = {
+            navigate: vi.fn().mockName("Router.navigate")
+        };
 
-    TestBed.configureTestingModule({
-    declarations: [
-    ],
-    imports: [FontAwesomeModule,
-        ReactiveFormsModule,
-        BrowserModule,
-        NgbModule,
-        RouterModule.forRoot([], {}),
-        EditComponent],
-    providers: [
-        { provide: CategoryService, useValue: categoryServiceSpy },
-        { provide: Router, useValue: routerSpy },
-        { provide: ActivatedRoute, useValue: { params: Observable.of<Params>({ id: categoryId }) } },
-        provideHttpClient(withInterceptorsFromDi())
-    ]
-});
-  }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(EditComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  beforeEach(() => {
-    categoryServiceSpy.getCategoryById.calls.reset();
-    categoryServiceSpy.getCategoryById.and.returnValue(Observable.of<Category>({
-      id: categoryId,
-      title: 'test',
-      description: 'test'
-    } as Category));
-    component.ngOnInit();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should init the form', () => {
-    expect(component.editCategoryForm).toBeTruthy();
-  });
-
-  it('should retrieve the category corresponding to the provided id', () => {
-    expect(categoryServiceSpy.getCategoryById).toHaveBeenCalled();
-    expect(categoryServiceSpy.getCategoryById.calls.count()).toBe(1);
-    expect(categoryServiceSpy.getCategoryById.calls.first().args[0]).toBe(categoryId);
-  });
-
-  describe('when submitting the form', () => {
+        await TestBed.configureTestingModule({
+            declarations: [],
+            imports: [FontAwesomeModule,
+                ReactiveFormsModule,
+                BrowserModule,
+                NgbModule,
+                RouterModule.forRoot([], {}),
+                EditComponent],
+            providers: [
+                { provide: CategoryService, useValue: categoryServiceSpy },
+                { provide: Router, useValue: routerSpy },
+                { provide: ActivatedRoute, useValue: { params: Observable.of<Params>({ id: categoryId }) } },
+                provideHttpClient(withInterceptorsFromDi())
+            ]
+        }).compileComponents();
+    });
 
     beforeEach(() => {
-      component.editCategoryForm.get('description').setValue('test2');
-      categoryServiceSpy.updateCategory.and.returnValue(Observable.of<Category>({} as Category));
-      component.onSubmit();
+        fixture = TestBed.createComponent(EditComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
 
-    it('should call the add function with category service with the values of the form', () => {
-      expect(categoryServiceSpy.updateCategory).toHaveBeenCalled();
-      expect(categoryServiceSpy.updateCategory.calls.count()).toBe(1);
-      expect(categoryServiceSpy.updateCategory.calls.first().args.length).toBe(1);
-      expect((categoryServiceSpy.updateCategory.calls.first().args[0] as Category).id).toBe(categoryId);
-      expect((categoryServiceSpy.updateCategory.calls.first().args[0] as Category).title).toBe('test');
-      expect((categoryServiceSpy.updateCategory.calls.first().args[0] as Category).description).toBe('test2');
+    beforeEach(() => {
+        categoryServiceSpy.getCategoryById.mockClear();
+        categoryServiceSpy.getCategoryById.mockReturnValue(Observable.of<Category>({
+            id: categoryId,
+            title: 'test',
+            description: 'test'
+        } as Category));
+        component.ngOnInit();
     });
 
-    it('should redirect to the list after', () => {
-      expect(routerSpy.navigate).toHaveBeenCalled();
-      expect(routerSpy.navigate.calls.count()).toBe(1);
-      expect(routerSpy.navigate.calls.first().args.length).toBe(2);
-      expect(routerSpy.navigate.calls.first().args[0].length).toBe(1);
-      expect(routerSpy.navigate.calls.first().args[0][0]).toBe('list');
+    it('should create', () => {
+        expect(component).toBeTruthy();
     });
-  });
+
+    it('should init the form', () => {
+        expect(component.editCategoryForm).toBeTruthy();
+    });
+
+    it('should retrieve the category corresponding to the provided id', () => {
+        expect(categoryServiceSpy.getCategoryById).toHaveBeenCalled();
+        expect(vi.mocked(categoryServiceSpy.getCategoryById).mock.calls.length).toBe(1);
+        expect(vi.mocked(categoryServiceSpy.getCategoryById).mock.calls[0][0]).toBe(categoryId);
+    });
+
+    describe('when submitting the form', () => {
+
+        beforeEach(() => {
+            component.editCategoryForm.get('description').setValue('test2');
+            categoryServiceSpy.updateCategory.mockReturnValue(Observable.of<Category>({} as Category));
+            component.onSubmit();
+        });
+
+        it('should call the add function with category service with the values of the form', () => {
+            expect(categoryServiceSpy.updateCategory).toHaveBeenCalled();
+            expect(vi.mocked(categoryServiceSpy.updateCategory).mock.calls.length).toBe(1);
+            expect(vi.mocked(categoryServiceSpy.updateCategory).mock.calls[0].length).toBe(1);
+            expect((vi.mocked(categoryServiceSpy.updateCategory).mock.calls[0][0] as Category).id).toBe(categoryId);
+            expect((vi.mocked(categoryServiceSpy.updateCategory).mock.calls[0][0] as Category).title).toBe('test');
+            expect((vi.mocked(categoryServiceSpy.updateCategory).mock.calls[0][0] as Category).description).toBe('test2');
+        });
+
+        it('should redirect to the list after', () => {
+            expect(routerSpy.navigate).toHaveBeenCalled();
+            expect(vi.mocked(routerSpy.navigate).mock.calls.length).toBe(1);
+            expect(vi.mocked(routerSpy.navigate).mock.calls[0].length).toBe(2);
+            expect(vi.mocked(routerSpy.navigate).mock.calls[0][0].length).toBe(1);
+            expect(vi.mocked(routerSpy.navigate).mock.calls[0][0][0]).toBe('list');
+        });
+    });
 });

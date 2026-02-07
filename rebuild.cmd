@@ -26,7 +26,7 @@ IF "%build_backend%"=="true" (
     pushd backend
     call :RunCommand npm ci 
     call :RunCommand npm run build 
-    call :RunCommand npm test 
+    call :RunCommand npm test -- --coverage
     call :RunCommand npm run lint -- --format=json --output-file=eslint.json     
     popd
 )

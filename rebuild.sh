@@ -13,7 +13,7 @@ if [ $# -eq 0 ] ||  [ "$1" = "backend" ];
     cd backend
     npm ci 
     npm run build 
-    npm test 
+    npm test -- --coverage
     npm run lint -- --format=json --output-file=eslint.json
     cd ..
 fi

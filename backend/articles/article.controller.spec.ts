@@ -1,15 +1,22 @@
 import { expect } from 'chai';
 import sinon from "sinon";
-import { ArticleController } from './article.controller';
-import { ArticleProcess } from './article.process';
 
 describe("ArticleController", () => {
-  let controller: ArticleController;
-  let processMock: sinon.SinonStubbedInstance<ArticleProcess>;
+  let controller: any;
+  let processMock: any;
   const id = "123";
 
-  beforeEach(() => {
-    processMock = sinon.createStubInstance(ArticleProcess);
+  beforeEach(async () => {
+    // Create a minimal mock process object
+    processMock = {
+      getAll: sinon.stub().resolves([]),
+      getById: sinon.stub().resolves({}),
+      save: sinon.stub().resolves({}),
+      delete: sinon.stub().resolves({})
+    };
+
+    // Now import and create controller with mock
+    const { ArticleController } = await import('./article.controller');
     controller = new ArticleController(processMock);
   });
 

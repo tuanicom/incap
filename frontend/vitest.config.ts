@@ -18,6 +18,10 @@ export default defineConfig({
         'tests-results',
         '**/*.js'
       ]
+    },
+    reporters: ['default','junit'],
+    outputFile: {
+      junit: 'tests-results/tests-results.xml'
     }
   }
 });

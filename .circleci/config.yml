@@ -66,13 +66,13 @@ jobs:
             /home/circleci/project/incap/
             # Must be relative path from root
           paths:
-            - frontend/coverage/lcov.info
+            - frontend/coverage/frontend/lcov.info
       - store_test_results:
           path: incap/frontend/tests-results
       - store_artifacts:
           path: incap/frontend/eslint.json
       - store_artifacts:
-          path: incap/frontend/coverage/index.html
+          path: incap/frontend/coverage/frontend/index.html
   build-backend:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor

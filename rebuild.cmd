@@ -18,7 +18,7 @@ IF "%build_frontend%"=="true" (
     pushd frontend
     call :RunCommand npm ci 
     call :RunCommand ng build --configuration production 
-    call :RunCommand ng test --no-watch --coverage --coverage-reporters=lcovonly
+    call :RunCommand ng test --no-watch --coverage --coverage-reporters=lcovonly --reporters=junit --output-file=tests-results/tests-results.xml
     call :RunCommand ng lint --format json --output-file eslint.json
     popd
 )

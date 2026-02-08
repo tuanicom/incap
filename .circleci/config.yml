@@ -46,13 +46,13 @@ jobs:
             export COVERALLS_SERVICE_JOB_ID=$CIRCLE_WORKFLOW_JOB_ID
             export COVERALLS_FLAG_NAME="frontend"
             export COVERALLS_PARALLEL=true
-            cat frontend/coverage/lcov.info | sed 's/SF:/SF:frontend\//' | coveralls --verbose 
+            cat frontend/coverage/frontend/lcov.info | sed 's/SF:/SF:frontend\//' | coveralls --verbose 
           name: Upload coverage report to Coveralls
           working_directory: /home/circleci/project/incap
       - run:
           command: |
             curl -Ls https://coverage.codacy.com/get.sh > get.sh
-            source get.sh report -r coverage/lcov.info -t $CODACY_PROJECT_TOKEN --partial
+            source get.sh report -r coverage/frontend/lcov.info -t $CODACY_PROJECT_TOKEN --partial
           name: Upload coverage report to Codacy
           working_directory: /home/circleci/project/incap/frontend
       - save_cache:

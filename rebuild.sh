@@ -4,7 +4,7 @@ if [ $# -eq 0 ] || [ "$1" = "frontend" ]; then
     cd frontend
     npm ci 
     ng build --configuration production 
-    ng test --no-watch --coverage 
+    ng test --no-watch --coverage --coverage-reporters=lcovonly
     ng lint frontend --format json --output-file eslint.json --eslint-config .eslintrc.json --force
     cd ..
 fi

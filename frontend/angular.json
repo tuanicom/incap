@@ -43,6 +43,9 @@
             "browser": "src/main.ts"
           },
           "configurations": {
+            "development": {
+              "sourceMap": true
+            },
             "production": {
               "fileReplacements": [
                 {
@@ -97,20 +100,9 @@
           }
         },
         "test": {
-          "builder": "@angular/build:karma",
+          "builder": "@angular/build:unit-test",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": ["zone.js", "@angular/localize/init"],
-            "tsConfig": "tsconfig.spec.json",
-            "karmaConfig": "karma.conf.js",
-            "styles": [
-              "src/styles.scss"
-            ],
-            "scripts": [],
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ]
+            "tsConfig": "tsconfig.spec.json"
           }
         },
         "lint": {

@@ -46,13 +46,13 @@ jobs:
             export COVERALLS_SERVICE_JOB_ID=$CIRCLE_WORKFLOW_JOB_ID
             export COVERALLS_FLAG_NAME="frontend"
             export COVERALLS_PARALLEL=true
-            cat frontend/coverage/lcov.info | sed 's/SF:/SF:frontend\//' | coveralls --verbose 
+            cat frontend/coverage/frontend/lcov.info | sed 's/SF:/SF:frontend\//' | coveralls --verbose 
           name: Upload coverage report to Coveralls
           working_directory: /home/circleci/project/incap
       - run:
           command: |
             curl -Ls https://coverage.codacy.com/get.sh > get.sh
-            source get.sh report -r coverage/lcov.info -t $CODACY_PROJECT_TOKEN --partial
+            source get.sh report -r coverage/frontend/lcov.info -t $CODACY_PROJECT_TOKEN --partial
           name: Upload coverage report to Codacy
           working_directory: /home/circleci/project/incap/frontend
       - save_cache:
@@ -66,13 +66,13 @@ jobs:
             /home/circleci/project/incap/
             # Must be relative path from root
           paths:
-            - frontend/coverage/lcov.info
+            - frontend/coverage/frontend/lcov.info
       - store_test_results:
           path: incap/frontend/tests-results
       - store_artifacts:
           path: incap/frontend/eslint.json
       - store_artifacts:
-          path: incap/frontend/coverage/index.html
+          path: incap/frontend/coverage/frontend/index.html
   build-backend:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor

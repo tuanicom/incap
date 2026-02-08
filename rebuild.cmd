@@ -18,15 +18,15 @@ IF "%build_frontend%"=="true" (
     pushd frontend
     call :RunCommand npm ci 
     call :RunCommand ng build --configuration production 
-    call :RunCommand ng test --no-watch --browsers ChromeHeadless --code-coverage 
-    call :RunCommand ng lint frontend --format json --output-file eslint.json
+    call :RunCommand ng test --no-watch --coverage --coverage-reporters=lcovonly --reporters=junit --output-file=tests-results/tests-results.xml
+    call :RunCommand ng lint --format json --output-file eslint.json
     popd
 )
 IF "%build_backend%"=="true" (
     pushd backend
     call :RunCommand npm ci 
     call :RunCommand npm run build 
-    call :RunCommand npm test 
+    call :RunCommand npm test -- --coverage
     call :RunCommand npm run lint -- --format=json --output-file=eslint.json     
     popd
 )

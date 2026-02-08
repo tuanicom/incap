@@ -4,8 +4,8 @@ if [ $# -eq 0 ] || [ "$1" = "frontend" ]; then
     cd frontend
     npm ci 
     ng build --configuration production 
-    ng test --no-watch --browsers ChromeHeadless --code-coverage 
-    ng lint frontend --format json --output-file eslint.json --eslint-config .eslintrc.json --force
+    ng test --no-watch --coverage --coverage-reporters=lcovonly --reporters=junit --output-file=tests-results/tests-results.xml
+    ng lint --format json --output-file eslint.json
     cd ..
 fi
 if [ $# -eq 0 ] ||  [ "$1" = "backend" ];
@@ -13,7 +13,7 @@ if [ $# -eq 0 ] ||  [ "$1" = "backend" ];
     cd backend
     npm ci 
     npm run build 
-    npm test 
+    npm test -- --coverage
     npm run lint -- --format=json --output-file=eslint.json
     cd ..
 fi

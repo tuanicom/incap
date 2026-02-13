@@ -18,7 +18,7 @@ const { getAllMock, getByIdMock, addMock, updateMock, deleteMock } = mocks;
 // Mock the controller class module
 vi.mock('./article.controller', () => {
   return {
-    ArticleController: vi.fn().mockImplementation(() => {
+    ArticleController: vi.fn(function() {
       return {
         getAll: mocks.getAllMock,
         getById: mocks.getByIdMock,

@@ -1,80 +1,115 @@
-import { expect } from 'chai';
-import sinon from 'sinon';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import request from 'supertest';
 import express from 'express';
 
-describe("ArticleRoutes", () => {
-  it("should have a default export router", async () => {
-    try {
-      const articleRoutes = await import('./article.routes');
-      expect(articleRoutes.default).to.exist;
-      expect(articleRoutes.default).to.be.an('object'); // Express Router is an object
-    } catch (err: any) {
-      // Log error for debugging but don't fail
-      console.log("ArticleRoutes import:", err.message);
-    }
+// Define the mocks using vi.hoisted to ensure they are available before imports
+const mocks = vi.hoisted(() => {
+  return {
+    getAllMock: vi.fn(),
+    getByIdMock: vi.fn(),
+    addMock: vi.fn(),
+    updateMock: vi.fn(),
+    deleteMock: vi.fn()
+  };
+});
+
+const { getAllMock, getByIdMock, addMock, updateMock, deleteMock } = mocks;
+
+// Mock the controller class module
+vi.mock('./article.controller', () => {
+  return {
+    ArticleController: vi.fn(function() {
+      return {
+        getAll: mocks.getAllMock,
+        getById: mocks.getByIdMock,
+        add: mocks.addMock,
+        update: mocks.updateMock,
+        delete: mocks.deleteMock
+      };
+    })
+  };
+});
+
+// Import the router after mocking
+import articleRoutes from './article.routes';
+
+describe('ArticleRoutes', () => {
+  let app: express.Application;
+
+  beforeEach(() => {
+    app = express();
+    app.use(express.json());
+    app.use('/', articleRoutes);
   });
 
-  it("should export ArticleRoutes class", async () => {
-    try {
-      const { ArticleRoutes } = await import('./article.routes');
-      expect(ArticleRoutes).to.exist;
-      expect(typeof ArticleRoutes).to.equal('function'); // Classes are functions
-    } catch (err: any) {
-      console.log("ArticleRoutes class check:", err.message);
-    }
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
-  it("should have router getter on ArticleRoutes instance", async () => {
-    try {
-      const { ArticleRoutes } = await import('./article.routes');
-      // Check that the class has the expected structure
-      const proto = ArticleRoutes.prototype;
-      expect(proto).to.exist;
-    } catch (err: any) {
-      console.log("ArticleRoutes prototype check:", err.message);
-    }
+  it('GET / should return all articles', async () => {
+    const mockArticles = [{ title: 'Article 1' }, { title: 'Article 2' }];
+    getAllMock.mockResolvedValue(mockArticles);
+
+    const response = await request(app).get('/');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(mockArticles);
+    expect(getAllMock).toHaveBeenCalled();
   });
 
-  it("should have declareRoutes method", async () => {
-    try {
-      const { ArticleRoutes } = await import('./article.routes');
-      expect(ArticleRoutes.prototype.declareRoutes).to.exist;
-      expect(typeof ArticleRoutes.prototype.declareRoutes).to.equal('function');
-    } catch (err: any) {
-      console.log("declareRoutes method check:", err.message);
-    }
+  it('GET / with category query should filter articles', async () => {
+    const mockArticles = [{ title: 'Article 1', category: 'Tech' }];
+    getAllMock.mockResolvedValue(mockArticles);
+
+    const response = await request(app).get('/?category=Tech');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(mockArticles);
+    expect(getAllMock).toHaveBeenCalledWith('Tech');
   });
 
-  it("should have router getter method", async () => {
-    try {
-      const { ArticleRoutes } = await import('./article.routes');
-      const descriptor = Object.getOwnPropertyDescriptor(ArticleRoutes.prototype, 'router');
-      expect(descriptor || Object.getOwnPropertyDescriptor(ArticleRoutes.prototype, '_router')).to.exist;
-    } catch (err: any) {
-      console.log("router property check:", err.message);
-    }
+  it('GET /:id should return a specific article', async () => {
+    const mockArticle = { title: 'Article 1' };
+    getByIdMock.mockResolvedValue(mockArticle);
+
+    const response = await request(app).get('/123');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(mockArticle);
+    expect(getByIdMock).toHaveBeenCalledWith('123');
   });
 
-  it("should create a valid router when instantiated with dependencies", async () => {
-    try {
-      // Just test the structure, don't actually instantiate with real Mongoose
-      const { ArticleRoutes } = await import('./article.routes');
-      expect(ArticleRoutes).to.exist;
-      expect(ArticleRoutes.prototype.constructor).to.equal(ArticleRoutes);
-    } catch (err: any) {
-      console.log("Router instantiation structure check:", err.message);
-    }
+  it('POST / should create a new article', async () => {
+    const newArticle = { title: 'New Article' };
+    const savedArticle = { _id: '1', ...newArticle };
+    addMock.mockResolvedValue(savedArticle);
+
+    const response = await request(app).post('/').send(newArticle);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(savedArticle);
+    expect(addMock).toHaveBeenCalledWith(newArticle);
   });
 
-  it("should define route handlers correctly", async () => {
-    try {
-      const { ArticleRoutes } = await import('./article.routes');
-      const source = ArticleRoutes.toString();
+  it('PUT / should update an article', async () => {
+    const updateData = { _id: '1', title: 'Updated Article' };
+    updateMock.mockResolvedValue(updateData);
 
-      // Check that common route declarations are present in the code
-      expect(source.includes('route') || source.includes('router')).to.be.true;
-    } catch (err: any) {
-      console.log("Route handler check:", err.message);
-    }
+    const response = await request(app).put('/').send(updateData);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(updateData);
+    expect(updateMock).toHaveBeenCalledWith(updateData);
+  });
+
+  it('DELETE /:id should delete an article', async () => {
+    const deletedArticle = { _id: '1', title: 'Deleted Article' };
+    deleteMock.mockResolvedValue(deletedArticle);
+
+    const response = await request(app).delete('/1');
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(deletedArticle);
+    expect(deleteMock).toHaveBeenCalledWith('1');
   });
 });

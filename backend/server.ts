@@ -7,6 +7,7 @@ import morgan from "morgan";
 import CategoryRoutes from "./categories/category.routes";
 import UserRoutes from "./users/user.routes";
 import ArticleRoutes from "./articles/article.routes";
+import CommentRoutes from "./comments/comment.routes";
 
 /**
  * The server.
@@ -64,6 +65,7 @@ export class Server {
         this.router.use('/categories', CategoryRoutes);
         this.router.use('/users', UserRoutes);
         this.router.use('/articles', ArticleRoutes);
+        this.router.use('/', CommentRoutes);
     }
 }
 

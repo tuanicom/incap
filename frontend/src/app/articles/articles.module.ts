@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddComponent } from './components/add/add.component';
 import { EditComponent } from './components/edit/edit.component';
 import { ListComponent } from './components/list/list.component';
+import { CommentListComponent } from '../comments/comment-list/comment-list.component';
 import { ArticleService } from './services/article.service';
 
 
@@ -22,5 +23,6 @@ import { ArticleService } from './services/article.service';
         ArticlesComponent,
         ListComponent,
         EditComponent,
+        CommentListComponent,
         AddComponent], providers: [ArticleService, provideHttpClient(withInterceptorsFromDi())] })
 export class ArticlesModule { }

@@ -5,7 +5,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
@@ -37,7 +36,6 @@ describe('Articles > EditComponent', () => {
             imports: [FontAwesomeModule,
                 ReactiveFormsModule,
                 BrowserModule,
-                NgbModule,
                 RouterModule.forRoot([], {}),
                 EditComponent],
             providers: [

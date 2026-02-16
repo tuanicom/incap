@@ -31,11 +31,7 @@
             "styles": [
               "src/styles.scss",
               {
-                "input": "./node_modules/bootstrap/dist/css/bootstrap.css",
-                "inject": true
-              },
-              {
-                "input": "./node_modules/font-awesome/css/font-awesome.css",
+                "input": "./node_modules/primeicons/primeicons.css",
                 "inject": true
               }
             ],

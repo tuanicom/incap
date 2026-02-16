@@ -1,14 +1,14 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">Incap</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<nav class="bg-gray-900 text-white shadow-lg">
+  <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+    <a href="/" class="text-xl font-bold text-white hover:text-gray-200 transition-colors">Incap</a>
+    <ul class="flex gap-6 items-center">
+      <!-- Navigation items can be added here -->
+    </ul>
+  </div>
+</nav>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-      </ul>
-    </div>
-  </nav>
-<div>
-  <router-outlet></router-outlet>
+<div class="min-h-screen bg-gray-100">
+  <div class="max-w-7xl mx-auto px-4 py-8">
+    <router-outlet></router-outlet>
+  </div>
 </div>

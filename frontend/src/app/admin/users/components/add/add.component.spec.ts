@@ -5,7 +5,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
@@ -35,7 +34,6 @@ describe('Users > AddComponent', () => {
             imports: [FontAwesomeModule,
                 ReactiveFormsModule,
                 BrowserModule,
-                NgbModule,
                 AddComponent],
             providers: [
                 { provide: UserService, useValue: userServiceSpy },

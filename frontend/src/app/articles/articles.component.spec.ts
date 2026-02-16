@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import * as Observable from 'rxjs';
 
 import { ArticlesComponent } from './articles.component';
@@ -22,7 +21,6 @@ describe('ArticlesComponent', () => {
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        NgbModule,
         ArticlesComponent],
     providers: [
         {

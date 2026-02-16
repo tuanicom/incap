@@ -9,14 +9,12 @@ import { UserService } from './services/user.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 
 
 @NgModule({ declarations: [
     ], imports: [CommonModule,
         ReactiveFormsModule,
-        NgbModule,
         RouterModule,
         UsersRoutingModule,
         FontAwesomeModule,

@@ -1,37 +1,46 @@
-<table class="table table-striped table-hover table-sm caption-top">
-  <caption>Categories list</caption>
-  <thead class="thead-dark">
-    <tr>
-      <th id="categoryId">Title</th>
-      <th id="categoryDescription">Description</th>
-      <th id="categoryActions">&nbsp;</th>
-    </tr>
-  </thead>
-  <tbody class="table-group-divider">
-    @for (category of categories$ | async; track category) {
+<div class="overflow-x-auto">
+  <table class="w-full border-collapse border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+    <caption class="caption-top mb-4 text-lg font-semibold text-gray-900">Categories list</caption>
+    <thead class="bg-gray-50 border-b border-gray-200">
       <tr>
-        <td>{{category.title}}</td>
-        <td>{{category.description}}</td>
-        <td>
-          <div class="btn-group d-md-flex justify-content-md-end">
-            <button class="btn btn-light flex-shrink-1" (click)="editCategory(category._id)">
-              <fa-icon [icon]="icons['edit']"></fa-icon>
+        <th id="categoryId" class="px-6 py-3 text-left text-sm font-medium text-gray-900">Title</th>
+        <th id="categoryDescription" class="px-6 py-3 text-left text-sm font-medium text-gray-900">Description</th>
+        <th id="categoryActions" class="px-6 py-3 text-right text-sm font-medium text-gray-900">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="divide-y divide-gray-200">
+      @for (category of categories$ | async; track category) {
+        <tr class="hover:bg-gray-50 transition-colors">
+          <td class="px-6 py-4 text-sm text-gray-900">{{category.title}}</td>
+          <td class="px-6 py-4 text-sm text-gray-700">{{category.description}}</td>
+          <td class="px-6 py-4 text-right flex gap-2 justify-end">
+            <button 
+              (click)="editCategory(category._id)"
+              class="inline-flex items-center justify-center rounded-md px-2 py-1 bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors"
+              title="Edit">
+              <fa-icon [icon]="icons['edit']" class="w-4 h-4"></fa-icon>
             </button>
-            <button class="btn btn-light flex-shrink-1" (click)="deleteCategory(category._id)">
-              <fa-icon [icon]="icons['trash']"></fa-icon>
+            <button 
+              (click)="deleteCategory(category._id)"
+              class="inline-flex items-center justify-center rounded-md px-2 py-1 bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors"
+              title="Delete">
+              <fa-icon [icon]="icons['trash']" class="w-4 h-4"></fa-icon>
             </button>
-          </div>
+          </td>
+        </tr>
+      }
+    </tbody>
+    <tfoot class="bg-gray-50 border-t border-gray-200">
+      <tr>
+        <td colspan="3" class="px-6 py-4">
+          <button 
+            (click)="addCategory()"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors font-medium">
+            <fa-icon [icon]="icons['plus']" class="w-4 h-4"></fa-icon>
+            Add Category
+          </button>
         </td>
       </tr>
-    }
-  </tbody>
-  <tfoot>
-    <tr>
-      <td colspan="3">
-        <button class="btn btn-light" (click)="addCategory()">
-          <fa-icon [icon]="icons['plus']"></fa-icon>
-        </button>
-      </td>
-    </tr>
-  </tfoot>
-</table>
+    </tfoot>
+  </table>
+</div>

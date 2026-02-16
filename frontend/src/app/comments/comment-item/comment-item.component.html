@@ -1,19 +1,41 @@
 <!-- eslint-disable @angular-eslint/template/prefer-control-flow -->
-<div class="card p-2">
+<div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
+  <!-- View mode -->
   <div *ngIf="!editing">
-    <div class="comment-text">{{ comment.text }}</div>
-    <div class="comment-meta text-muted small">by {{ comment.authorId }} • {{ comment.createdAt | date:'short' }}</div>
-    <div class="mt-2">
-      <button class="btn btn-link" (click)="startEdit()">Edit</button>
-      <button class="btn btn-link text-danger" (click)="remove()">Delete</button>
+    <div class="text-gray-900 text-sm mb-2">{{ comment.text }}</div>
+    <div class="text-gray-500 text-xs mb-4">by {{ comment.authorId }} • {{ comment.createdAt | date:'short' }}</div>
+    <div class="flex gap-2">
+      <button
+        (click)="startEdit()"
+        class="text-blue-600 hover:text-blue-800 underline text-sm font-medium transition-colors">
+        Edit
+      </button>
+      <button
+        (click)="remove()"
+        class="text-red-600 hover:text-red-800 underline text-sm font-medium transition-colors">
+        Delete
+      </button>
     </div>
   </div>
 
+  <!-- Edit mode -->
   <div *ngIf="editing">
-    <textarea class="form-control" rows="3" [(ngModel)]="editText"></textarea>
-    <div class="mt-2">
-      <button class="btn btn-primary" (click)="save()">Save</button>
-      <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    <textarea
+      class="form-control block w-full mb-3"
+      rows="3"
+      [(ngModel)]="editText"
+      placeholder="Edit your comment..."></textarea>
+    <div class="flex gap-2">
+      <button
+        (click)="save()"
+        class="btn btn-primary">
+        Save
+      </button>
+      <button
+        (click)="cancel()"
+        class="btn btn-secondary">
+        Cancel
+      </button>
     </div>
   </div>
 </div>

@@ -7,7 +7,6 @@ import { ListComponent } from '../components/list/list.component';
 import { EditComponent } from '../components/edit/edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF } from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
@@ -39,7 +38,6 @@ describe('ArticleService', () => {
             imports: [FontAwesomeModule,
                 ReactiveFormsModule,
                 BrowserModule,
-                NgbModule,
                 RouterModule.forRoot([], {}),
                 ArticlesComponent,
                 ListComponent,

@@ -4,7 +4,6 @@ import { ListComponent } from './components/list/list.component';
 import { EditComponent } from './components/edit/edit.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { CategoryService } from './services/category.service';
 import { APP_BASE_HREF } from '@angular/common';
@@ -19,7 +18,6 @@ describe('CategoriesComponent', () => {
     imports: [FontAwesomeModule,
         ReactiveFormsModule,
         BrowserModule,
-        NgbModule,
         RouterModule.forRoot([], {}),
         CategoriesComponent,
         ListComponent,

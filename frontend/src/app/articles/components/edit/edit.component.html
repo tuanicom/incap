@@ -9,3 +9,6 @@
   <button type="submit" class="btn btn-primary">Submit</button>
   <button (click)="goBackToList()" class="btn btn-secondary">Cancel</button>
 </form>
+
+  <!-- Comments -->
+  <app-comment-list [articleId]="(article$ | async)?._id"></app-comment-list>

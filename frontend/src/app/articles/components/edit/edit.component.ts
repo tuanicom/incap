@@ -5,12 +5,13 @@ import { Article } from '../../models/article';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { CommentListComponent } from '../../../comments/comment-list/comment-list.component';
 
 @Component({
     selector: 'app-articles-edit',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.scss'],
-    imports: [ReactiveFormsModule, CommonModule]
+    imports: [ReactiveFormsModule, CommonModule, CommentListComponent]
 })
 export class EditComponent implements OnInit {
   public article$: Observable<Article>;

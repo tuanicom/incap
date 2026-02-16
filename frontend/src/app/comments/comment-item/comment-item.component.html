@@ -1,0 +1,19 @@
+<!-- eslint-disable @angular-eslint/template/prefer-control-flow -->
+<div class="card p-2">
+  <div *ngIf="!editing">
+    <div class="comment-text">{{ comment.text }}</div>
+    <div class="comment-meta text-muted small">by {{ comment.authorId }} • {{ comment.createdAt | date:'short' }}</div>
+    <div class="mt-2">
+      <button class="btn btn-link" (click)="startEdit()">Edit</button>
+      <button class="btn btn-link text-danger" (click)="remove()">Delete</button>
+    </div>
+  </div>
+
+  <div *ngIf="editing">
+    <textarea class="form-control" rows="3" [(ngModel)]="editText"></textarea>
+    <div class="mt-2">
+      <button class="btn btn-primary" (click)="save()">Save</button>
+      <button class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+</div>

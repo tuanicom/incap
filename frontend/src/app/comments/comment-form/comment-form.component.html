@@ -1,7 +1,17 @@
-<div class="comment-form">
-  <label for="commentText">Add a comment</label>
-  <textarea id="commentText" class="form-control" rows="3" [(ngModel)]="text" aria-label="Comment text"></textarea>
-  <div class="mt-2">
-    <button class="btn btn-primary" (click)="submit()">Submit</button>
+<div class="comment-form space-y-3">
+  <label for="commentText" class="block text-sm font-medium text-gray-700">Add a comment</label>
+  <textarea 
+    id="commentText" 
+    class="form-control block w-full" 
+    rows="3" 
+    [(ngModel)]="text" 
+    aria-label="Comment text"
+    placeholder="Share your thoughts..."></textarea>
+  <div class="flex justify-end">
+    <button 
+      (click)="submit()"
+      class="btn btn-primary">
+      Submit
+    </button>
   </div>
 </div>

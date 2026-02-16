@@ -1,14 +1,37 @@
-<h5 class="card-title">Editing {{ (article$ | async)?.title }}</h5>
-<form [formGroup]="editArticleForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="articleContent">
-      Content:
-    </label>
-    <textarea class="form-control" id="articleContent"  formControlName="content" rows="3"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-  <button (click)="goBackToList()" class="btn btn-secondary">Cancel</button>
-</form>
+<div class="max-w-2xl ">
+  <h1 class="text-2xl font-bold text-gray-900 mb-6">Editing {{ (article$ | async)?.title }}</h1>
+  
+  <form [formGroup]="editArticleForm" (ngSubmit)="onSubmit()" class="space-y-6 mb-8">
+    <div class="form-group">
+      <label for="articleContent" class="block text-sm font-medium text-gray-700 mb-2">
+        Content:
+      </label>
+      <textarea 
+        class="form-control block w-full" 
+        id="articleContent" 
+        formControlName="content" 
+        rows="6"
+        placeholder="Enter article content..."></textarea>
+    </div>
+    
+    <div class="flex gap-3">
+      <button 
+        type="submit" 
+        class="btn btn-primary">
+        Submit
+      </button>
+      <button 
+        type="button"
+        (click)="goBackToList()" 
+        class="btn btn-secondary">
+        Cancel
+      </button>
+    </div>
+  </form>
 
-  <!-- Comments -->
-  <app-comment-list [articleId]="(article$ | async)?._id"></app-comment-list>
+  <!-- Comments Section -->
+  <div class="border-t border-gray-200 pt-8 mt-8">
+    <h2 class="text-xl font-bold text-gray-900 mb-6">Comments</h2>
+    <app-comment-list [articleId]="(article$ | async)?._id"></app-comment-list>
+  </div>
+</div>

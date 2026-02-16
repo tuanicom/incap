@@ -1,14 +1,14 @@
 <div class="comment-form space-y-3">
   <label for="commentText" class="block text-sm font-medium text-gray-700">Add a comment</label>
-  <textarea 
-    id="commentText" 
-    class="form-control block w-full" 
-    rows="3" 
-    [(ngModel)]="text" 
+  <textarea
+    id="commentText"
+    class="form-control block w-full"
+    rows="3"
+    [(ngModel)]="text"
     aria-label="Comment text"
     placeholder="Share your thoughts..."></textarea>
   <div class="flex justify-end">
-    <button 
+    <button
       (click)="submit()"
       class="btn btn-primary">
       Submit

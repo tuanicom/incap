@@ -5,12 +5,12 @@
     <div class="text-gray-900 text-sm mb-2">{{ comment.text }}</div>
     <div class="text-gray-500 text-xs mb-4">by {{ comment.authorId }} • {{ comment.createdAt | date:'short' }}</div>
     <div class="flex gap-2">
-      <button 
+      <button
         (click)="startEdit()"
         class="text-blue-600 hover:text-blue-800 underline text-sm font-medium transition-colors">
         Edit
       </button>
-      <button 
+      <button
         (click)="remove()"
         class="text-red-600 hover:text-red-800 underline text-sm font-medium transition-colors">
         Delete
@@ -20,18 +20,18 @@
 
   <!-- Edit mode -->
   <div *ngIf="editing">
-    <textarea 
-      class="form-control block w-full mb-3" 
-      rows="3" 
+    <textarea
+      class="form-control block w-full mb-3"
+      rows="3"
       [(ngModel)]="editText"
       placeholder="Edit your comment..."></textarea>
     <div class="flex gap-2">
-      <button 
+      <button
         (click)="save()"
         class="btn btn-primary">
         Save
       </button>
-      <button 
+      <button
         (click)="cancel()"
         class="btn btn-secondary">
         Cancel

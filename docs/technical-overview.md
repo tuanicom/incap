@@ -1,5 +1,9 @@
 # Technical Overview
 
+## Nx Monorepo Migration
+
+This project is now managed as an Nx monorepo. All apps are under `apps/` and all builds, tests, and linting are run via Nx CLI. See [docs/nx-monorepo-migration.md](docs/nx-monorepo-migration.md) for details.
+
 ## Architecture Overview
 
 INCAP follows a modern, cloud-native architecture with clear separation between frontend and backend services.

@@ -1,5 +1,15 @@
 # Backend Technical Details
 
+## Nx Monorepo Migration
+
+The backend is now part of an Nx monorepo. Build, test, and lint using Nx CLI:
+
+- Build: `npx nx build backend`
+- Test: `npx nx test backend`
+- Lint: `npx nx lint backend`
+
+See [docs/nx-monorepo-migration.md](docs/nx-monorepo-migration.md) for details.
+
 ## Overview
 
 The INCAP backend is a RESTful API server built with Express.js and TypeScript, providing complete CRUD operations for articles, categories, and users. It demonstrates a clean three-layer architecture with proper separation of concerns.

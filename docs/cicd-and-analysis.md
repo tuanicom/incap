@@ -52,9 +52,31 @@ INCAP implements a comprehensive DevOps strategy with multiple quality gates, au
     └──────────────────────────────┘
 ```
 
-## AppVeyor Configuration
 
-### Build Environment
+## CircleCI Configuration
+
+**File**: `.circleci/config.yml`
+
+CircleCI runs on every push and pull request. It builds, tests, and lints both frontend and backend using Nx CLI. It also uploads coverage to Coveralls and Codacy.
+
+**Main steps:**
+- Install dependencies with `npm ci --legacy-peer-deps`
+- Build, test, and lint frontend and backend via `npx nx ...`
+- Upload coverage reports to Coveralls and Codacy
+- Store test results and artifacts
+
+## GitHub Actions Configuration
+
+**File**: `.github/workflows/docker-image.yml`
+
+GitHub Actions builds and publishes Docker images for both frontend and backend on push, PR, or release. Images are tagged and pushed to Docker Hub.
+
+**Main steps:**
+- Checkout code
+- Build Docker images for `apps/frontend` and `apps/backend`
+- Login to Docker Hub and push images
+
+## AppVeyor Configuration
 
 **File**: `appveyor.yml`
 

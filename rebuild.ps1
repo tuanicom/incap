@@ -1,28 +1,48 @@
-$ScriptBlock = {
-    param($target,$script_path)
-    Set-Location $script_path
-    .\rebuild.cmd $target
-}
-$build_front = Start-Job -ScriptBlock $ScriptBlock -ArgumentList "frontend",$PSScriptRoot -Name "Build.frontend" 
-$build_back  = Start-Job -ScriptBlock $ScriptBlock -ArgumentList "backend",$PSScriptRoot -Name "Build.backend" 
-Get-Job | Out-Host
-$jobs = @($build_front,$build_back)
-while ($jobs.Length -gt 0) {
-    $jid = @()
-    foreach ($j in $jobs) { $jid += $j.Id }
-    
-    Wait-job -Id $jid -Any -Timeout 6000
+param(
+    [string]$Target = "all"
+)
 
-    $remaining = @()
-    $jid = @()
-    foreach ($j in $jobs) {
-        if ($j.State -ne "Running") {
-            Receive-Job -Job $j
-        }
-        else {
-            $jid += $j.Id
-            $remaining += $j
-        }
-    }
-    $jobs = $remaining
+# Build script using Nx monorepo
+Write-Host "Installing dependencies..." -ForegroundColor Cyan
+npm ci --legacy-peer-deps
+if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+
+if ($Target -eq "all" -or $Target -eq "") {
+    Write-Host "Building all apps with Nx..." -ForegroundColor Cyan
+    npm run build
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    
+    npm run test
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    
+    npm run lint
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 }
+elseif ($Target -eq "frontend") {
+    Write-Host "Building frontend with Nx..." -ForegroundColor Cyan
+    npx nx build frontend
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    
+    npx nx test frontend
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    
+    npx nx lint frontend
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+}
+elseif ($Target -eq "backend") {
+    Write-Host "Building backend with Nx..." -ForegroundColor Cyan
+    npx nx build backend
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    
+    npx nx test backend
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+    
+    npx nx lint backend
+    if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+}
+else {
+    Write-Host "Usage: .\rebuild.ps1 [all|frontend|backend]" -ForegroundColor Yellow
+    exit 1
+}
+
+Write-Host "Build completed successfully!" -ForegroundColor Green

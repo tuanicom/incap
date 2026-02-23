@@ -2,10 +2,10 @@
 setlocal EnableDelayedExpansion
 set "build_frontend=false"
 set "build_backend=false"
+set "build_all=false"
 
-if /I "%1"=="" (
-    set "build_frontend=true"
-    set "build_backend=true"
+if "%1"=="" (
+    set "build_all=true"
 )
 if /I "%1"=="frontend" (
     set "build_frontend=true"
@@ -13,26 +13,40 @@ if /I "%1"=="frontend" (
 if /I "%1"=="backend" (
     set "build_backend=true"
 )
+if /I "%1"=="all" (
+    set "build_all=true"
+)
 
+echo Installing dependencies...
+call :RunCommand npm ci --legacy-peer-deps
+IF %errorlevel% NEQ 0 goto :eof
+
+IF "%build_all%"=="true" (
+    echo Building all apps with Nx...
+    call :RunCommand npm run build
+    call :RunCommand npm run test
+    call :RunCommand npm run lint
+)
 IF "%build_frontend%"=="true" (
-    pushd frontend
-    call :RunCommand npm ci 
-    call :RunCommand ng build --configuration production 
-    call :RunCommand ng test --no-watch --coverage --coverage-reporters=lcovonly --reporters=junit --output-file=tests-results/tests-results.xml
-    call :RunCommand ng lint --format json --output-file eslint.json
-    popd
+    echo Building frontend with Nx...
+    call :RunCommand npx nx build frontend
+    call :RunCommand npx nx test frontend
+    call :RunCommand npx nx lint frontend
 )
 IF "%build_backend%"=="true" (
-    pushd backend
-    call :RunCommand npm ci 
-    call :RunCommand npm run build 
-    call :RunCommand npm test -- --coverage
-    call :RunCommand npm run lint -- --format=json --output-file=eslint.json     
-    popd
+    echo Building backend with Nx...
+    call :RunCommand npx nx build backend
+    call :RunCommand npx nx test backend
+    call :RunCommand npx nx lint backend
 )
+
 goto :eof
 
 :RunCommand
 echo ------------- Run command: %* -------------
 call %*
-IF %errorlevel% NEQ 0 cmd /k
+IF %errorlevel% NEQ 0 (
+    echo Command failed with error level %errorlevel%
+    exit /b %errorlevel%
+)
+goto :eof

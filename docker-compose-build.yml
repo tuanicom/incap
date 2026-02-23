@@ -3,10 +3,10 @@ version: '3' # specify docker-compose version
 # Define the services/containers to be run
 services:
   frontend: # name of the first service
-    build: frontend # specify the directory of the Dockerfile
+    build: apps/frontend # specify the directory of the Dockerfile with Nx-based build
 
   backend: #name of the second service
-    build: backend # specify the directory of the Dockerfile
+    build: apps/backend # specify the directory of the Dockerfile with Nx-based build
 
   mongodb: # name of the third service
     image: mongo # specify image to build container from

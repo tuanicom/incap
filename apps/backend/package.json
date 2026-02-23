@@ -1,36 +1,11 @@
 {
-  "name": "incap_backend",
+  "name": "@incap/backend",
   "version": "1.0.0",
   "description": "Back-end part of the Incap project",
-  "main": "dist/server.js",
-  "scripts": {
-    "build": "esbuild server.ts --outdir=dist --bundle --platform=node",
-    "lint": "eslint --config eslint.config.mjs",
-    "start": "node dist/server.js",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "coverage": "vitest run --coverage",
-    "snyk": "snyk auth & snyk wizard",
-    "snyk-test": "snyk test",
-    "snyk-protect": "snyk-protect",
-    "prepare": "npm run snyk-protect"
-  },
+  "main": "dist/apps/backend/server.js",
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tuanicom/incap.git"
-  },
-  "keywords": [
-    "expressjs",
-    "nodejs",
-    "mean"
-  ],
   "author": "Tuani SIMETE",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tuanicom/incap/issues"
-  },
-  "homepage": "https://github.com/tuanicom/incap#readme",
   "dependencies": {
     "@snyk/protect": "^1.1302.1",
     "body-parser": "^2.2.2",

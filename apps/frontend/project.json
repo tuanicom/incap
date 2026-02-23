@@ -6,7 +6,7 @@
   "prefix": "app",
   "targets": {
     "build": {
-      "executor": "@angular-eslint/builder:browser",
+      "executor": "@nx/angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/frontend",
@@ -20,19 +20,18 @@
       },
       "configurations": {
         "production": {
-          "budgets": [
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "buildOptimizer": true,
+          "fileReplacements": [
             {
-              "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
-            },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "4kb"
+              "replace": "src/environments/environment.ts",
+              "with": "src/environments/environment.prod.ts"
             }
-          ],
-          "outputHashing": "all"
+          ]
         },
         "development": {
           "buildOptimizer": false,
@@ -46,7 +45,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular/build:dev-server",
+      "executor": "@nx/angular:dev-server",
       "buildTarget": "frontend:build",
       "configurations": {
         "production": {
@@ -59,13 +58,13 @@
       "defaultConfiguration": "development"
     },
     "extract-i18n": {
-      "executor": "@angular/build:extract-i18n",
+      "executor": "@nx/angular:extract-i18n",
       "options": {
         "buildTarget": "frontend:build"
       }
     },
     "test": {
-      "executor": "@angular/build:karma",
+      "executor": "@nx/angular:karma",
       "outputs": ["{workspaceRoot}/coverage/apps/frontend"],
       "options": {
         "polyfills": ["zone.js", "zone.js/testing"],

@@ -1,37 +1,10 @@
 {
-  "name": "incap_frontend",
+  "name": "@incap/frontend",
   "version": "1.0.0",
   "description": "Front-end part of the Incap project",
-  "scripts": {
-    "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
-    "build": "ng build --configuration production",
-    "test": "ng test",
-    "test:unit": "vitest run --coverage",
-    "coverage": "vitest run --coverage",
-    "test:coverage": "ng test --watch=false --coverage --coverage-reporters=lcovonly",
-    "lint": "ng lint",
-    "snyk": "snyk auth & snyk wizard",
-    "snyk-test": "snyk test",
-    "snyk-protect": "snyk-protect",
-    "prepare": "npm run snyk-protect",
-    "preinstall": "npx npm-force-resolutions"
-  },
   "private": true,
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tuanicom/incap.git"
-  },
-  "keywords": [
-    "angular",
-    "mean"
-  ],
   "author": "Tuani SIMETE",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tuanicom/incap/issues"
-  },
-  "homepage": "https://github.com/tuanicom/incap#readme",
   "dependencies": {
     "@angular/animations": "21.1.1",
     "@angular/common": "21.1.1",

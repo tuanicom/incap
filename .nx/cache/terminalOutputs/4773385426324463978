@@ -1,0 +1,642 @@
+> ng build --configuration production
+
+[33m❯[39m Building...
+[32m✔[39m Building...
+Application bundle generation failed. [5.377 seconds] - 2026-02-23T20:25:17.581Z
+
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mNG8107: The left side of this optional chain operation does not include 'null' or 'undefined' in its type, therefore the '?.' operator can be replaced with the '.' operator.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment-list/comment-list.component.html:5:24:
+[37m      5 │   <div *ngIf="comments?.[32mlength[37m === 0" class="text-center py-6 text-...
+        ╵                         [32m~~~~~~[0m
+
+  Warning occurs in the template of component CommentListComponent.
+
+    src/app/comments/comment-list/comment-list.component.ts:10:15:
+[37m      10 │   templateUrl: [32m'./comment-list.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTypeScript compiler options 'target' and 'useDefineForClassFields' are set to 'ES2022' and 'false' respectively by the Angular CLI.[0m [1m[35m[plugin angular-compiler][0m
+
+    tsconfig.app.json:0:0:
+[37m      0 │ [32m[37m
+        ╵ [32m^[0m
+
+  To control ECMA version and features use the Browserslist configuration. For more information, see [4mhttps://angular.dev/tools/cli/build#configuring-browser-compatibility[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '@angular/common/http' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/categories.module.ts:3:58:
+[37m      3 │ ...deHttpClient, withInterceptorsFromDi } from [32m'@angular/common/http'[37m;
+        ╵                                                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/components/add/add.component.ts:25:13:
+[37m      25 │       title: [32mthis.addCategoryForm.get('title')[37m.value,
+         ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/components/add/add.component.ts:26:19:
+[37m      26 │       description: [32mthis.addCategoryForm.get('description')[37m.value
+         ╵                    [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'category$' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/components/edit/edit.component.ts:16:9:
+[37m      16 │   public [32mcategory$[37m: Observable<Category>;
+         ╵          [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/components/edit/edit.component.ts:27:34:
+[37m      27 │       this.getCategoryById(params.[32mid[37m);
+         ╵                                   [32m~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/components/edit/edit.component.ts:35:8:
+[37m      35 │         [32mthis.editCategoryForm.get('description')[37m.setValue(category...
+         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null' is not assignable to type 'string'.
+  Type 'null' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/components/edit/edit.component.ts:42:6:
+[37m      42 │       [32mcategory.description[37m = this.editCategoryForm.controls.descri...
+         ╵       [32m~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property '_id' does not exist on type 'Category'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/components/list/list.component.html:18:45:
+[37m      18 │               (click)="editCategory(category.[32m_id[37m)"
+         ╵                                              [32m~~~[0m
+
+  Error occurs in the template of component ListComponent.
+
+    src/app/admin/categories/components/list/list.component.ts:12:17:
+[37m      12 │     templateUrl: [32m'./list.component.html'[37m,
+         ╵                  [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property '_id' does not exist on type 'Category'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/components/list/list.component.html:24:47:
+[37m      24 │               (click)="deleteCategory(category.[32m_id[37m)"
+         ╵                                                [32m~~~[0m
+
+  Error occurs in the template of component ListComponent.
+
+    src/app/admin/categories/components/list/list.component.ts:12:17:
+[37m      12 │     templateUrl: [32m'./list.component.html'[37m,
+         ╵                  [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'categories$' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/components/list/list.component.ts:17:9:
+[37m      17 │   public [32mcategories$[37m: Observable<Category[]>;
+         ╵          [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '@angular/common/http' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/services/category.service.ts:2:27:
+[37m      2 │ import { HttpClient } from [32m'@angular/common/http'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'src/app/app.settings' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/services/category.service.ts:5:35:
+[37m      5 │ import { AppSettingsService } from [32m'src/app/app.settings'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/services/category.service.ts:15:11:
+[37m      15 │     return [32mthis.appSettings[37m.settings.categoriesApiUrl;
+         ╵            [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/services/category.service.ts:19:11:
+[37m      19 │     return [32mthis.http[37m.get<Category[]>(this.apiUrl);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/services/category.service.ts:23:11:
+[37m      23 │     return [32mthis.http[37m.get<Category>(`${this.apiUrl}/${id}`);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/services/category.service.ts:27:11:
+[37m      27 │     return [32mthis.http[37m.post<Category>(this.apiUrl, category);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/services/category.service.ts:31:11:
+[37m      31 │     return [32mthis.http[37m.put<Category>(this.apiUrl, category);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/categories/services/category.service.ts:35:11:
+[37m      35 │     return [32mthis.http[37m.delete(`${this.apiUrl}/${id}`);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/components/add/add.component.ts:24:12:
+[37m      24 │       name: [32mthis.addUserForm.get('name')[37m.value,
+         ╵             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property '_id' does not exist on type 'User'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/components/list/list.component.html:16:39:
+[37m      16 │               (click)="deleteUser(user.[32m_id[37m)"
+         ╵                                        [32m~~~[0m
+
+  Error occurs in the template of component ListComponent.
+
+    src/app/admin/users/components/list/list.component.ts:12:17:
+[37m      12 │     templateUrl: [32m'./list.component.html'[37m,
+         ╵                  [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'users$' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/components/list/list.component.ts:17:9:
+[37m      17 │   public [32musers$[37m: Observable<User[]>;
+         ╵          [32m~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '@angular/common/http' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/services/user.service.ts:2:27:
+[37m      2 │ import { HttpClient } from [32m'@angular/common/http'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'src/app/app.settings' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/services/user.service.ts:5:35:
+[37m      5 │ import { AppSettingsService } from [32m'src/app/app.settings'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/services/user.service.ts:15:11:
+[37m      15 │     return [32mthis.appSettings[37m.settings.usersApiUrl;
+         ╵            [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/services/user.service.ts:19:11:
+[37m      19 │     return [32mthis.http[37m.get<User[]>(this.apiUrl);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/services/user.service.ts:23:11:
+[37m      23 │     return [32mthis.http[37m.get<User>(`${this.apiUrl}/${id}`);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/services/user.service.ts:27:11:
+[37m      27 │     return [32mthis.http[37m.post<User>(this.apiUrl, user);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/services/user.service.ts:31:11:
+[37m      31 │     return [32mthis.http[37m.put<User>(this.apiUrl, user);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/services/user.service.ts:35:11:
+[37m      35 │     return [32mthis.http[37m.delete(`${this.apiUrl}/${id}`);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '@angular/common/http' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/admin/users/users.module.ts:9:58:
+[37m      9 │ ...deHttpClient, withInterceptorsFromDi } from [32m'@angular/common/http'[37m;
+        ╵                                                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '@angular/common/http' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.module.ts:3:58:
+[37m      3 │ ...deHttpClient, withInterceptorsFromDi } from [32m'@angular/common/http'[37m;
+        ╵                                                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '@angular/common/http' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.settings.ts:2:27:
+[37m      2 │ import { HttpClient } from [32m'@angular/common/http'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'categoriesApiUrl' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.settings.ts:5:2:
+[37m      5 │   [32mcategoriesApiUrl[37m: string;
+        ╵   [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'usersApiUrl' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.settings.ts:6:2:
+[37m      6 │   [32musersApiUrl[37m: string;
+        ╵   [32m~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'articlesApiUrl' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.settings.ts:7:2:
+[37m      7 │   [32marticlesApiUrl[37m: string;
+        ╵   [32m~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.settings.ts:26:4:
+[37m      26 │     [32mthis.http[37m.get('assets/settings.json').subscribe((res: AppSetti...
+         ╵     [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'category' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/articles.component.ts:12:9:
+[37m      12 │   public [32mcategory[37m: string;
+         ╵          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS4111: Property 'category' comes from an index signature, so it must be accessed with ['category'].[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/articles.component.ts:16:29:
+[37m      16 │       this.category = params.[32mcategory[37m;
+         ╵                              [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '@angular/common/http' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/articles.module.ts:6:58:
+[37m      6 │ ...deHttpClient, withInterceptorsFromDi } from [32m'@angular/common/http'[37m;
+        ╵                                                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'category' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/add/add.component.ts:17:10:
+[37m      17 │   private [32mcategory[37m: string;
+         ╵           [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/add/add.component.ts:20:4:
+[37m      20 │     [32mthis.route.parent[37m.params.subscribe((params: Params) => {
+         ╵     [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS4111: Property 'category' comes from an index signature, so it must be accessed with ['category'].[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/add/add.component.ts:21:29:
+[37m      21 │       this.category = params.[32mcategory[37m;
+         ╵                              [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/add/add.component.ts:32:13:
+[37m      32 │       title: [32mthis.addArticleForm.get('title')[37m.value,
+         ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/add/add.component.ts:33:15:
+[37m      33 │       content: [32mthis.addArticleForm.get('content')[37m.value,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property '_id' does not exist on type 'Article'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/edit/edit.component.html:35:55:
+[37m      35 │ ...ent-list [articleId]="(article$ | async)?.[32m_id[37m"></app-comment-list>
+         ╵                                              [32m~~~[0m
+
+  Error occurs in the template of component EditComponent.
+
+    src/app/articles/components/edit/edit.component.ts:12:17:
+[37m      12 │     templateUrl: [32m'./edit.component.html'[37m,
+         ╵                  [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'article$' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/edit/edit.component.ts:17:9:
+[37m      17 │   public [32marticle$[37m: Observable<Article>;
+         ╵          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS4111: Property 'id' comes from an index signature, so it must be accessed with ['id'].[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/edit/edit.component.ts:28:33:
+[37m      28 │       this.getArticleById(params.[32mid[37m);
+         ╵                                  [32m~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/edit/edit.component.ts:36:8:
+[37m      36 │         [32mthis.editArticleForm.get('content')[37m.setValue(article.conte...
+         ╵         [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null' is not assignable to type 'string'.
+  Type 'null' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/edit/edit.component.ts:43:6:
+[37m      43 │       [32marticle.content[37m = this.editArticleForm.controls.content.value;
+         ╵       [32m~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property '_id' does not exist on type 'Article'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/list/list.component.html:6:52:
+[37m      6 │   @for (article of articles$ | async; track article.[32m_id[37m) {
+        ╵                                                     [32m~~~[0m
+
+  Error occurs in the template of component ListComponent.
+
+    src/app/articles/components/list/list.component.ts:12:17:
+[37m      12 │     templateUrl: [32m'./list.component.html'[37m,
+         ╵                  [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property '_id' does not exist on type 'Article'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/list/list.component.html:23:39:
+[37m      23 │           (click)="editArticle(article.[32m_id[37m)"
+         ╵                                        [32m~~~[0m
+
+  Error occurs in the template of component ListComponent.
+
+    src/app/articles/components/list/list.component.ts:12:17:
+[37m      12 │     templateUrl: [32m'./list.component.html'[37m,
+         ╵                  [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property '_id' does not exist on type 'Article'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/list/list.component.html:29:41:
+[37m      29 │           (click)="deleteArticle(article.[32m_id[37m)"
+         ╵                                          [32m~~~[0m
+
+  Error occurs in the template of component ListComponent.
+
+    src/app/articles/components/list/list.component.ts:12:17:
+[37m      12 │     templateUrl: [32m'./list.component.html'[37m,
+         ╵                  [32m~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'articles$' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/list/list.component.ts:17:9:
+[37m      17 │   public [32marticles$[37m: Observable<Article[]>;
+         ╵          [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'category' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/list/list.component.ts:26:10:
+[37m      26 │   private [32mcategory[37m: string;
+         ╵           [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2531: Object is possibly 'null'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/list/list.component.ts:29:4:
+[37m      29 │     [32mthis.route.parent[37m.params.subscribe((params: Params) => {
+         ╵     [32m~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS4111: Property 'category' comes from an index signature, so it must be accessed with ['category'].[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/components/list/list.component.ts:30:29:
+[37m      30 │       this.category = params.[32mcategory[37m;
+         ╵                              [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '@angular/common/http' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/services/article.service.ts:2:39:
+[37m      2 │ import { HttpClient, HttpParams } from [32m'@angular/common/http'[37m;
+        ╵                                        [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'src/app/app.settings' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/services/article.service.ts:5:35:
+[37m      5 │ import { AppSettingsService } from [32m'src/app/app.settings'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/services/article.service.ts:15:11:
+[37m      15 │     return [32mthis.appSettings[37m.settings.articlesApiUrl;
+         ╵            [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/services/article.service.ts:21:11:
+[37m      21 │     return [32mthis.http[37m.get<Article[]>(this.apiUrl, { params: queryPa...
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/services/article.service.ts:25:11:
+[37m      25 │     return [32mthis.http[37m.get<Article>(`${this.apiUrl}/${id}`);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/services/article.service.ts:29:11:
+[37m      29 │     return [32mthis.http[37m.post<Article>(this.apiUrl, article);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/services/article.service.ts:33:11:
+[37m      33 │     return [32mthis.http[37m.put<Article>(this.apiUrl, article);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/articles/services/article.service.ts:37:11:
+[37m      37 │     return [32mthis.http[37m.delete(`${this.apiUrl}/${id}`);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'articleId' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment-form/comment-form.component.ts:15:11:
+[37m      15 │   @Input() [32marticleId[37m: string;
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'comment' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment-item/comment-item.component.ts:16:11:
+[37m      16 │   @Input() [32mcomment[37m: Comment;
+         ╵            [32m~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment-item/comment-item.component.ts:34:31:
+[37m      34 │ ...s.commentService.update([32mthis.comment._id[37m, { text: this.editText...
+         ╵                            [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment-item/comment-item.component.ts:42:31:
+[37m      42 │     this.commentService.delete([32mthis.comment._id[37m).subscribe(() => {
+         ╵                                [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2564: Property 'articleId' has no initializer and is not definitely assigned in the constructor.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment-list/comment-list.component.ts:16:11:
+[37m      16 │   @Input() [32marticleId[37m: string;
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '@angular/common/http' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment.service.ts:2:27:
+[37m      2 │ import { HttpClient } from [32m'@angular/common/http'[37m;
+        ╵                            [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module 'src/app/app.settings' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment.service.ts:3:35:
+[37m      3 │ import { AppSettingsService } from [32m'src/app/app.settings'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment.service.ts:13:11:
+[37m      13 │     return [32mthis.appSettings[37m.settings.articlesApiUrl;
+         ╵            [32m~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment.service.ts:17:11:
+[37m      17 │     return [32mthis.http[37m.get<Comment[]>(`${this.articlesApi}/${article...
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment.service.ts:21:11:
+[37m      21 │     return [32mthis.http[37m.post<Comment>(`${this.articlesApi}/${articleI...
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment.service.ts:25:11:
+[37m      25 │     return [32mthis.http[37m.put<Comment>(`/comments/${id}`, payload);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2571: Object is of type 'unknown'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/comments/comment.service.ts:29:11:
+[37m      29 │     return [32mthis.http[37m.delete(`/comments/${id}`);
+         ╵            [32m~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "src/app/app.settings"[0m
+
+    src/app/admin/categories/services/category.service.ts:3:35:
+[37m      3 │ import { AppSettingsService } from [32m'src/app/app.settings'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "src/app/app.settings" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "src/app/app.settings"[0m
+
+    src/app/admin/users/services/user.service.ts:3:35:
+[37m      3 │ import { AppSettingsService } from [32m'src/app/app.settings'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "src/app/app.settings" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "src/app/app.settings"[0m
+
+    src/app/articles/services/article.service.ts:3:35:
+[37m      3 │ import { AppSettingsService } from [32m'src/app/app.settings'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "src/app/app.settings" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "src/app/app.settings"[0m
+
+    src/app/comments/comment.service.ts:3:35:
+[37m      3 │ import { AppSettingsService } from [32m'src/app/app.settings'[37m;
+        ╵                                    [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+  You can mark the path "src/app/app.settings" as external to exclude it from the bundle, which will remove this error and leave the unresolved path in the bundle.
+
+[39m[22m

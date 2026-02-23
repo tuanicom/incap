@@ -6,80 +6,45 @@
   "prefix": "app",
   "targets": {
     "build": {
-      "executor": "@nx/angular:browser",
-      "outputs": ["{options.outputPath}"],
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/apps/frontend"],
       "options": {
-        "outputPath": "dist/apps/frontend",
-        "index": "src/index.html",
-        "main": "src/main.ts",
-        "polyfills": ["zone.js"],
-        "tsConfig": "tsconfig.app.json",
-        "assets": ["src/favicon.ico", "src/assets"],
-        "styles": ["src/styles.scss"],
-        "scripts": []
-      },
-      "configurations": {
-        "production": {
-          "optimization": true,
-          "outputHashing": "all",
-          "sourceMap": false,
-          "namedChunks": false,
-          "aot": true,
-          "buildOptimizer": true,
-          "fileReplacements": [
-            {
-              "replace": "src/environments/environment.ts",
-              "with": "src/environments/environment.prod.ts"
-            }
-          ]
-        },
-        "development": {
-          "buildOptimizer": false,
-          "optimization": false,
-          "vendorChunk": true,
-          "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true
-        }
-      },
-      "defaultConfiguration": "production"
+        "cwd": "apps/frontend",
+        "commands": [
+          "ng build --configuration production"
+        ],
+        "parallel": false
+      }
     },
     "serve": {
-      "executor": "@nx/angular:dev-server",
-      "buildTarget": "frontend:build",
-      "configurations": {
-        "production": {
-          "buildTarget": "frontend:build:production"
-        },
-        "development": {
-          "buildTarget": "frontend:build:development"
-        }
-      },
-      "defaultConfiguration": "development"
-    },
-    "extract-i18n": {
-      "executor": "@nx/angular:extract-i18n",
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "frontend:build"
+        "cwd": "apps/frontend",
+        "commands": [
+          "ng serve --host 0.0.0.0"
+        ],
+        "parallel": false
       }
     },
     "test": {
-      "executor": "@nx/angular:karma",
+      "executor": "nx:run-commands",
       "outputs": ["{workspaceRoot}/coverage/apps/frontend"],
       "options": {
-        "polyfills": ["zone.js", "zone.js/testing"],
-        "tsConfig": "tsconfig.spec.json",
-        "inlineStyleLanguage": "scss",
-        "assets": ["src/favicon.ico", "src/assets"],
-        "styles": ["src/styles.scss"],
-        "scripts": [],
-        "karmaConfig": "karma.conf.js"
+        "cwd": "apps/frontend",
+        "commands": [
+          "ng test --watch=false"
+        ],
+        "parallel": false
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
+      "executor": "nx:run-commands",
       "options": {
-        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+        "cwd": "apps/frontend",
+        "commands": [
+          "ng lint"
+        ],
+        "parallel": false
       }
     }
   },

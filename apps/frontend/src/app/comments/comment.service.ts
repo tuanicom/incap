@@ -1,13 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AppSettingsService } from 'src/app/app.settings';
+import { AppSettingsService } from '../app.settings';
 import { Observable } from 'rxjs';
 import { Comment } from './comment.model';
 
 @Injectable({ providedIn: 'root' })
 export class CommentService {
-  private http = inject(HttpClient);
-  private appSettings = inject(AppSettingsService);
+  private http: HttpClient = inject(HttpClient);
+  private appSettings: AppSettingsService = inject(AppSettingsService);
 
   private get articlesApi(): string {
     return this.appSettings.settings.articlesApiUrl;

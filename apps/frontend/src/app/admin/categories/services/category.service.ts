@@ -2,14 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Category } from '../models/category';
 import { Observable } from 'rxjs';
-import { AppSettingsService } from 'src/app/app.settings';
+import { AppSettingsService } from '../../../app.settings';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoryService {
-  private http = inject(HttpClient);
-  private appSettings = inject(AppSettingsService);
+  private http: HttpClient = inject(HttpClient);
+  private appSettings: AppSettingsService = inject(AppSettingsService);
 
   private get apiUrl(): string {
     return this.appSettings.settings.categoriesApiUrl;

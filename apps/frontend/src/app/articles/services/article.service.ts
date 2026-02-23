@@ -2,14 +2,14 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Article } from '../models/article';
 import { Observable } from 'rxjs';
-import { AppSettingsService } from 'src/app/app.settings';
+import { AppSettingsService } from '../../app.settings';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArticleService {
-  private http = inject(HttpClient);
-  private appSettings = inject(AppSettingsService);
+  private http: HttpClient = inject(HttpClient);
+  private appSettings: AppSettingsService = inject(AppSettingsService);
 
   private get apiUrl(): string {
     return this.appSettings.settings.articlesApiUrl;

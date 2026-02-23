@@ -3,14 +3,6 @@
   "version": "1.0.0",
   "description": "Back-end part of the Incap project",
   "main": "dist/apps/backend/server.js",
-  "scripts": {
-    "build": "esbuild src/server.ts --outdir=dist --bundle --platform=node --target=node20",
-    "lint": "eslint --config eslint.config.mjs",
-    "start": "node dist/server.js",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "coverage": "vitest run --coverage"
-  },
   "private": true,
   "author": "Tuani SIMETE",
   "license": "ISC",
@@ -52,8 +44,10 @@
     "source-map-support": "^0.5.21",
     "supertest": "^7.2.2",
     "ts-node": "^10.9.2",
-    "typescript": "~5.5.4",
+    "typescript": "^5.9.3",
     "vitest": "^4.0.18"
   },
-  "snyk": true
+  "snyk": true,
+  "type": "commonjs",
+  "types": "./../../src/server.d.ts"
 }

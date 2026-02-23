@@ -28,13 +28,16 @@
     "mongoose": "^9.1.5"
   },
   "devDependencies": {
+    "@angular-devkit/architect": "^0.2101.5",
+    "@angular-devkit/build-angular": "^21.1.5",
+    "@angular-devkit/core": "^21.1.5",
     "@nx/angular": "^19.8.0",
     "@nx/eslint": "^19.8.0",
     "@nx/eslint-plugin": "^19.8.0",
-    "@nx/js": "^19.8.0",
-    "@nx/node": "^19.8.0",
+    "@nx/js": "^19.8.14",
+    "@nx/node": "^19.8.14",
     "@nx/workspace": "^19.8.0",
     "nx": "^19.8.0",
-    "typescript": "^5.9.3"
+    "typescript": "~5.5.4"
   }
 }

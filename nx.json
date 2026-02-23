@@ -1,0 +1,28 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "extends": "nx/presets/npm.json",
+  "npmScope": "incap",
+  "pluginsConfig": {
+    "@nx/js": {
+      "analyzeSourceFiles": true
+    }
+  },
+  "targetDefaults": {
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"]
+    },
+    "test": {
+      "cache": true,
+      "inputs": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.json"]
+    },
+    "lint": {
+      "cache": true
+    }
+  },
+  "inputExts": [".ts", ".tsx", ".js", ".jsx", ".json"],
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*"],
+    "prod": ["!{projectRoot}/**/*.spec.ts"]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "name": "frontend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "@angular-eslint/builder:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/frontend",
+        "index": "src/index.html",
+        "main": "src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "tsconfig.app.json",
+        "assets": ["src/favicon.ico", "src/assets"],
+        "styles": ["src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular/build:dev-server",
+      "buildTarget": "frontend:build",
+      "configurations": {
+        "production": {
+          "buildTarget": "frontend:build:production"
+        },
+        "development": {
+          "buildTarget": "frontend:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "frontend:build"
+      }
+    },
+    "test": {
+      "executor": "@angular/build:karma",
+      "outputs": ["{workspaceRoot}/coverage/apps/frontend"],
+      "options": {
+        "polyfills": ["zone.js", "zone.js/testing"],
+        "tsConfig": "tsconfig.spec.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["src/favicon.ico", "src/assets"],
+        "styles": ["src/styles.scss"],
+        "scripts": [],
+        "karmaConfig": "karma.conf.js"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+      }
+    }
+  },
+  "tags": ["type:app", "scope:frontend"]
+}

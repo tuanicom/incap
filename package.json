@@ -1,0 +1,40 @@
+{
+  "name": "incap",
+  "version": "1.0.0",
+  "description": "MEAN stack application with Nx workspace",
+  "private": true,
+  "scripts": {
+    "nx": "nx",
+    "start": "nx serve frontend",
+    "backend:start": "nx serve backend",
+    "backend:build": "nx build backend",
+    "frontend:build": "nx build frontend",
+    "build": "nx run-many --target=build --all",
+    "test": "nx run-many --target=test --all",
+    "test:backend": "nx test backend",
+    "test:frontend": "nx test frontend",
+    "lint": "nx run-many --target=lint --all",
+    "lint:backend": "nx lint backend",
+    "lint:frontend": "nx lint frontend",
+    "affected:build": "nx affected:build",
+    "affected:test": "nx affected:test",
+    "affected:lint": "nx affected:lint",
+    "dep-graph": "nx dep-graph",
+    "format:check": "nx format:check",
+    "format:write": "nx format:write"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "mongoose": "^9.1.5"
+  },
+  "devDependencies": {
+    "@nx/angular": "^19.8.0",
+    "@nx/eslint": "^19.8.0",
+    "@nx/eslint-plugin": "^19.8.0",
+    "@nx/js": "^19.8.0",
+    "@nx/node": "^19.8.0",
+    "@nx/workspace": "^19.8.0",
+    "nx": "^19.8.0",
+    "typescript": "^5.9.3"
+  }
+}

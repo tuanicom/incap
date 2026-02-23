@@ -1,0 +1,62 @@
+{
+  "name": "backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "src",
+  "prefix": "incap",
+  "targets": {
+    "build": {
+      "executor": "@nx/node:esbuild",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/backend",
+        "main": "src/server.ts",
+        "tsConfig": "tsconfig.app.json",
+        "assets": [],
+        "generatePackageJson": false,
+        "esbuildOptions": {
+          "bundle": true,
+          "platform": "node"
+        }
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "vendorChunk": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nx/node:node",
+      "options": {
+        "buildTarget": "backend:build",
+        "inspect": "inspect",
+        "args": []
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["{workspaceRoot}/coverage/apps/backend"],
+      "options": {
+        "config": "vitest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "coverage": true
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["src/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["type:app", "scope:backend"]
+}

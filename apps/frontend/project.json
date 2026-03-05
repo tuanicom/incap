@@ -1,0 +1,52 @@
+{
+  "name": "frontend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "src",
+  "prefix": "app",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/apps/frontend"],
+      "options": {
+        "cwd": "apps/frontend",
+        "commands": [
+          "ng build --configuration production"
+        ],
+        "parallel": false
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/frontend",
+        "commands": [
+          "ng serve --host 0.0.0.0"
+        ],
+        "parallel": false
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/coverage/apps/frontend"],
+      "options": {
+        "cwd": "apps/frontend",
+        "commands": [
+          "ng test --watch=false"
+        ],
+        "parallel": false
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/frontend",
+        "commands": [
+          "ng lint"
+        ],
+        "parallel": false
+      }
+    }
+  },
+  "tags": ["type:app", "scope:frontend"]
+}

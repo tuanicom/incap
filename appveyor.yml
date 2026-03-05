@@ -5,28 +5,30 @@ install:
 - ps: Update-NodeJsInstallation 24.13.0 x64
 - npm install sonar-scanner -g
 - npm install -g snyk
-- npm install -g @angular/cli
+- npm install --legacy-peer-deps
 - curl -o codecov.exe https://uploader.codecov.io/latest/windows/codecov.exe 
 cache: 
-  - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json  # global npm modules
-  - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json         # npm cache
-  - frontend\node_modules -> package.json                               # local npm modules
+  - C:\Users\appveyor\AppData\Roaming\npm\node_modules -> package.json        # global npm modules
+  - C:\Users\appveyor\AppData\Roaming\npm-cache -> package.json               # npm cache
+  - node_modules -> package.json                                              # monorepo root npm modules
+  - apps\backend\node_modules -> apps\backend\package.json                     # backend node modules
+  - apps\frontend\node_modules -> apps\frontend\package.json                   # frontend node modules
 build_script:
-- ps: .\rebuild.ps1
+- ps: .\rebuild.ps1 all
 after_build:
-- curl -F "file=@backend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"
-- curl -F "file=@frontend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"
+- curl -F "file=@apps\\backend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"
+- curl -F "file=@apps\\frontend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"
 - codecov.exe
 - set JAVA_HOME=C:\Program Files\Java\jdk19
 - set PATH=%JAVA_HOME%\bin;%PATH%
 - if defined APPVEYOR_PULL_REQUEST_NUMBER ( set "SONAR_ARGS=-Dsonar.pullrequest.base=%APPVEYOR_REPO_BRANCH% -Dsonar.pullrequest.branch=%APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH% -Dsonar.pullrequest.key=%APPVEYOR_PULL_REQUEST_NUMBER%" ) else ( set "SONAR_ARGS=-Dsonar.branch.name=%APPVEYOR_REPO_BRANCH%" )
 - call sonar-scanner %SONAR_ARGS%
 artifacts:
-- path: frontend/coverage/index.html
+- path: apps\frontend\coverage
   name: Frontend Coverage
-- path: backend/coverage/lcov-report/index.html
+- path: apps\backend\coverage
   name: Backend Coverage
-- path: frontend/eslint.json
+- path: apps\frontend\eslint.json
   name: Frontend Linting
-- path: backend/eslint.json
+- path: apps\backend\eslint.json
   name: Backend Linting

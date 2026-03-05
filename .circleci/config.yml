@@ -35,10 +35,22 @@ jobs:
       - checkout:
           path: /home/circleci/project/incap
       - restore_cache:
-          key: frontend-{{ .Branch }}-{{ checksum "incap/frontend/package-lock.json" }}
+          key: monorepo-{{ .Branch }}-{{ checksum "incap/package-lock.json" }}
       - run:
-          command: bash rebuild.sh frontend
-          name: rebuild.sh frontend
+          command: npm ci --legacy-peer-deps
+          name: Install dependencies
+          working_directory: /home/circleci/project/incap
+      - run:
+          command: npx nx build frontend
+          name: Build frontend
+          working_directory: /home/circleci/project/incap
+      - run:
+          command: npx nx test frontend --code-coverage
+          name: Test frontend
+          working_directory: /home/circleci/project/incap
+      - run:
+          command: npx nx lint frontend
+          name: Lint frontend
           working_directory: /home/circleci/project/incap
       - run:
           command: |
@@ -46,17 +58,17 @@ jobs:
             export COVERALLS_SERVICE_JOB_ID=$CIRCLE_WORKFLOW_JOB_ID
             export COVERALLS_FLAG_NAME="frontend"
             export COVERALLS_PARALLEL=true
-            cat frontend/coverage/frontend/lcov.info | sed 's/SF:/SF:frontend\//' | coveralls --verbose 
+            cat coverage/apps/frontend/lcov.info | sed 's/SF:/SF:apps\/frontend\//' | coveralls --verbose 
           name: Upload coverage report to Coveralls
           working_directory: /home/circleci/project/incap
       - run:
           command: |
             curl -Ls https://coverage.codacy.com/get.sh > get.sh
-            source get.sh report -r coverage/frontend/lcov.info -t $CODACY_PROJECT_TOKEN --partial
+            source get.sh report -r coverage/apps/frontend/lcov.info -t $CODACY_PROJECT_TOKEN --partial
           name: Upload coverage report to Codacy
-          working_directory: /home/circleci/project/incap/frontend
+          working_directory: /home/circleci/project/incap
       - save_cache:
-          key: frontend-{{ .Branch }}-{{ checksum "incap/frontend/package-lock.json" }}
+          key: monorepo-{{ .Branch }}-{{ checksum "incap/package-lock.json" }}
           paths:
             - "node_modules"
       - persist_to_workspace:
@@ -66,13 +78,13 @@ jobs:
             /home/circleci/project/incap/
             # Must be relative path from root
           paths:
-            - frontend/coverage/frontend/lcov.info
+            - coverage/apps/frontend/lcov.info
       - store_test_results:
-          path: incap/frontend/tests-results
+          path: incap/apps/frontend/tests-results
       - store_artifacts:
-          path: incap/frontend/eslint.json
+          path: incap/eslint.json
       - store_artifacts:
-          path: incap/frontend/coverage/frontend/index.html
+          path: incap/coverage/apps/frontend/index.html
   build-backend:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
@@ -93,10 +105,22 @@ jobs:
       - checkout:
           path: /home/circleci/project/incap
       - restore_cache:
-          key: backend-{{ .Branch }}-{{ checksum "incap/backend/package-lock.json" }}
+          key: monorepo-{{ .Branch }}-{{ checksum "incap/package-lock.json" }}
       - run:
-          command: bash rebuild.sh backend
-          name: rebuild.sh backend
+          command: npm ci --legacy-peer-deps
+          name: Install dependencies
+          working_directory: /home/circleci/project/incap
+      - run:
+          command: npx nx build backend
+          name: Build backend
+          working_directory: /home/circleci/project/incap
+      - run:
+          command: npx nx test backend --code-coverage
+          name: Test backend
+          working_directory: /home/circleci/project/incap
+      - run:
+          command: npx nx lint backend
+          name: Lint backend
           working_directory: /home/circleci/project/incap
       - run:
           command: |
@@ -104,17 +128,17 @@ jobs:
             export COVERALLS_SERVICE_JOB_ID=$CIRCLE_WORKFLOW_JOB_ID
             export COVERALLS_FLAG_NAME="backend"
             export COVERALLS_PARALLEL=true
-            cat backend/coverage/lcov.info | sed 's/SF:/SF:backend\//' | coveralls  
+            cat coverage/apps/backend/lcov.info | sed 's/SF:/SF:apps\/backend\//' | coveralls  
           name: Upload coverage report to Coveralls
           working_directory: /home/circleci/project/incap/
       - run:
           command: |
             curl -Ls https://coverage.codacy.com/get.sh > get.sh
-            source get.sh report -r coverage/lcov.info -t $CODACY_PROJECT_TOKEN --partial
+            source get.sh report -r coverage/apps/backend/lcov.info -t $CODACY_PROJECT_TOKEN --partial
           name: Upload coverage report to Codacy
-          working_directory: /home/circleci/project/incap/backend
+          working_directory: /home/circleci/project/incap
       - save_cache:
-          key: backend-{{ .Branch }}-{{ checksum "incap/backend/package-lock.json" }}
+          key: monorepo-{{ .Branch }}-{{ checksum "incap/package-lock.json" }}
           paths:
             - "node_modules"
       - persist_to_workspace:
@@ -123,13 +147,13 @@ jobs:
           root: /home/circleci/project/incap/
           # Must be relative path from root
           paths:
-            - backend/coverage/lcov.info
+            - coverage/apps/backend/lcov.info
       - store_test_results:
-          path: incap/backend/tests-results
+          path: incap/apps/backend/tests-results
       - store_artifacts:
-          path: incap/backend/eslint.json
+          path: incap/eslint.json
       - store_artifacts:
-          path: incap/frontend/coverage/lcov-report/index.html
+          path: incap/coverage/apps/backend/index.html
   finalize:
     docker:
       - image: "cimg/node:lts"

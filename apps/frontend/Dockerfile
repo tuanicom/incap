@@ -7,7 +7,7 @@ COPY nx.json tsconfig.base.json ./
 COPY apps/frontend ./apps/frontend
 
 RUN npm ci --legacy-peer-deps
-RUN npm run frontend:build
+RUN npm run build:frontend
 
 FROM nginx:1.29.4-alpine3.23-slim AS runner
 

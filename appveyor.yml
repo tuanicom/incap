@@ -14,7 +14,7 @@ cache:
   - apps\backend\node_modules -> apps\backend\package.json                     # backend node modules
   - apps\frontend\node_modules -> apps\frontend\package.json                   # frontend node modules
 build_script:
-- ps: .\rebuild.ps1 all
+- cmd: rebuild.cmd
 after_build:
 - curl -F "file=@apps\\backend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"
 - curl -F "file=@apps\\frontend\\tests-results\\tests-results.xml" "https://ci.appveyor.com/api/testresults/junit/%APPVEYOR_JOB_ID%"

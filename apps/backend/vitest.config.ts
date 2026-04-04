@@ -10,6 +10,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
+      reportsDirectory: '../../coverage/apps/backend',
       all: true,
       exclude: [
         'node_modules',
@@ -18,7 +19,6 @@ export default defineConfig({
         'tests',
         'tests-results',
         'frontend',
-        'src',
         '**/*.js'
       ]
     },

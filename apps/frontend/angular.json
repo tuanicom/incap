@@ -98,7 +98,14 @@
         "test": {
           "builder": "@angular/build:unit-test",
           "options": {
-            "tsConfig": "tsconfig.spec.json"
+            "tsConfig": "tsconfig.spec.json",
+            "runner": "vitest",
+            "runnerConfig": true,
+            "coverageReporters": ["html", "lcov", "text"],
+            "reporters": [
+              "default",
+              ["junit", { "outputFile": "tests-results/tests-results.xml" }]
+            ]
           }
         },
         "lint": {

@@ -2,3 +2,4 @@
 .angular
 .nx
 dist
+coverage

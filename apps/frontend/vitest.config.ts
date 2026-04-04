@@ -9,7 +9,7 @@ export default defineConfig({
     coverage: {
       provider: 'v8',
       reporter: ['text', 'lcov'],
-      reportsDirectory: 'coverage',
+      reportsDirectory: '../../coverage/apps/frontend',
       exclude: [
         'node_modules',
         'dist',

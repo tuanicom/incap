@@ -26,7 +26,7 @@ after_build:
 artifacts:
 - path: apps\frontend\coverage
   name: Frontend Coverage
-- path: apps\backend\coverage
+- path: coverage\apps\backend
   name: Backend Coverage
 - path: apps\frontend\eslint.json
   name: Frontend Linting

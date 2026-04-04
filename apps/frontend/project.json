@@ -28,11 +28,22 @@
     },
     "test": {
       "executor": "nx:run-commands",
-      "outputs": ["{workspaceRoot}/coverage/apps/frontend"],
+      "outputs": ["{workspaceRoot}/apps/frontend/coverage", "{workspaceRoot}/apps/frontend/tests-results"],
       "options": {
         "cwd": "apps/frontend",
         "commands": [
           "ng test --watch=false"
+        ],
+        "parallel": false
+      }
+    },
+    "coverage": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/apps/frontend/coverage", "{workspaceRoot}/apps/frontend/tests-results"],
+      "options": {
+        "cwd": "apps/frontend",
+        "commands": [
+          "ng test --watch=false --coverage"
         ],
         "parallel": false
       }

@@ -28,11 +28,22 @@
     },
     "test": {
       "executor": "nx:run-commands",
-      "outputs": ["{cwd}/coverage"],
+      "outputs": ["{workspaceRoot}/coverage/apps/backend", "{workspaceRoot}/apps/backend/tests-results"],
       "options": {
         "cwd": "apps/backend",
         "commands": [
           "npm run test"
+        ],
+        "parallel": false
+      }
+    },
+    "coverage": {
+      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/coverage/apps/backend", "{workspaceRoot}/apps/backend/tests-results"],
+      "options": {
+        "cwd": "apps/backend",
+        "commands": [
+          "npm run coverage"
         ],
         "parallel": false
       }

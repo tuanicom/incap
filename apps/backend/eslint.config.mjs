@@ -32,7 +32,7 @@ export default [
         parser: tsParser,
         ecmaVersion: 6,
         parserOptions: {
-            project: true,
+            project: "./tsconfig.eslint.json",
         },
     },
 

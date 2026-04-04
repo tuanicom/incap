@@ -11,10 +11,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     selector: 'app-categories-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    standalone: true,
     imports: [CommonModule, FontAwesomeModule]
 })
 export class ListComponent implements OnInit {
-  public categories$: Observable<Category[]>;
+  public categories$!: Observable<Category[]>;
   private categoryService = inject(CategoryService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -36,11 +37,17 @@ export class ListComponent implements OnInit {
     this.router.navigate(['../add'], { relativeTo: this.route });
   }
 
-  editCategory(id: string): void {
+  editCategory(id?: string): void {
+    if (!id) {
+      return;
+    }
     this.router.navigate([`../edit/${id}`], { relativeTo: this.route });
   }
 
-  deleteCategory(id: string): void {
+  deleteCategory(id?: string): void {
+    if (!id) {
+      return;
+    }
     this.categoryService.deleteCategory(id).subscribe(() => {
       this.getCategories();
     });

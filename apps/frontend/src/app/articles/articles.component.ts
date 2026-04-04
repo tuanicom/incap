@@ -5,15 +5,16 @@ import { ActivatedRoute, Params, RouterModule } from '@angular/router';
     selector: 'app-articles',
     templateUrl: './articles.component.html',
     styleUrls: ['./articles.component.scss'],
+    standalone: true,
     imports: [RouterModule]
 })
 export class ArticlesComponent implements OnInit{
   private route = inject(ActivatedRoute);
-  public category: string;
+  public category = '';
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.category = params.category;
+      this.category = params['category'];
     });
   }
 }

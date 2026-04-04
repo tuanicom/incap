@@ -6,7 +6,7 @@
     "target": "es2020",
     "types": ["node"]
   },
-  "files": ["src/main.ts"],
+  // "files": ["src/main.ts"],
   "include": ["src/**/*.d.ts"],
   "references": [
     {

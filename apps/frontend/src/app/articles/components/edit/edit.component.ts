@@ -11,21 +11,22 @@ import { CommentListComponent } from '../../../comments/comment-list/comment-lis
     selector: 'app-articles-edit',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.scss'],
+    standalone: true,
     imports: [ReactiveFormsModule, CommonModule, CommentListComponent]
 })
 export class EditComponent implements OnInit {
-  public article$: Observable<Article>;
+  public article$!: Observable<Article>;
   private articleService = inject(ArticleService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   editArticleForm = new FormGroup({
-    content: new FormControl(''),
+    content: new FormControl('', { nonNullable: true }),
   });
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.getArticleById(params.id);
+      this.getArticleById(params['id']);
     });
   }
 
@@ -33,7 +34,7 @@ export class EditComponent implements OnInit {
     this.article$ = this.articleService.getArticleById(id);
     if (this.article$) {
       this.article$.subscribe((article: Article) => {
-        this.editArticleForm.get('content').setValue(article.content);
+        this.editArticleForm.controls.content.setValue(article.content);
       });
     }
   }

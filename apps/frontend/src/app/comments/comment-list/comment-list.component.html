@@ -2,7 +2,7 @@
 <div class="space-y-4">
   <app-comment-form (created)="onCreated($event)" [articleId]="articleId"></app-comment-form>
 
-  <div *ngIf="comments?.length === 0" class="text-center py-6 text-gray-500">
+  <div *ngIf="comments.length === 0" class="text-center py-6 text-gray-500">
     <p>No comments yet.</p>
   </div>
 

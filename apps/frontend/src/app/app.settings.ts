@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-export class AppSettings {
+export interface AppSettings {
   categoriesApiUrl: string;
   usersApiUrl: string;
   articlesApiUrl: string;
@@ -9,11 +9,11 @@ export class AppSettings {
 
 @Injectable({ providedIn: 'root' })
 export class AppSettingsService {
-  public settings: AppSettings;
-
-  constructor() {
-    this.settings = new AppSettings();
-  }
+  public settings: AppSettings = {
+    categoriesApiUrl: '',
+    usersApiUrl: '',
+    articlesApiUrl: ''
+  };
 }
 
 
@@ -23,6 +23,6 @@ export class AppSettingsHttpService {
   private appSettingsService = inject(AppSettingsService);
 
   public initializeApp(): void {
-    this.http.get('assets/settings.json').subscribe((res: AppSettings) => this.appSettingsService.settings = res);
+    this.http.get<AppSettings>('assets/settings.json').subscribe((res) => this.appSettingsService.settings = res);
   }
 }

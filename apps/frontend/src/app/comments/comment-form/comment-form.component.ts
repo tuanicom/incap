@@ -12,13 +12,13 @@ import { Comment } from '../comment.model';
   imports: [CommonModule, FormsModule]
 })
 export class CommentFormComponent {
-  @Input() articleId: string;
+  @Input() articleId: string | null = null;
   @Output() created = new EventEmitter<Comment>();
   public text = '';
   private commentService = inject(CommentService);
 
   submit(): void {
-    if (!this.text || !this.text.trim()) { return; }
+    if (!this.articleId || !this.text || !this.text.trim()) { return; }
     this.commentService.create(this.articleId, { text: this.text }).subscribe((res) => {
       this.created.emit(res);
       this.text = '';

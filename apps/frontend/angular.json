@@ -18,7 +18,7 @@
           "builder": "@angular/build:application",
           "options": {
             "outputPath": {
-              "base": "dist/frontend"
+              "base": "../../dist/apps/frontend"
             },
             "index": "src/index.html",
             "polyfills": ["zone.js", "@angular/localize/init"],
@@ -31,7 +31,7 @@
             "styles": [
               "src/styles.scss",
               {
-                "input": "./node_modules/primeicons/primeicons.css",
+                "input": "../../node_modules/primeicons/primeicons.css",
                 "inject": true
               }
             ],

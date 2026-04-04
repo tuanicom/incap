@@ -13,7 +13,7 @@ import { inject } from '@angular/core';
   imports: [CommonModule, FormsModule]
 })
 export class CommentItemComponent {
-  @Input() comment: Comment;
+  @Input() comment!: Comment;
   @Output() updated = new EventEmitter<Comment>();
   @Output() deleted = new EventEmitter<string>();
   public editing = false;
@@ -31,6 +31,7 @@ export class CommentItemComponent {
 
   save(): void {
     if (!this.editText || !this.editText.trim()) { return; }
+    if (!this.comment._id) { return; }
     this.commentService.update(this.comment._id, { text: this.editText }).subscribe((res) => {
       this.updated.emit(res);
       this.comment = res;
@@ -39,6 +40,7 @@ export class CommentItemComponent {
   }
 
   remove(): void {
+    if (!this.comment._id) { return; }
     this.commentService.delete(this.comment._id).subscribe(() => {
       this.deleted.emit(this.comment._id as string);
     });

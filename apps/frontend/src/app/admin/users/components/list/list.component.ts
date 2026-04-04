@@ -11,10 +11,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     selector: 'app-users-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    standalone: true,
     imports: [CommonModule, FontAwesomeModule]
 })
 export class ListComponent implements OnInit {
-  public users$: Observable<User[]>;
+  public users$!: Observable<User[]>;
   private userService = inject(UserService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -36,7 +37,10 @@ export class ListComponent implements OnInit {
     this.router.navigate(['../add'], { relativeTo: this.route });
   }
 
-  deleteUser(id: string): void {
+  deleteUser(id?: string): void {
+    if (!id) {
+      return;
+    }
     this.userService.deleteUser(id).subscribe(() => {
       this.getUsers();
     });

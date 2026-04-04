@@ -11,10 +11,11 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     selector: 'app-articles-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    standalone: true,
     imports: [CommonModule, FontAwesomeModule]
 })
 export class ListComponent implements OnInit {
-  public articles$: Observable<Article[]>;
+  public articles$!: Observable<Article[]>;
   private articleService = inject(ArticleService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -23,11 +24,16 @@ export class ListComponent implements OnInit {
     edit: faEdit,
     trash: faTrash,
   };
-  private category: string;
+  private category = '';
 
   ngOnInit(): void {
-    this.route.parent.params.subscribe((params: Params) => {
-      this.category = params.category;
+    const parentRoute = this.route.parent;
+    if (!parentRoute) {
+      return;
+    }
+
+    parentRoute.params.subscribe((params: Params) => {
+      this.category = params['category'];
       this.getArticles();
     });
   }
@@ -40,11 +46,17 @@ export class ListComponent implements OnInit {
     this.router.navigate(['../add'], { relativeTo: this.route });
   }
 
-  editArticle(id: string): void {
+  editArticle(id?: string): void {
+    if (!id) {
+      return;
+    }
     this.router.navigate([`../edit/${id}`], { relativeTo: this.route });
   }
 
-  deleteArticle(id: string): void {
+  deleteArticle(id?: string): void {
+    if (!id) {
+      return;
+    }
     this.articleService.deleteArticle(id).subscribe(() => {
       this.getArticles();
     });

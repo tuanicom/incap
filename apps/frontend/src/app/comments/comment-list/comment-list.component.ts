@@ -13,7 +13,7 @@ import { CommentItemComponent } from '../comment-item/comment-item.component';
   imports: [CommonModule, CommentFormComponent, CommentItemComponent]
 })
 export class CommentListComponent implements OnInit {
-  @Input() articleId: string;
+  @Input() articleId: string | null = null;
   public comments: Comment[] = [];
   private commentService = inject(CommentService);
 
@@ -24,6 +24,9 @@ export class CommentListComponent implements OnInit {
   }
 
   load(): void {
+    if (!this.articleId) {
+      return;
+    }
     this.commentService.listForArticle(this.articleId).subscribe((cs) => this.comments = cs || []);
   }
 

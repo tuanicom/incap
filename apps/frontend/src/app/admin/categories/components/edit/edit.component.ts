@@ -10,21 +10,22 @@ import { CommonModule } from '@angular/common';
     selector: 'app-categories-edit',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.scss'],
+    standalone: true,
     imports: [ReactiveFormsModule, CommonModule]
 })
 export class EditComponent implements OnInit {
-  public category$: Observable<Category>;
+  public category$!: Observable<Category>;
   private categoryService = inject(CategoryService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   editCategoryForm = new FormGroup({
-    description: new FormControl(''),
+    description: new FormControl('', { nonNullable: true }),
   });
 
   ngOnInit(): void {
     this.route.params.subscribe((params: Params) => {
-      this.getCategoryById(params.id);
+      this.getCategoryById(params['id']);
     });
   }
 
@@ -32,7 +33,7 @@ export class EditComponent implements OnInit {
     this.category$ = this.categoryService.getCategoryById(id);
     if (this.category$) {
       this.category$.subscribe((category: Category) => {
-        this.editCategoryForm.get('description').setValue(category.description);
+        this.editCategoryForm.controls.description.setValue(category.description);
       });
     }
   }

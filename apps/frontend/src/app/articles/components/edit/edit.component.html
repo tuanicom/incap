@@ -32,6 +32,6 @@
   <!-- Comments Section -->
   <div class="border-t border-gray-200 pt-8 mt-8">
     <h2 class="text-xl font-bold text-gray-900 mb-6">Comments</h2>
-    <app-comment-list [articleId]="(article$ | async)?._id"></app-comment-list>
+    <app-comment-list [articleId]="(article$ | async)?._id ?? null"></app-comment-list>
   </div>
 </div>

@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
     selector: 'app-categories-root',
     templateUrl: './categories.component.html',
     styleUrls: ['./categories.component.scss'],
+    standalone: true,
     imports: [RouterModule]
 })
 export class CategoriesComponent {

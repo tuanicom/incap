@@ -8,6 +8,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
     selector: 'app-categories-add',
     templateUrl: './add.component.html',
     styleUrls: ['./add.component.scss'],
+    standalone: true,
     imports: [ReactiveFormsModule]
 })
 export class AddComponent {
@@ -16,14 +17,14 @@ export class AddComponent {
   private route = inject(ActivatedRoute);
 
   addCategoryForm = new FormGroup({
-    title: new FormControl(''),
-    description: new FormControl(''),
+    title: new FormControl('', { nonNullable: true }),
+    description: new FormControl('', { nonNullable: true }),
   });
 
   onSubmit(): void {
     const category: Category = {
-      title: this.addCategoryForm.get('title').value,
-      description: this.addCategoryForm.get('description').value
+      title: this.addCategoryForm.controls.title.value,
+      description: this.addCategoryForm.controls.description.value
     } as Category;
     this.categoryService.addCategory(category).subscribe(() => {
       this.goBackToList();

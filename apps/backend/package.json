@@ -1,0 +1,17 @@
+{
+  "name": "@incap/backend",
+  "version": "1.0.0",
+  "description": "Back-end part of the Incap project",
+  "main": "dist/apps/backend/server.js",
+  "scripts": {
+    "build": "esbuild src/server.ts --outdir=dist --bundle --platform=node --target=node20",
+    "lint": "eslint --config eslint.config.mjs",
+    "start": "node dist/server.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage"
+  },
+  "private": true,
+  "author": "Tuani SIMETE",
+  "license": "ISC"
+}

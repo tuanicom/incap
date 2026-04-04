@@ -1,0 +1,13 @@
+{
+  "name": "@incap/frontend",
+  "version": "1.0.0",
+  "description": "Front-end part of the Incap project",
+  "private": true,
+  "author": "Tuani SIMETE",
+  "license": "ISC",
+
+  "resolutions": {
+    "tslintk": "6.1.3"
+  },
+  "snyk": true
+}

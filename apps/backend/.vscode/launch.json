@@ -1,0 +1,13 @@
+{
+	"version": "0.1.0",
+	"configurations": [
+		{   
+            "request": "attach",
+			"name": "Debug Mocha Test",
+			"type": "node",
+			"address": "127.0.0.1",
+			"port": 9229,
+			"sourceMaps": true
+		}
+	]
+}

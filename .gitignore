@@ -1,2 +1,5 @@
 /node_modules
 .angular
+.nx
+dist
+coverage

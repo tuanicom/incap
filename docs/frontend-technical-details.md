@@ -1,5 +1,15 @@
 # Frontend Technical Details
 
+## Nx Monorepo Migration
+
+The frontend is now part of an Nx monorepo. Build, test, and lint using Nx CLI:
+
+- Build: `npx nx build frontend`
+- Test: `npx nx test frontend`
+- Lint: `npx nx lint frontend`
+
+See [docs/nx-monorepo-migration.md](docs/nx-monorepo-migration.md) for details.
+
 ## Overview
 
 The INCAP frontend is an Angular 21 Single Page Application (SPA) built with TypeScript, featuring a responsive Bootstrap 5 UI and modern Component-driven architecture.

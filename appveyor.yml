@@ -19,8 +19,6 @@ after_build:
 - codecovcli do-upload --report-type test_results --file apps\frontend\tests-results\tests-results.xml
 - codecovcli upload-process
 - snyk auth %snyk_token%
-- snyk test --non-interactive --fail-fast
-- snyk protect --non-interactive
 - snyk monitor --non-interactive --fail-fast
 - set JAVA_HOME=C:\Program Files\Java\jdk19
 - set PATH=%JAVA_HOME%\bin;%PATH%

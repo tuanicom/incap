@@ -37,20 +37,8 @@ jobs:
       - restore_cache:
           key: monorepo-{{ .Branch }}-{{ checksum "incap/package-lock.json" }}
       - run:
-          command: npm ci --legacy-peer-deps
-          name: Install dependencies
-          working_directory: /home/circleci/project/incap
-      - run:
-          command: npx nx build frontend
-          name: Build frontend
-          working_directory: /home/circleci/project/incap
-      - run:
-          command: npx nx test frontend --code-coverage
-          name: Test frontend
-          working_directory: /home/circleci/project/incap
-      - run:
-          command: npx nx lint frontend
-          name: Lint frontend
+          command: bash rebuild.sh frontend
+          name: rebuild.sh frontend
           working_directory: /home/circleci/project/incap
       - run:
           command: |
@@ -107,20 +95,8 @@ jobs:
       - restore_cache:
           key: monorepo-{{ .Branch }}-{{ checksum "incap/package-lock.json" }}
       - run:
-          command: npm ci --legacy-peer-deps
-          name: Install dependencies
-          working_directory: /home/circleci/project/incap
-      - run:
-          command: npx nx build backend
-          name: Build backend
-          working_directory: /home/circleci/project/incap
-      - run:
-          command: npx nx test backend --code-coverage
-          name: Test backend
-          working_directory: /home/circleci/project/incap
-      - run:
-          command: npx nx lint backend
-          name: Lint backend
+          command: bash rebuild.sh backend
+          name: rebuild.sh backend
           working_directory: /home/circleci/project/incap
       - run:
           command: |

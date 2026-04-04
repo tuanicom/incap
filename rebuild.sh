@@ -11,15 +11,15 @@ if [ $# -eq 0 ] || [ "$1" = "all" ]; then
 elif [ "$1" = "frontend" ]; then
     echo "Building frontend with Nx..."
     npm ci --legacy-peer-deps
-    npx nx build frontend
-    npx nx test frontend
-    npx nx lint frontend
+    npm run frontend:build
+    npm run test:frontend
+    npm run lint:frontend
 elif [ "$1" = "backend" ]; then
     echo "Building backend with Nx..."
     npm ci --legacy-peer-deps
-    npx nx build backend
-    npx nx test backend
-    npx nx lint backend
+    npm run backend:build
+    npm run test:backend
+    npm run lint:backend
 else
     echo "Usage: $0 [frontend|backend|all]"
     exit 1

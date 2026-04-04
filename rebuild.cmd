@@ -24,20 +24,20 @@ IF %errorlevel% NEQ 0 goto :eof
 IF "%build_all%"=="true" (
     echo Building all apps with Nx...
     call :RunCommand npm run build
-    call :RunCommand npm run test
+    call :RunCommand npm run coverage
     call :RunCommand npm run lint
 )
 IF "%build_frontend%"=="true" (
     echo Building frontend with Nx...
-    call :RunCommand npx nx build frontend
-    call :RunCommand npx nx test frontend
-    call :RunCommand npx nx lint frontend
+    call :RunCommand npm run frontend:build
+    call :RunCommand npm run coverage:frontend
+    call :RunCommand npm run lint:frontend
 )
 IF "%build_backend%"=="true" (
     echo Building backend with Nx...
-    call :RunCommand npx nx build backend
-    call :RunCommand npx nx test backend
-    call :RunCommand npx nx lint backend
+    call :RunCommand npm run backend:build
+    call :RunCommand npm run coverage:backend
+    call :RunCommand npm run lint:backend
 )
 
 goto :eof

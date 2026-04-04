@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { User } from '../models/user';
 import { lastValueFrom } from 'rxjs';
 import * as Observable from 'rxjs';
-import { AppSettingsService } from 'src/app/app.settings';
+import { AppSettingsService } from '../../../app.settings';
 
 describe('UserService', () => {
     let httpClientSpy: {

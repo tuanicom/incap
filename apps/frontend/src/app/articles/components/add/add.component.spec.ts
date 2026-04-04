@@ -67,8 +67,8 @@ describe('Articles > AddComponent', () => {
     describe('when submitting the form', () => {
 
         beforeEach(() => {
-            component.addArticleForm.get('title').setValue('test');
-            component.addArticleForm.get('content').setValue('test');
+            component.addArticleForm.controls.title.setValue('test');
+            component.addArticleForm.controls.content.setValue('test');
             articleServiceSpy.addArticle.mockReturnValue(Observable.of<object>({}));
             component.onSubmit();
         });

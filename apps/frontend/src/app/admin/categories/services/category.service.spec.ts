@@ -14,7 +14,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Category } from '../models/category';
 import { lastValueFrom } from 'rxjs';
 import * as Observable from 'rxjs';
-import { AppSettingsService } from 'src/app/app.settings';
+import { AppSettingsService } from '../../../app.settings';
 
 describe('CategoryService', () => {
     let httpClientSpy: {

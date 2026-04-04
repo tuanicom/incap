@@ -80,7 +80,7 @@ describe('Articles > EditComponent', () => {
     describe('when submitting the form', () => {
 
         beforeEach(() => {
-            component.editArticleForm.get('content').setValue('test2');
+            component.editArticleForm.controls.content.setValue('test2');
             articleServiceSpy.updateArticle.mockReturnValue(Observable.of<Article>({} as Article));
             component.onSubmit();
         });

@@ -6,7 +6,11 @@ import { APP_BASE_HREF } from '@angular/common';
 import * as Observable from 'rxjs';
 
 describe('AppSettings', () => {
-    const appSettings: AppSettings = new AppSettings();
+    const appSettings: AppSettings = {
+        categoriesApiUrl: '',
+        usersApiUrl: '',
+        articlesApiUrl: ''
+    };
     let appSettingsService: AppSettingsService = new AppSettingsService();
     let appSettingsHttpService: AppSettingsHttpService;
     let httpClientSpy: {

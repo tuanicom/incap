@@ -61,8 +61,8 @@ describe('Categories > AddComponent', () => {
     describe('when submitting the form', () => {
 
         beforeEach(() => {
-            component.addCategoryForm.get('title').setValue('test');
-            component.addCategoryForm.get('description').setValue('test');
+            component.addCategoryForm.controls.title.setValue('test');
+            component.addCategoryForm.controls.description.setValue('test');
             categoryServiceSpy.addCategory.mockReturnValue(Observable.of<object>({}));
             component.onSubmit();
         });

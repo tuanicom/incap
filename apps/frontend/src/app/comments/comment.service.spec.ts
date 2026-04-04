@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import type { Mock } from 'vitest';
 import { CommentService } from './comment.service';
 import { HttpClient } from '@angular/common/http';
-import { AppSettingsService } from 'src/app/app.settings';
+import { AppSettingsService } from '../app.settings';
 import * as Observable from 'rxjs';
 import { lastValueFrom } from 'rxjs';
 

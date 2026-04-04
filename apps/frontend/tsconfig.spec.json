@@ -4,7 +4,6 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/apps/frontend",
     "types": [
-      "jasmine",
       "vitest/globals"
     ]
   },

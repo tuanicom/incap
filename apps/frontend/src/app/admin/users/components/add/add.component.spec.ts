@@ -61,7 +61,7 @@ describe('Users > AddComponent', () => {
     describe('when submitting the form', () => {
 
         beforeEach(() => {
-            component.addUserForm.get('name').setValue('test');
+            component.addUserForm.controls.name.setValue('test');
             userServiceSpy.addUser.mockReturnValue(Observable.of<object>({}));
             component.onSubmit();
         });

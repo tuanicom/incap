@@ -80,7 +80,7 @@ describe('Categories > EditComponent', () => {
     describe('when submitting the form', () => {
 
         beforeEach(() => {
-            component.editCategoryForm.get('description').setValue('test2');
+            component.editCategoryForm.controls.description.setValue('test2');
             categoryServiceSpy.updateCategory.mockReturnValue(Observable.of<Category>({} as Category));
             component.onSubmit();
         });

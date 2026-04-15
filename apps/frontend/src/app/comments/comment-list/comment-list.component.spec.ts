@@ -34,21 +34,23 @@ describe('Comments > CommentListComponent', () => {
   });
 
   it('should not load comments when article id is missing', () => {
+    commentServiceSpy.listForArticle.mockClear();
     const localFixture = TestBed.createComponent(CommentListComponent);
     const localComponent = localFixture.componentInstance;
 
     localFixture.detectChanges();
 
-    expect(commentServiceSpy.listForArticle).toHaveBeenCalledTimes(1);
+    expect(commentServiceSpy.listForArticle).not.toHaveBeenCalled();
     expect(localComponent.comments).toEqual([]);
   });
 
   it('should ignore load when article id is null', () => {
+    commentServiceSpy.listForArticle.mockClear();
     component.articleId = null;
 
     component.load();
 
-    expect(commentServiceSpy.listForArticle).toHaveBeenCalledTimes(1);
+    expect(commentServiceSpy.listForArticle).not.toHaveBeenCalled();
   });
 
   it('should fallback to an empty comment list when the service returns nothing', () => {

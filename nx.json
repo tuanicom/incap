@@ -10,19 +10,35 @@
   "targetDefaults": {
     "build": {
       "cache": true,
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
     },
     "test": {
       "cache": true,
-      "inputs": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.json"]
+      "inputs": [
+        "{projectRoot}/**/*.ts",
+        "{projectRoot}/**/*.json"
+      ]
     },
     "lint": {
       "cache": true
     }
   },
-  "inputExts": [".ts", ".tsx", ".js", ".jsx", ".json"],
+  "inputExts": [
+    ".ts",
+    ".tsx",
+    ".js",
+    ".jsx",
+    ".json"
+  ],
   "namedInputs": {
-    "default": ["{projectRoot}/**/*"],
-    "prod": ["!{projectRoot}/**/*.spec.ts"]
-  }
+    "default": [
+      "{projectRoot}/**/*"
+    ],
+    "prod": [
+      "!{projectRoot}/**/*.spec.ts"
+    ]
+  },
+  "analytics": false
 }

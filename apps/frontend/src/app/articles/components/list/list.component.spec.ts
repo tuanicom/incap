@@ -19,7 +19,7 @@ describe('Articles > ListComponent', () => {
     let routerSpy: {
         navigate: Mock;
     };
-    const route = {
+    const route: { parent?: { params: ReturnType<typeof Observable.from> } } = {
         parent: {
             params: Observable.from([{ category: 'test' }])
         }
@@ -33,6 +33,8 @@ describe('Articles > ListComponent', () => {
         routerSpy = {
             navigate: vi.fn().mockName("Router.navigate")
         };
+        articleServiceSpy.getArticles.mockReturnValue(Observable.of([]));
+        articleServiceSpy.deleteArticle.mockReturnValue(Observable.of({}));
 
         await TestBed.configureTestingModule({
             declarations: [],
@@ -52,6 +54,9 @@ describe('Articles > ListComponent', () => {
     });
 
     beforeEach(() => {
+        route.parent = {
+            params: Observable.from([{ category: 'test' }])
+        };
         fixture = TestBed.createComponent(ListComponent);
         component = fixture.componentInstance;
         fixture.detectChanges();
@@ -66,6 +71,17 @@ describe('Articles > ListComponent', () => {
         expect(articleServiceSpy.getArticles).toHaveBeenCalled();
     });
 
+    it('should not load articles when there is no parent route', () => {
+        route.parent = undefined;
+        const localFixture = TestBed.createComponent(ListComponent);
+        const localComponent = localFixture.componentInstance;
+        articleServiceSpy.getArticles.mockClear();
+
+        localComponent.ngOnInit();
+
+        expect(articleServiceSpy.getArticles).not.toHaveBeenCalled();
+    });
+
     describe('when adding a new article', () => {
         it('should navigate to ../add', () => {
             component.addArticle();
@@ -78,6 +94,12 @@ describe('Articles > ListComponent', () => {
         });
     });
 
+    it('should not navigate when editing without an id', () => {
+        component.editArticle();
+
+        expect(routerSpy.navigate).not.toHaveBeenCalled();
+    });
+
     describe('when editiong an existing article with id 1', () => {
         it('should navigate to ../edit/1', () => {
             component.editArticle('1');
@@ -88,6 +110,12 @@ describe('Articles > ListComponent', () => {
             expect(vi.mocked(routerSpy.navigate).mock.calls[0][0][0]).toBe('../edit/1');
             expect(vi.mocked(routerSpy.navigate).mock.calls[0][1]).toEqual({ relativeTo: route });
         });
+    });
+
+    it('should not delete when no id is provided', () => {
+        component.deleteArticle();
+
+        expect(articleServiceSpy.deleteArticle).not.toHaveBeenCalled();
     });
 
     describe('when deleting an existing article with id 1', () => {
@@ -108,5 +136,20 @@ describe('Articles > ListComponent', () => {
             expect(articleServiceSpy.getArticles).toHaveBeenCalled();
             expect(vi.mocked(articleServiceSpy.getArticles).mock.calls.length).toBe(1);
         });
+    });
+
+    it('should render article content returned by the service', async () => {
+        articleServiceSpy.getArticles.mockReturnValue(Observable.of([
+            { _id: '1', title: 'Rendered title', content: 'Rendered body', category: 'test' }
+        ]));
+
+        component.getArticles();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const text = fixture.nativeElement.textContent;
+        expect(text).toContain('Rendered title');
+        expect(text).toContain('Rendered body');
     });
 });

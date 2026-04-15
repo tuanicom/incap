@@ -29,6 +29,8 @@ describe('Categories > ListComponent', () => {
         routerSpy = {
             navigate: vi.fn().mockName("Router.navigate")
         };
+        categoryServiceSpy.getCategories.mockReturnValue(Observable.of([]));
+        categoryServiceSpy.deleteCategory.mockReturnValue(Observable.of({}));
 
         await TestBed.configureTestingModule({
             declarations: [],
@@ -82,6 +84,18 @@ describe('Categories > ListComponent', () => {
         });
     });
 
+    it('should not navigate when editing without an id', () => {
+        component.editCategory();
+
+        expect(routerSpy.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should not delete when no id is provided', () => {
+        component.deleteCategory();
+
+        expect(categoryServiceSpy.deleteCategory).not.toHaveBeenCalled();
+    });
+
     describe('when deleting an existing category with id 1', () => {
         beforeEach(() => {
             categoryServiceSpy.deleteCategory.mockReturnValue(Observable.of<object>({}));
@@ -100,5 +114,21 @@ describe('Categories > ListComponent', () => {
             expect(categoryServiceSpy.getCategories).toHaveBeenCalled();
             expect(vi.mocked(categoryServiceSpy.getCategories).mock.calls.length).toBe(1);
         });
+    });
+
+    it('should render the categories returned by the service', async () => {
+        categoryServiceSpy.getCategories.mockReturnValue(Observable.of([
+            { _id: '1', title: 'Category A', description: 'First category' }
+        ]));
+
+        component.getCategories();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const text = fixture.nativeElement.textContent;
+        expect(text).toContain('Category A');
+        expect(text).toContain('First category');
+        expect(text).toContain('Add Category');
     });
 });

@@ -29,6 +29,8 @@ describe('Users > ListComponent', () => {
         routerSpy = {
             navigate: vi.fn().mockName("Router.navigate")
         };
+        userServiceSpy.getUsers.mockReturnValue(Observable.of([]));
+        userServiceSpy.deleteUser.mockReturnValue(Observable.of({}));
 
         await TestBed.configureTestingModule({
             declarations: [],
@@ -71,6 +73,12 @@ describe('Users > ListComponent', () => {
         });
     });
 
+    it('should not delete when no id is provided', () => {
+        component.deleteUser();
+
+        expect(userServiceSpy.deleteUser).not.toHaveBeenCalled();
+    });
+
     describe('when deleting an existing user with id 1', () => {
         beforeEach(() => {
             userServiceSpy.deleteUser.mockReturnValue(Observable.of<object>({}));
@@ -89,5 +97,20 @@ describe('Users > ListComponent', () => {
             expect(userServiceSpy.getUsers).toHaveBeenCalled();
             expect(vi.mocked(userServiceSpy.getUsers).mock.calls.length).toBe(1);
         });
+    });
+
+    it('should render the users returned by the service', async () => {
+        userServiceSpy.getUsers.mockReturnValue(Observable.of([
+            { _id: '1', name: 'Ada Lovelace' }
+        ]));
+
+        component.getUsers();
+        fixture.detectChanges();
+        await fixture.whenStable();
+        fixture.detectChanges();
+
+        const text = fixture.nativeElement.textContent;
+        expect(text).toContain('Ada Lovelace');
+        expect(text).toContain('Add User');
     });
 });

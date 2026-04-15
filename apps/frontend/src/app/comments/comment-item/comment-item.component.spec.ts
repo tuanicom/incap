@@ -37,6 +37,7 @@ describe('Comments > CommentItemComponent', () => {
   it('should enter edit mode and cancel', () => {
     component.startEdit();
     expect(component.editing).toBe(true);
+    expect(component.editText).toBe('hello');
     component.cancel();
     expect(component.editing).toBe(false);
   });
@@ -49,9 +50,67 @@ describe('Comments > CommentItemComponent', () => {
     expect(commentServiceSpy.update).toHaveBeenCalled();
   });
 
+  it('should emit the updated comment and exit edit mode after save', () => {
+    const updatedSpy = vi.spyOn(component.updated, 'emit');
+    const updatedComment = {
+      _id: '1',
+      text: 'updated',
+      authorId: 'u1',
+      articleId: 'a1',
+      createdAt: new Date().toISOString()
+    };
+    commentServiceSpy.update.mockReturnValueOnce(Observable.of(updatedComment));
+
+    component.startEdit();
+    component.editText = 'updated';
+    component.save();
+
+    expect(commentServiceSpy.update).toHaveBeenCalledWith('1', { text: 'updated' });
+    expect(updatedSpy).toHaveBeenCalledWith(updatedComment);
+    expect(component.comment).toEqual(updatedComment);
+    expect(component.editing).toBe(false);
+  });
+
+  it('should not save when the edited text is blank', () => {
+    component.startEdit();
+    component.editText = '   ';
+
+    component.save();
+
+    expect(commentServiceSpy.update).not.toHaveBeenCalled();
+  });
+
+  it('should not save when the comment id is missing', () => {
+    component.startEdit();
+    component.comment = { ...component.comment, _id: undefined };
+    component.editText = 'updated';
+
+    component.save();
+
+    expect(commentServiceSpy.update).not.toHaveBeenCalled();
+  });
+
   it('should call delete on remove', () => {
     commentServiceSpy.delete.mockReturnValueOnce(Observable.of({}));
     component.remove();
     expect(commentServiceSpy.delete).toHaveBeenCalled();
+  });
+
+  it('should emit deleted ids after removing a comment', () => {
+    const deletedSpy = vi.spyOn(component.deleted, 'emit');
+    commentServiceSpy.delete.mockReturnValueOnce(Observable.of({}));
+
+    component.remove();
+
+    expect(commentServiceSpy.delete).toHaveBeenCalledWith('1');
+    expect(deletedSpy).toHaveBeenCalledWith('1');
+  });
+
+  it('should not remove comments without an id', () => {
+    component.comment = { ...component.comment, _id: undefined };
+
+    component.remove();
+
+    expect(commentServiceSpy.delete).not.toHaveBeenCalled();
   });
 });

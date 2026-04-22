@@ -8,8 +8,8 @@ import { AppSettingsService } from '../../app.settings';
   providedIn: 'root'
 })
 export class ArticleService {
-  private http: HttpClient = inject(HttpClient);
-  private appSettings: AppSettingsService = inject(AppSettingsService);
+  private readonly http = inject(HttpClient);
+  private readonly appSettings = inject(AppSettingsService);
 
   private get apiUrl(): string {
     return this.appSettings.settings.articlesApiUrl;

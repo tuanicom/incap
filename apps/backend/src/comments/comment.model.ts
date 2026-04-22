@@ -28,16 +28,16 @@ export const commentSchema = new Schema({
 });
 
 function getCommentModel(): Model<Comment> {
-    if ((mongoose as any).models && (mongoose as any).models.Comment) {
+    if ((mongoose as any).models?.Comment) {
         return (mongoose as any).models.Comment as Model<Comment>;
     }
-    if (mongoose.modelNames && mongoose.modelNames().includes && mongoose.modelNames().includes('Comment')) {
+    if (mongoose.modelNames?.().includes?.('Comment')) {
         return mongoose.model('Comment') as Model<Comment>;
     }
     try {
         return model<Comment>('Comment', commentSchema);
     } catch (err: any) {
-        if (err && err.name === 'OverwriteModelError') {
+        if (err?.name === 'OverwriteModelError') {
             return (mongoose as any).models.Comment as Model<Comment>;
         }
         throw err;

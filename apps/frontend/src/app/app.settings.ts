@@ -19,8 +19,8 @@ export class AppSettingsService {
 
 @Injectable({ providedIn: 'root' })
 export class AppSettingsHttpService {
-  private http = inject(HttpClient);
-  private appSettingsService = inject(AppSettingsService);
+  private readonly http = inject(HttpClient);
+  private readonly appSettingsService = inject(AppSettingsService);
 
   public initializeApp(): void {
     this.http.get<AppSettings>('assets/settings.json').subscribe((res) => this.appSettingsService.settings = res);

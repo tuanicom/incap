@@ -18,12 +18,13 @@ export class ArticleRoutes {
     }
 
     public declareRoutes() {
-        this.router.route('/').get(asyncHandler(async (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const articles = await this.controller.getAll(_req.query.category as string);
+        this.router.route('/').get(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+            const category = typeof req.query.category === 'string' ? req.query.category : undefined;
+            const articles = await this.controller.getAll(category);
             res.json(articles);
         }));
         this.router.route('/:id').get(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const article = await this.controller.getById(req.params.id as string);
+            const article = await this.controller.getById(req.params.id);
             res.json(article);
         }));
 
@@ -38,7 +39,7 @@ export class ArticleRoutes {
         }));
 
         this.router.route('/:id').delete(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const article = await this.controller.delete(req.params.id as string);
+            const article = await this.controller.delete(req.params.id);
             res.json(article);
         }));
     }

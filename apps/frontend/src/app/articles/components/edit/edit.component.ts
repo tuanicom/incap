@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { CommentListComponent } from '../../../comments/comment-list/comment-list.component';
@@ -16,9 +16,9 @@ import { CommentListComponent } from '../../../comments/comment-list/comment-lis
 })
 export class EditComponent implements OnInit {
   public article$!: Observable<Article>;
-  private articleService = inject(ArticleService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly articleService = inject(ArticleService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   editArticleForm = new FormGroup({
     content: new FormControl('', { nonNullable: true }),
@@ -31,12 +31,10 @@ export class EditComponent implements OnInit {
   }
 
   private getArticleById(id: string): void {
-    this.article$ = this.articleService.getArticleById(id);
-    if (this.article$) {
-      this.article$.subscribe((article: Article) => {
-        this.editArticleForm.controls.content.setValue(article.content);
-      });
-    }
+    this.article$ = this.articleService.getArticleById(id).pipe(shareReplay(1));
+    this.article$.subscribe((article: Article) => {
+      this.editArticleForm.controls.content.setValue(article.content);
+    });
   }
 
   onSubmit(): void {

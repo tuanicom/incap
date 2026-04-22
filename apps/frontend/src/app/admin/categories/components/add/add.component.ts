@@ -12,9 +12,9 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
     imports: [ReactiveFormsModule]
 })
 export class AddComponent {
-  private categoryService = inject(CategoryService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
+  private readonly categoryService = inject(CategoryService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   addCategoryForm = new FormGroup({
     title: new FormControl('', { nonNullable: true }),
@@ -25,7 +25,7 @@ export class AddComponent {
     const category: Category = {
       title: this.addCategoryForm.controls.title.value,
       description: this.addCategoryForm.controls.description.value
-    } as Category;
+    };
     this.categoryService.addCategory(category).subscribe(() => {
       this.goBackToList();
     });

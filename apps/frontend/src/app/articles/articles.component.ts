@@ -9,7 +9,7 @@ import { ActivatedRoute, Params, RouterModule } from '@angular/router';
     imports: [RouterModule]
 })
 export class ArticlesComponent implements OnInit{
-  private route = inject(ActivatedRoute);
+  private readonly route = inject(ActivatedRoute);
   public category = '';
 
   ngOnInit(): void {

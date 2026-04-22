@@ -8,14 +8,14 @@ import { AppSettingsService } from '../../../app.settings';
   providedIn: 'root'
 })
 export class CategoryService {
-  private http: HttpClient = inject(HttpClient);
-  private appSettings: AppSettingsService = inject(AppSettingsService);
+  private readonly http = inject(HttpClient);
+  private readonly appSettings = inject(AppSettingsService);
 
   private get apiUrl(): string {
     return this.appSettings.settings.categoriesApiUrl;
   }
 
-  public getCategories(): Observable<Category[]> {console.log(this.http, this.apiUrl)
+  public getCategories(): Observable<Category[]> {
     return this.http.get<Category[]>(this.apiUrl);
   }
 

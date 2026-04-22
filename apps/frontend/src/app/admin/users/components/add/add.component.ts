@@ -12,9 +12,9 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
     imports: [ReactiveFormsModule]
 })
 export class AddComponent {
-  private userService = inject(UserService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
+  private readonly userService = inject(UserService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
 
   addUserForm = new FormGroup({
     name: new FormControl('', { nonNullable: true }),
@@ -23,7 +23,7 @@ export class AddComponent {
   onSubmit(): void {
     const user: User = {
       name: this.addUserForm.controls.name.value,
-    } as User;
+    };
     this.userService.addUser(user).subscribe(() => {
       this.goBackToList();
     });

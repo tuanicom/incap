@@ -12,9 +12,9 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
     imports: [ReactiveFormsModule]
 })
 export class AddComponent implements OnInit {
-  private articleService = inject(ArticleService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
+  private readonly articleService = inject(ArticleService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   private category = '';
 
   ngOnInit(): void {
@@ -39,7 +39,7 @@ export class AddComponent implements OnInit {
       content: this.addArticleForm.controls.content.value,
       category: this.category,
       author: ""
-    } as Article;
+    };
     this.articleService.addArticle(article).subscribe(() => {
       this.goBackToList();
     });

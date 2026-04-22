@@ -15,7 +15,7 @@ export class CommentFormComponent {
   @Input() articleId: string | null = null;
   @Output() created = new EventEmitter<Comment>();
   public text = '';
-  private commentService = inject(CommentService);
+  private readonly commentService = inject(CommentService);
 
   submit(): void {
     if (!this.articleId || !this.text || !this.text.trim()) { return; }

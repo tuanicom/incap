@@ -22,16 +22,16 @@ export const articleSchema = new Schema({
     }
 });
 function getArticleModel(): Model<Article> {
-    if ((mongoose as any).models && (mongoose as any).models.Article) {
+    if ((mongoose as any).models?.Article) {
         return (mongoose as any).models.Article as Model<Article>;
     }
-    if (mongoose.modelNames && mongoose.modelNames().includes && mongoose.modelNames().includes('Article')) {
+    if (mongoose.modelNames?.().includes?.('Article')) {
         return mongoose.model('Article') as Model<Article>;
     }
     try {
         return model<Article>('Article', articleSchema);
     } catch (err: any) {
-        if (err && err.name === 'OverwriteModelError') {
+        if (err?.name === 'OverwriteModelError') {
             return (mongoose as any).models.Article as Model<Article>;
         }
         throw err;

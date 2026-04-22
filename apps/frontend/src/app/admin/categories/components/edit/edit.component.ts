@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -15,9 +15,9 @@ import { CommonModule } from '@angular/common';
 })
 export class EditComponent implements OnInit {
   public category$!: Observable<Category>;
-  private categoryService = inject(CategoryService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly categoryService = inject(CategoryService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   editCategoryForm = new FormGroup({
     description: new FormControl('', { nonNullable: true }),
@@ -30,12 +30,10 @@ export class EditComponent implements OnInit {
   }
 
   private getCategoryById(id: string): void {
-    this.category$ = this.categoryService.getCategoryById(id);
-    if (this.category$) {
-      this.category$.subscribe((category: Category) => {
-        this.editCategoryForm.controls.description.setValue(category.description);
-      });
-    }
+    this.category$ = this.categoryService.getCategoryById(id).pipe(shareReplay(1));
+    this.category$.subscribe((category: Category) => {
+      this.editCategoryForm.controls.description.setValue(category.description);
+    });
   }
 
   onSubmit(): void {

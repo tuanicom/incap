@@ -20,12 +20,12 @@ export class CommentRoutes {
     public declareRoutes() {
         // List and create comments for an article
         this.router.route('/articles/:articleId/comments').get(asyncHandler(async (req: express.Request, res: express.Response) => {
-            const comments = await this.controller.getByArticle(req.params.articleId as string);
+            const comments = await this.controller.getByArticle(req.params.articleId);
             res.json(comments);
         }));
 
         this.router.route('/articles/:articleId/comments').post(asyncHandler(async (req: express.Request, res: express.Response) => {
-            const comment = await this.controller.add(req.params.articleId as string, req.body);
+            const comment = await this.controller.add(req.params.articleId, req.body);
             res.status(201).json(comment);
         }));
 
@@ -38,7 +38,7 @@ export class CommentRoutes {
         }));
 
         this.router.route('/comments/:id').delete(asyncHandler(async (req: express.Request, res: express.Response) => {
-            await this.controller.delete(req.params.id as string);
+            await this.controller.delete(req.params.id);
             res.status(204).end();
         }));
     }

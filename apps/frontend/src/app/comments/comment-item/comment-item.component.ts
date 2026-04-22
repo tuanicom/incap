@@ -1,9 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Comment } from '../comment.model';
 import { CommentService } from '../comment.service';
-import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-comment-item',
@@ -18,7 +17,7 @@ export class CommentItemComponent {
   @Output() deleted = new EventEmitter<string>();
   public editing = false;
   public editText = '';
-  private commentService = inject(CommentService);
+  private readonly commentService = inject(CommentService);
 
   startEdit(): void {
     this.editing = true;
@@ -40,9 +39,10 @@ export class CommentItemComponent {
   }
 
   remove(): void {
-    if (!this.comment._id) { return; }
-    this.commentService.delete(this.comment._id).subscribe(() => {
-      this.deleted.emit(this.comment._id as string);
+    const id = this.comment._id;
+    if (!id) { return; }
+    this.commentService.delete(id).subscribe(() => {
+      this.deleted.emit(id);
     });
   }
 }

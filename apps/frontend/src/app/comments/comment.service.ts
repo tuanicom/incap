@@ -6,8 +6,8 @@ import { Comment } from './comment.model';
 
 @Injectable({ providedIn: 'root' })
 export class CommentService {
-  private http: HttpClient = inject(HttpClient);
-  private appSettings: AppSettingsService = inject(AppSettingsService);
+  private readonly http = inject(HttpClient);
+  private readonly appSettings = inject(AppSettingsService);
 
   private get articlesApi(): string {
     return this.appSettings.settings.articlesApiUrl;

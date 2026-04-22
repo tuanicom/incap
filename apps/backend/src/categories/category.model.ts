@@ -14,15 +14,16 @@ export const categorySchema = new Schema({
     }
 });
 function getCategoryModel(): Model<Category> {
-    if ((mongoose as any).models && (mongoose as any).models.Category) {
+    if ((mongoose as any).models?.Category) {
         return (mongoose as any).models.Category as Model<Category>;
     }
-    if (mongoose.modelNames && mongoose.modelNames().includes && mongoose.modelNames().includes('Category')) {
+    if (mongoose.modelNames?.().includes?.('Category')) {
+        return mongoose.model('Category') as Model<Category>;
     }
     try {
         return model<Category>('Category', categorySchema);
     } catch (err: any) {
-        if (err && err.name === 'OverwriteModelError') {
+        if (err?.name === 'OverwriteModelError') {
             return (mongoose as any).models.Category as Model<Category>;
         }
         throw err;

@@ -10,15 +10,16 @@ export const userSchema = new Schema({
     }
 });
 function getUserModel(): Model<User> {
-    if ((mongoose as any).models && (mongoose as any).models.User) {
+    if ((mongoose as any).models?.User) {
         return (mongoose as any).models.User as Model<User>;
     }
-    if (mongoose.modelNames && mongoose.modelNames().includes && mongoose.modelNames().includes('User')) {
+    if (mongoose.modelNames?.().includes?.('User')) {
+        return mongoose.model('User') as Model<User>;
     }
     try {
         return model<User>('User', userSchema);
     } catch (err: any) {
-        if (err && err.name === 'OverwriteModelError') {
+        if (err?.name === 'OverwriteModelError') {
             return (mongoose as any).models.User as Model<User>;
         }
         throw err;

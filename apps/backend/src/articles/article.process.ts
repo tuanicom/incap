@@ -3,7 +3,7 @@ import articleModel, { Article } from "./article.model";
 export class ArticleProcess {
 
     public async getAll(category?: string): Promise<Article[]> {
-        const criteria = category !== undefined ? {category: category} : {};
+        const criteria = category ? { category } : {};
         return articleModel.find(criteria).exec();
     }
 

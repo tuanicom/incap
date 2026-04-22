@@ -16,9 +16,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 })
 export class ListComponent implements OnInit {
   public categories$!: Observable<Category[]>;
-  private categoryService = inject(CategoryService);
-  private router = inject(Router);
-  private route = inject(ActivatedRoute);
+  private readonly categoryService = inject(CategoryService);
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   public icons: { [id: string]: IconDefinition; } = {
     plus: faPlus,
     edit: faEdit,

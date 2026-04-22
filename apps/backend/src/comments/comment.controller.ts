@@ -14,7 +14,7 @@ export class CommentController {
 
     public async add(articleId: string, input: any): Promise<Comment> {
         const now = new Date().toISOString();
-        const payload = Object.assign({}, input, { articleId: articleId, createdAt: now });
+        const payload = { ...input, articleId, createdAt: now };
         const newComment = new commentModel(payload);
         return this.process.save(newComment);
     }

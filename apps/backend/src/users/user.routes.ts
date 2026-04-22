@@ -23,7 +23,7 @@ export class UserRoutes {
             res.json(users);
         }));
         this.router.route('/:id').get(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const user = await this.controller.getById(req.params.id as string);
+            const user = await this.controller.getById(req.params.id);
             res.json(user);
         }));
 
@@ -38,7 +38,7 @@ export class UserRoutes {
         }));
 
         this.router.route('/:id').delete(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const user = await this.controller.delete(req.params.id as string);
+            const user = await this.controller.delete(req.params.id);
             res.json(user);
         }));
     }

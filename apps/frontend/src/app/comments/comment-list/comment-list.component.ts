@@ -15,7 +15,7 @@ import { CommentItemComponent } from '../comment-item/comment-item.component';
 export class CommentListComponent implements OnInit {
   @Input() articleId: string | null = null;
   public comments: Comment[] = [];
-  private commentService = inject(CommentService);
+  private readonly commentService = inject(CommentService);
 
   ngOnInit(): void {
     if (this.articleId) {

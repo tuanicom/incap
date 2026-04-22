@@ -15,9 +15,9 @@ import { CommonModule } from '@angular/common';
 })
 export class EditComponent implements OnInit {
   public category$!: Observable<Category>;
-  private categoryService = inject(CategoryService);
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
+  private readonly categoryService = inject(CategoryService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   editCategoryForm = new FormGroup({
     description: new FormControl('', { nonNullable: true }),
@@ -31,11 +31,9 @@ export class EditComponent implements OnInit {
 
   private getCategoryById(id: string): void {
     this.category$ = this.categoryService.getCategoryById(id);
-    if (this.category$) {
-      this.category$.subscribe((category: Category) => {
-        this.editCategoryForm.controls.description.setValue(category.description);
-      });
-    }
+    this.category$.subscribe((category: Category) => {
+      this.editCategoryForm.controls.description.setValue(category.description);
+    });
   }
 
   onSubmit(): void {

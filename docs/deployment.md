@@ -2,659 +2,266 @@
 
 ## Overview
 
-INCAP supports multiple deployment strategies: local development with Docker Compose, and production deployment with either Docker Compose or Kubernetes. Each approach balances convenience, scalability, and operational complexity.
+This repository ships deployment assets for three main scenarios:
 
-## Deployment Architecture
+- local runtime wiring with `docker-compose.yml`
+- local image build or image pull flows with `docker-compose-build.yml` and `docker-compose-image.yml`
+- Kubernetes manifests under `deploy/`
 
-### Service Topology
+The frontend and backend Dockerfiles live in the Nx monorepo under:
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                  Load Balancer / Ingress                │
-│                  (External Access points)               │
-└────────────┬──────────────────────────────┬──────────────┘
-             │                              │
-    ┌────────↓────────┐            ┌────────↓────────┐
-    │   Frontend      │            │   Backend       │
-    │   Container     │            │   Container     │
-    │   (Port 8080)   │            │   (Port 4000)   │
-    └────────┬────────┘            └────────┬────────┘
-             │                              │
-             │         ┌──────────────────────┐
-             │         │                      │
-             │         ↓                      ↓
-             │    ┌──────────────────────────────────┐
-             │    │     MongoDB Container            │
-             │    │     (Port 27017)                 │
-             │    │     Database Volume (Persistent) │
-             │    └──────────────────────────────────┘
-             │
-             └─→ Nginx proxy server (Static files)
-```
+- `apps/frontend/Dockerfile`
+- `apps/backend/Dockerfile`
 
 ## Docker Images
 
 ### Frontend Image
 
-**Dockerfile Strategy**: Multi-stage build
+**File**: `apps/frontend/Dockerfile`
 
-```dockerfile
-# Stage 1: Build
-FROM node:24-alpine AS builder
-WORKDIR /app
-COPY frontend/package*.json ./
-RUN npm ci
-COPY frontend/ ./
-RUN npm run build
+The frontend image is built from the monorepo root context.
 
-# Stage 2: Runtime
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY frontend/nginx.conf /etc/nginx/nginx.conf
-EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
-```
+Build stage:
 
-**Result**:
-- Small image size (Nginx + static files only)
-- Fast deployment
-- No Node.js runtime in final image
+- base image: `node:22-alpine`
+- copies `package*.json`, `nx.json`, `tsconfig.base.json`, and `apps/frontend`
+- installs dependencies with `npm ci --legacy-peer-deps`
+- runs `npm run build:frontend`
 
-**Image Tag**: `tuanicom/incap-frontend:latest`
+Runtime stage:
 
-**Registry**: Docker Hub
+- base image: `nginx:1.29.4-alpine3.23-slim`
+- serves files from `dist/apps/frontend/browser/`
+- exposes port `8080`
+- injects runtime API endpoints into nginx config via `envsubst`
+
+Default runtime environment variables:
+
+- `CATEGORIES_API_URL=http://localhost/api/categories`
+- `USERS_API_URL=http://localhost/api/users`
+- `ARTICLES_API_URL=http://localhost/api/articles`
+
+Published image tag:
+
+- `tuanicom/incap-frontend:latest`
 
 ### Backend Image
 
-**Dockerfile Strategy**: Multi-stage build
+**File**: `apps/backend/Dockerfile`
 
-```dockerfile
-# Stage 1: Build & Test
-FROM node:24-alpine AS builder
-WORKDIR /app
-COPY backend/package*.json ./
-RUN npm ci
-COPY backend/ ./
-RUN npm run build
-RUN npm run test
-RUN npm run coverage
+The backend image is also built from the monorepo root context.
 
-# Stage 2: Runtime
-FROM node:24-alpine
-WORKDIR /app
-COPY --from=builder /app/package*.json ./
-RUN npm ci --production
-COPY --from=builder /app/dist ./dist
-EXPOSE 4000
-CMD ["node", "dist/server.js"]
-```
+Build stage:
 
-**Result**:
-- Tests run during build (fail fast)
-- Only production dependencies in runtime
-- Minimal attack surface
+- base image: `node:22-alpine`
+- copies `package*.json` and `apps/backend`
+- installs dependencies with `npm ci --legacy-peer-deps`
+- runs `npm --prefix apps/backend run build`
 
-**Image Tag**: `tuanicom/incap-backend:latest`
+Runtime stage:
 
-**Registry**: Docker Hub
+- base image: `node:22-alpine`
+- copies `apps/backend/dist/server.js` into the runtime image
+- creates and uses a non-root user
+- exposes port `4000`
 
-### MongoDB Image
+Default runtime environment variables:
 
-**Source**: Official `mongo` image from Docker Hub
+- `NODE_ENV=production`
+- `MONGO_DB_URL=localhost:27017`
 
-**Usage**: Pre-built, no custom image needed
+Published image tag:
 
-```yaml
-services:
-  mongodb:
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongodb_data:/data/db
-```
+- `tuanicom/incap-backend:latest`
 
-## Docker Compose Deployment
+## Compose Files
 
-### Development Environment
+### `docker-compose.yml`
 
-**File**: `docker-compose.yml`
+This file documents runtime relationships between the three services and is the simplest local orchestration entry point.
 
-```yaml
-version: '3'
+Defined services:
 
-services:
-  frontend:
-    ports:
-      - "8080:8080"
-    environment:
-      CATEGORIES_API_URL: http://backend:4000/categories
-      USERS_API_URL: http://backend:4000/users
-      ARTICLES_API_URL: http://backend:4000/articles
-    depends_on:
-      - backend
+- `frontend`
+- `backend`
+- `mongodb`
 
-  backend:
-    environment:
-      MONGO_DB_URL: mongodb:27017
-    depends_on:
-      - mongodb
+Current configuration in the file:
 
-  mongodb:
-    image: mongo
-```
+- frontend publishes `8080:8080`
+- frontend uses:
+  - `CATEGORIES_API_URL=http://backend:4000/categories`
+  - `USERS_API_URL=http://backend:4000/users`
+  - `ARTICLES_API_URL=http://backend:4000/articles`
+- backend uses `MONGO_DB_URL=mongodb:27017`
+- mongodb uses the official `mongo` image
 
-### Service Configuration
+Important limitation: this file does not currently declare `build`, `image`, backend port publishing, MongoDB port publishing, or a persistent volume. It is useful as a lightweight wiring reference, but it is not a fully self-contained production compose stack.
 
-#### Frontend Service
+### `docker-compose-build.yml`
 
-**Port Mapping**: `8080:8080`
-- External: localhost:8080
-- Internal: 8080 (Nginx)
+This file builds local images from source:
 
-**Environment Variables**:
-```bash
-CATEGORIES_API_URL=http://backend:4000/categories
-USERS_API_URL=http://backend:4000/users
-ARTICLES_API_URL=http://backend:4000/articles
-```
-- Internal DNS names for backend communication
-- Configured via Docker Compose networking
+- frontend build context: `apps/frontend`
+- backend build context: `apps/backend`
+- mongodb image: `mongo`
 
-### Backend Service
+Use it when you want Docker to build the application images locally.
 
-**Port Mapping**: `4000:4000` (implicit)
-- External: localhost:4000
-- Internal: 4000 (Express)
+### `docker-compose-image.yml`
 
-**Environment Variables**:
-```bash
-MONGO_DB_URL=mongodb:27017
-```
-- Connection string to MongoDB
-- Resolves via internal Docker network
+This file pulls prebuilt images instead of building them:
 
-### MongoDB Service
+- `tuanicom/incap-frontend`
+- `tuanicom/incap-backend`
 
-**Image**: `mongo:latest`
+Both services use `pull_policy: always`.
 
-**Port Mapping**: `27017:27017`
-- External: localhost:27017
-- Internal: 27017
+### `deploy/docker-compose.yml`
 
-**Data Persistence**:
-```yaml
-volumes:
-  - mongodb_data:/data/db
-```
-- Named volume for data durability
-- Survives container restart
+This file is a separate deployment-oriented compose reference under `deploy/`. It uses service names `incap-frontend` and `incap-backend`, publishes both application ports, and points the frontend category API to `http://localhost:4000/categories`.
 
-### Startup Sequence
+Unlike the root `docker-compose.yml`, it does not define all three frontend API environment variables.
 
-```
-1. Docker Compose starts services in dependency order
-2. MongoDB starts (no dependencies)
-3. Backend starts (depends on MongoDB)
-   └─ Waits and retries MongoDB connection
-4. Frontend starts (depends on Backend)
-   └─ Loads API URLs from environment
-5. All services health-checked
-6. Application ready on localhost:8080
-```
+## Running with Docker
 
-### Running Docker Compose
+Examples from the repository root:
 
 ```bash
-# Start services
+# Start the lightweight runtime compose file
 docker-compose up -d
 
-# View logs
-docker-compose logs -f
+# Build local images from source definitions
+docker-compose -f docker-compose-build.yml build
 
-# Stop services
-docker-compose down
-
-# Remove volumes (clean database)
-docker-compose down -v
-
-# Rebuild images
-docker-compose build --no-cache
+# Run using published images
+docker-compose -f docker-compose-image.yml pull
+docker-compose -f docker-compose-image.yml up -d
 ```
 
-## Kubernetes Deployment
+## Kubernetes Manifests
 
-### Overview
+Kubernetes assets are stored in `deploy/`:
 
-Kubernetes manifests enable production-grade container orchestration with:
-- High availability through replicas
-- Self-healing and auto-restart
-- Load balancing
-- Resource management
-- Rolling updates
+- `deploy/backend-deployment.yaml`
+- `deploy/backend-service.yaml`
+- `deploy/frontend-deployment.yaml`
+- `deploy/frontend-service.yaml`
+- `deploy/mongodb-deployment.yaml`
+- `deploy/mongodb-service.yaml`
 
-### Deployment Files
-
-Located in `deploy/` directory:
-
-```
-deploy/
-├── backend-deployment.yaml      # Backend Pod configuration
-├── backend-service.yaml         # Backend Service (networking)
-├── frontend-deployment.yaml     # Frontend Pod configuration
-├── frontend-service.yaml        # Frontend Service (networking)
-├── mongodb-deployment.yaml      # MongoDB Pod configuration
-├── mongodb-service.yaml         # MongoDB Service (networking)
-└── docker-compose.yml           # Development reference
-
-```
+These files appear to be Kompose-generated manifests derived from an older compose definition and should be treated as baseline manifests rather than polished production Kubernetes resources.
 
 ### Backend Deployment
 
 **File**: `deploy/backend-deployment.yaml`
 
-```yaml
-apiVersion: extensions/v1beta1
-kind: Deployment
-metadata:
-  labels:
-    io.kompose.service: incap-backend
-  name: incap-backend
-spec:
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        io.kompose.service: incap-backend
-    spec:
-      containers:
-        - env:
-            - name: MONGO_DB_URL
-              value: mongodb:27017
-          image: tuanicom/incap-backend
-          name: incap-backend
-          securityContext:
-            allowPrivilegeEscalation: false
-            runAsNonRoot: true
-            capabilities:
-              drop:
-                - all
-          ports:
-            - containerPort: 4000
-          resources: {}
-      restartPolicy: Always
-```
+Current characteristics:
 
-**Key Features**:
-- **Replicas**: 1 (can increase for HA)
-- **Container Port**: 4000
-- **Environment**: MongoDB connection string
-- **Security**:
-  - No privilege escalation
-  - Run as non-root user
-  - Drop all Linux capabilities
-- **Restart Policy**: Always (self-healing)
+- `apiVersion: extensions/v1beta1`
+- image: `tuanicom/incap-backend`
+- env: `MONGO_DB_URL=mongodb:27017`
+- container port: `4000`
+- security context sets `allowPrivilegeEscalation: false`, `runAsNonRoot: true`, and drops all capabilities
 
 ### Backend Service
 
 **File**: `deploy/backend-service.yaml`
 
-```yaml
-apiVersion: v1
-kind: Service
-metadata:
-  labels:
-    io.kompose.service: incap-backend
-  name: incap-backend
-spec:
-  ports:
-    - name: "4000"
-      port: 4000
-      targetPort: 4000
-  selector:
-    io.kompose.service: incap-backend
-type: ClusterIP
-```
+Current characteristics:
 
-**Purpose**: 
-- Internal service discovery
-- Load balancing across backend pods
-- DNS name: `incap-backend` (resolvable within cluster)
+- service type: `NodePort`
+- service port: `4000`
+- target port: `4000`
+- node port: `30400`
 
 ### Frontend Deployment
 
 **File**: `deploy/frontend-deployment.yaml`
 
-**Structure**: Similar to backend
-- Image: `tuanicom/incap-frontend`
-- Port: 8080
-- Security context applied
+Current characteristics:
+
+- `apiVersion: extensions/v1beta1`
+- image: `tuanicom/incap-frontend`
+- only one env variable is present: `CATEGORIES_API_URL=http://localhost:4000`
+- container port: `8080`
+
+Note that this does not mirror the frontend Dockerfile defaults, which define three API URL variables.
 
 ### Frontend Service
 
-**Type**: ClusterIP (internal) or LoadBalancer (external)
+**File**: `deploy/frontend-service.yaml`
 
-**For Production**:
-```yaml
-type: LoadBalancer
-ports:
-  - port: 80
-    targetPort: 8080
-    protocol: TCP
-```
+Current characteristics:
 
-### MongoDB Deployment
+- service type: `NodePort`
+- service port: `8080`
+- target port: `8080`
+- node port: `30080`
 
-**Considerations**:
-- StatefulSet instead of Deployment (for data consistency)
-- Persistent Volume for data
-- Connection string: `mongodb` (internal DNS)
+### MongoDB
 
-### Kubernetes Network
+**Files**:
 
-```
-┌─────────────────────────────────────────┐
-│       Kubernetes Cluster                │
-├─────────────────────────────────────────┤
-│                                         │
-│  ┌──────────────────────────────────┐  │
-│  │  Ingress / LoadBalancer Service  │  │
-│  │  (External traffic entry point)  │  │
-│  └────────────────┬─────────────────┘  │
-│                   │                     │
-│        ┌──────────┼──────────┐          │
-│        ↓                     ↓          │
-│  ┌──────────────┐     ┌──────────────┐│
-│  │ Frontend Pod │     │ Backend Pod  ││
-│  │   (Port 8080)      │  (Port 4000) ││
-│  └────────┬─────┘     └──────┬───────┘│
-│           │                  │        │
-│           └──────────┬───────┘        │
-│                      ↓                │
-│           ┌──────────────────┐        │
-│           │  MongoDB Service │        │
-│           │  (Port 27017)    │        │
-│           └──────────────────┘        │
-│                                       │
-└─────────────────────────────────────────┘
-```
+- `deploy/mongodb-deployment.yaml`
+- `deploy/mongodb-service.yaml`
 
-### Deploying to Kubernetes
+Current characteristics:
+
+- image: `mongo`
+- service port: `27017`
+- no persistent volume claim is defined in the repository
+
+## Applying the Kubernetes Manifests
 
 ```bash
-# Create namespace
 kubectl create namespace incap
-
-# Deploy services
-kubectl apply -f deploy/backend-service.yaml -n incap
-kubectl apply -f deploy/frontend-service.yaml -n incap
 kubectl apply -f deploy/mongodb-service.yaml -n incap
-
-# Deploy applications
-kubectl apply -f deploy/backend-deployment.yaml -n incap
-kubectl apply -f deploy/frontend-deployment.yaml -n incap
 kubectl apply -f deploy/mongodb-deployment.yaml -n incap
-
-# Check status
-kubectl get deployments -n incap
-kubectl get services -n incap
-kubectl get pods -n incap
-
-# View logs
-kubectl logs deployment/incap-backend -n incap
-kubectl logs deployment/incap-frontend -n incap
+kubectl apply -f deploy/backend-service.yaml -n incap
+kubectl apply -f deploy/backend-deployment.yaml -n incap
+kubectl apply -f deploy/frontend-service.yaml -n incap
+kubectl apply -f deploy/frontend-deployment.yaml -n incap
 ```
 
-### Scaling
+## Configuration Summary
 
-```bash
-# Scale backend to 3 replicas
-kubectl scale deployment/incap-backend --replicas=3 -n incap
+### Frontend
 
-# Auto-scaling with HPA
-kubectl autoscale deployment incap-backend --min=2 --max=10 \
-  --cpu-percent=80 -n incap
-```
+The frontend runtime can be configured with:
 
-## Configuration Management
+- `CATEGORIES_API_URL`
+- `USERS_API_URL`
+- `ARTICLES_API_URL`
 
-### Environment Variables
+Those variables are consumed by `apps/frontend/nginx.conf` and substituted at container startup by the frontend Docker image.
 
-#### Frontend
-- `CATEGORIES_API_URL`: Categories endpoint
-- `USERS_API_URL`: Users endpoint
-- `ARTICLES_API_URL`: Articles endpoint
+The application code also still contains `assets/settings.json` support, so there are effectively two configuration mechanisms in the repository today:
 
-**Configuration Sources**:
-- Docker Compose: `environment:` section
-- Kubernetes: `env:` in deployment spec
-- File-based: `assets/settings.json`
+- static/runtime file-based app settings inside the frontend app
+- nginx proxy endpoint injection through container environment variables
 
-#### Backend
-- `MONGO_DB_URL`: MongoDB connection string
-  - Format: `host:port`
-  - Default: `localhost:27017`
-  - In containers: `mongodb:27017`
+### Backend
 
-### Configuration for Different Environments
+The backend runtime currently depends on:
 
-**Development**:
-```yaml
-Backend:
-  MONGO_DB_URL: mongodb:27017 (Docker Compose)
-Frontend:
-  API URLs: http://localhost:4000/...
-```
+- `MONGO_DB_URL`
 
-**Production**:
-```yaml
-Backend:
-  MONGO_DB_URL: db.example.com:27017 (production MongoDB)
-Frontend:
-  API URLs: https://api.example.com/... (production domain)
-```
+The default value in the server code and Dockerfile is `localhost:27017`.
 
-## Data Persistence
+## Known Gaps in the Current Deployment Assets
 
-### MongoDB Data Persistence
+These are important operational caveats in the repository as it exists today:
 
-**Docker Compose**:
-```yaml
-services:
-  mongodb:
-    volumes:
-      - mongodb_data:/data/db
+- The root `docker-compose.yml` is incomplete for a full fresh deployment because it does not specify image builds or published backend and MongoDB ports.
+- The root compose file also does not define a named volume for MongoDB persistence.
+- The Kubernetes deployments still use deprecated `extensions/v1beta1` API versions.
+- The Kubernetes services are `NodePort`, not `ClusterIP` or `LoadBalancer`.
+- The frontend Kubernetes deployment sets only `CATEGORIES_API_URL`, while the frontend Docker image expects three API URL variables.
+- No health probes are defined in the Kubernetes manifests.
+- No persistent storage manifest for MongoDB is present under `deploy/`.
 
-volumes:
-  mongodb_data:
-```
+## Related Files
 
-**Kubernetes**:
-```yaml
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mongodb-pvc
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-```
-
-### Backup Strategy
-
-**Backup Commands**:
-```bash
-# Docker Compose
-docker-compose exec mongodb mongodump -o /backup
-
-# Kubernetes
-kubectl exec deployment/incap-mongodb -n incap -- \
-  mongodump -o /backup
-```
-
-## Security in Production
-
-### Network Security
-
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: incap-network-policy
-spec:
-  podSelector:
-    matchLabels:
-      app: incap-backend
-  policyTypes:
-    - Ingress
-  ingress:
-    - from:
-        - podSelector:
-            matchLabels:
-              app: incap-frontend
-      ports:
-        - protocol: TCP
-          port: 4000
-```
-
-### Resource Limits
-
-```yaml
-resources:
-  requests:
-    memory: "256Mi"
-    cpu: "250m"
-  limits:
-    memory: "512Mi"
-    cpu: "500m"
-```
-
-### Container Security
-
-```yaml
-securityContext:
-  allowPrivilegeEscalation: false
-  runAsNonRoot: true
-  capabilities:
-    drop:
-      - all
-  readOnlyRootFilesystem: true
-```
-
-## Building Custom Images
-
-### Manual Build
-
-```bash
-# Backend
-docker build -t incap-backend:v1.0 backend/
-
-# Frontend
-docker build -t incap-frontend:v1.0 frontend/
-
-# Tag for registry
-docker tag incap-backend:v1.0 myregistry.azurecr.io/incap-backend:v1.0
-docker tag incap-frontend:v1.0 myregistry.azurecr.io/incap-frontend:v1.0
-
-# Push to registry
-docker push myregistry.azurecr.io/incap-backend:v1.0
-docker push myregistry.azurecr.io/incap-frontend:v1.0
-```
-
-### CI/CD Image Publishing
-
-**AppVeyor**: Automates image building and pushing
-
-```yaml
-# In CI/CD configuration
-docker build -t tuanicom/incap-backend:latest backend/
-docker push tuanicom/incap-backend:latest
-```
-
-## Health Checks & Monitoring
-
-### Kubernetes Probes
-
-```yaml
-livenessProbe:
-  httpGet:
-    path: /health
-    port: 4000
-  initialDelaySeconds: 10
-  periodSeconds: 10
-
-readinessProbe:
-  httpGet:
-    path: /ready
-    port: 4000
-  initialDelaySeconds: 5
-  periodSeconds: 5
-```
-
-### Logging
-
-**Docker Compose**:
-```bash
-docker-compose logs -f service_name
-```
-
-**Kubernetes**:
-```bash
-kubectl logs deployment/incap-backend -n incap -f
-kubectl logs pod/incap-backend-xyz -n incap
-```
-
-## Troubleshooting
-
-### Common Issues
-
-**MongoDB Connection Failed**
-```bash
-# Check MongoDB is running
-docker-compose logs mongodb
-
-# Or kubectl
-kubectl logs deployment/incap-mongodb -n incap
-```
-
-**Frontend Can't Reach Backend**
-```bash
-# Check network connectivity
-docker-compose exec frontend curl http://backend:4000/articles
-
-# Or kubectl
-kubectl exec deployment/incap-frontend -n incap -- \
-  curl http://incap-backend:4000/articles
-```
-
-**Port Already in Use**
-```bash
-# Find process using port
-netstat -ano | findstr :8080
-
-# Stop the process or use different port
-docker-compose up -p custom_project -d
-```
-
----
-
-## Deployment Checklist
-
-- [ ] Images built successfully
-- [ ] Environment variables configured
-- [ ] Database initialized
-- [ ] All services responding on health endpoints
-- [ ] Frontend can reach backend API
-- [ ] Database connection verified
-- [ ] Resource limits set appropriately
-- [ ] Security policies in place
-- [ ] Backups configured
-- [ ] Monitoring set up
-- [ ] Documentation updated
-
----
-
-For CI/CD pipeline details, see [CI/CD and Code Analysis](./cicd-and-analysis.md).
+- [CI/CD and Code Analysis](./cicd-and-analysis.md)
+- [README](../README.md)

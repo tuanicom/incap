@@ -39,9 +39,10 @@ export class CommentItemComponent {
   }
 
   remove(): void {
-    if (!this.comment._id) { return; }
-    this.commentService.delete(this.comment._id).subscribe(() => {
-      this.deleted.emit(this.comment._id);
+    const id = this.comment._id;
+    if (!id) { return; }
+    this.commentService.delete(id).subscribe(() => {
+      this.deleted.emit(id);
     });
   }
 }

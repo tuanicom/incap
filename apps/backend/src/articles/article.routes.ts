@@ -18,8 +18,8 @@ export class ArticleRoutes {
     }
 
     public declareRoutes() {
-        this.router.route('/').get(asyncHandler(async (_req: express.Request, res: express.Response, _next: express.NextFunction) => {
-            const category = typeof _req.query.category === 'string' ? _req.query.category : undefined;
+        this.router.route('/').get(asyncHandler(async (req: express.Request, res: express.Response, _next: express.NextFunction) => {
+            const category = typeof req.query.category === 'string' ? req.query.category : undefined;
             const articles = await this.controller.getAll(category);
             res.json(articles);
         }));

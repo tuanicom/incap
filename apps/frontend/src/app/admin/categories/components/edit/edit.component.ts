@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -30,7 +30,7 @@ export class EditComponent implements OnInit {
   }
 
   private getCategoryById(id: string): void {
-    this.category$ = this.categoryService.getCategoryById(id);
+    this.category$ = this.categoryService.getCategoryById(id).pipe(shareReplay(1));
     this.category$.subscribe((category: Category) => {
       this.editCategoryForm.controls.description.setValue(category.description);
     });

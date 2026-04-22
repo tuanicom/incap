@@ -142,18 +142,21 @@ INCAP follows a modern, cloud-native architecture with clear separation between 
 ### Three-Layer Backend Architecture
 
 **1. Route Layer**
+
 - Defines HTTP endpoints
 - Handles request routing
 - Uses `express-async-handler` for async/await support
 - Decouples HTTP concerns from business logic
 
 **2. Controller Layer**
+
 - Processes incoming requests
 - Orchestrates business logic via Process layer
 - Handles parameter extraction
 - Returns formatted JSON responses
 
 **3. Service Layers**
+
 - **Process Layer**: Business logic and data manipulation
 - **Model Layer**: Data schemas, validation, and persistence
 - Mongoose models provide MongoDB integration
@@ -231,6 +234,7 @@ Kubernetes:
 ## Communication Patterns
 
 ### Frontend-Backend Communication
+
 - **Protocol**: HTTP/REST
 - **Data Format**: JSON
 - **Configuration**: Dynamic via `settings.json`
@@ -240,6 +244,7 @@ Kubernetes:
   - Articles: `/articles`
 
 ### Backend-Database Communication
+
 - **Protocol**: MongoDB Wire Protocol
 - **ODM**: Mongoose for abstraction
 - **Connection**: Configurable via `MONGO_DB_URL` environment variable
@@ -288,5 +293,6 @@ Kubernetes:
 ---
 
 For detailed implementation specifics, see:
+
 - [Frontend Technical Details](./frontend-technical-details.md)
 - [Backend Technical Details](./backend-technical-details.md)

@@ -7,6 +7,7 @@ This document describes the automated agents, scripts, and CI/CD bots involved i
 ---
 
 ## 1. Nx CLI & Nx Cloud
+
 - **Purpose:** Orchestrates builds, tests, linting, and affected commands across all apps and libraries in the monorepo.
 - **Key Commands:**
   - `npx nx build <project>`
@@ -18,6 +19,7 @@ This document describes the automated agents, scripts, and CI/CD bots involved i
 ## 2. CI/CD Agents
 
 ### GitHub Actions
+
 - **Workflow:** `.github/workflows/docker-image.yml`
 - **Purpose:** Builds and pushes Docker images for frontend and backend on push/PR/Release.
 - **Key Steps:**
@@ -25,6 +27,7 @@ This document describes the automated agents, scripts, and CI/CD bots involved i
   - Push to Docker Hub
 
 ### CircleCI
+
 - **Workflow:** `.circleci/config.yml`
 - **Purpose:** Runs Nx build, test, and lint for all projects. Uploads coverage to Coveralls and Codacy.
 - **Key Steps:**
@@ -33,6 +36,7 @@ This document describes the automated agents, scripts, and CI/CD bots involved i
   - Coverage upload
 
 ### AppVeyor
+
 - **Config:** `appveyor.yml`
 - **Purpose:** Windows CI for Nx monorepo. Runs build/test/lint using PowerShell.
 
@@ -43,11 +47,13 @@ This document describes the automated agents, scripts, and CI/CD bots involved i
   - Accepts parameters for backend/frontend/all.
 
 ## 4. Nx Agents (Copilot/Automation)
+
 - **Copilot/AI Agents:**
   - Used for migration, code refactoring, and CI/CD updates.
   - Ensures dependency alignment, .gitignore management, and monorepo best practices.
 
 ## 5. Source Control Automation
+
 - **.gitignore:** Now includes `.nx` to prevent workspace state from being tracked.
 - **Automated Cleanup:**
   - Run `git rm -r --cached .nx` after adding to .gitignore to remove from history.

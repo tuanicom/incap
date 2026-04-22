@@ -17,6 +17,7 @@ The INCAP backend is a RESTful API server built with Express.js and TypeScript, 
 ## Technology Stack
 
 ### Core Technologies
+
 - **Node.js**: 24.x - JavaScript runtime
 - **Express.js**: 5.2 - Web application framework
 - **TypeScript**: 5.9 - Type-safe language
@@ -140,6 +141,7 @@ private config() {
 ```
 
 **Middleware Order & Purpose**:
+
 1. **Security**: Disable X-Powered-By header
 2. **CORS**: Allow cross-origin requests
 3. **Body Parsing**: Parse JSON request bodies
@@ -218,6 +220,7 @@ this.router.route('/').get(
 ### Controller Layer (article.controller.ts)
 
 **Responsibilities**:
+
 - Extract request parameters
 - Call service layer
 - Handle business logic coordination
@@ -258,12 +261,14 @@ export class ArticleController {
 #### Process Layer (article.process.ts)
 
 **Responsibilities**:
+
 - Implement business rules
 - Data validation
 - Coordinate with models
 - Handle error cases
 
 **Typical Operations**:
+
 - `getAll(category?: string)` - Retrieve articles, optionally filtered
 - `getById(id: string)` - Find single article
 - `save(article: Article)` - Create or update
@@ -380,6 +385,7 @@ private dbConnection() {
 ```
 
 **Environment Variable**:
+
 - `MONGO_DB_URL`: MongoDB connection string (default: localhost:27017)
 
 ### Collections
@@ -581,6 +587,7 @@ esbuild server.ts --outdir=dist --bundle --platform=node
 ```
 
 **Results**:
+
 - Single bundled file at `dist/server.js`
 - All dependencies included
 - Optimized for Node.js environment
@@ -613,6 +620,7 @@ this.app.use(morgan('combined'));
 ```
 
 **Information Captured**:
+
 - Remote IP address
 - Request timestamp
 - HTTP method and path
@@ -625,6 +633,7 @@ this.app.use(morgan('combined'));
 ```typescript
 this.app.use(cors());
 ```
+
 - Allows requests from any origin
 - Configurable for production (should restrict domains)
 
@@ -632,9 +641,11 @@ this.app.use(cors());
 ```typescript
 this.app.disable('x-powered-by');
 ```
+
 - Hides Express version information
 
 ### Input Validation
+
 - Express.json() built-in body size limits
 - QueryString parsing by Express
 - Type-safe through TypeScript

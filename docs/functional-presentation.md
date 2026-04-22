@@ -9,6 +9,7 @@ INCAP is a collaborative blogging platform that allows a community to share know
 ### 1. Article Management
 
 **Capabilities:**
+
 - **Create Articles**: Authenticated users can create new articles with title and content
 - **Read Articles**: All visitors can browse and read published articles
 - **Update Articles**: Authors can modify their articles
@@ -16,6 +17,7 @@ INCAP is a collaborative blogging platform that allows a community to share know
 - **Filter by Category**: Articles can be filtered by their assigned category
 
 **Key Attributes:**
+
 - Title
 - Content
 - Category assignment
@@ -25,23 +27,26 @@ INCAP is a collaborative blogging platform that allows a community to share know
 ### 2. Category Management
 
 **Capabilities:**
+
 - **Create Categories**: Organize topics into logical categories
 - **List Categories**: Display all available categories
 - **Update Categories**: Modify category information
 - **Delete Categories**: Remove categories (with cascade rules)
 
-**Purpose:** 
+**Purpose:**
 Categories serve as a taxonomy system to organize articles thematically, making content discovery intuitive.
 
 ### 3. User Management
 
 **Capabilities:**
+
 - **User Registration**: New users can create accounts
 - **User Profiles**: Store user information and preferences
 - **User Authentication**: Framework for securing endpoints
 - **User Listing**: Administrative view of registered users
 
 **User Attributes:**
+
 - Username/Email
 - User profile information
 - Role/permission framework
@@ -49,12 +54,14 @@ Categories serve as a taxonomy system to organize articles thematically, making 
 ### 4. Frontend Interface
 
 **Main Pages:**
+
 - **Home Page**: Landing page with featured content
 - **Articles Section**: Browse, search, and view articles
 - **Admin Panel**: Management interface for content and users
 - **Navigation**: Responsive navigation across all sections
 
 **User Experience:**
+
 - Responsive Bootstrap 5 design
 - Mobile-friendly interface
 - Intuitive navigation
@@ -92,18 +99,21 @@ Categories serve as a taxonomy system to organize articles thematically, making 
 ## Content Organization
 
 ### Articles
+
 - Associated with a single category
 - Have an author
 - Contain title and content
 - Are timestamped
 
 ### Categories
+
 - Have a unique name
 - Can contain multiple articles
 - Are editable and deletable
 - Drive the site's taxonomy
 
 ### Users
+
 - Can be authors
 - Have profiles
 - May have different roles/permissions
@@ -114,6 +124,7 @@ Categories serve as a taxonomy system to organize articles thematically, making 
 All endpoints are RESTful and follow standard HTTP methods:
 
 ### Articles
+
 - `GET /articles` - List articles (filterable by category)
 - `GET /articles/:id` - Get specific article
 - `POST /articles` - Create new article
@@ -121,6 +132,7 @@ All endpoints are RESTful and follow standard HTTP methods:
 - `DELETE /articles/:id` - Delete article
 
 ### Categories
+
 - `GET /categories` - List all categories
 - `GET /categories/:id` - Get specific category
 - `POST /categories` - Create new category
@@ -128,6 +140,7 @@ All endpoints are RESTful and follow standard HTTP methods:
 - `DELETE /categories/:id` - Delete category
 
 ### Users
+
 - `GET /users` - List all users
 - `GET /users/:id` - Get specific user
 - `POST /users` - Create new user

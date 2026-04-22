@@ -17,6 +17,7 @@ The INCAP frontend is an Angular 21 Single Page Application (SPA) built with Typ
 ## Technology Stack
 
 ### Core Technologies
+
 - **Angular**: 21.1 - Modern framework for building SPAs
 - **TypeScript**: 5.9 - Type-safe language
 - **Bootstrap**: 5.3 - Responsive CSS framework
@@ -26,6 +27,7 @@ The INCAP frontend is an Angular 21 Single Page Application (SPA) built with Typ
 - **SCSS**: Sass for stylesheets
 
 ### Build & Development
+
 - **Angular CLI**: 21.1 - Build tooling and development server
 - **Vitest**: 4.0 - Fast unit test runner
 - **TypeScript Compiler**: 5.9 - Type checking and compilation
@@ -123,6 +125,7 @@ const routes: Routes = [
 ```
 
 **Routing Features:**
+
 - Lazy-loading for feature modules (reduce initial bundle size)
 - Component-based routing
 - Standalone components support
@@ -134,6 +137,7 @@ const routes: Routes = [
 **Purpose**: Root application component
 
 **Responsibilities**:
+
 - Application shell
 - Global navigation
 - Layout structure
@@ -196,6 +200,7 @@ provideAppInitializer(() => {
 **Purpose**: Content management interface (lazy-loaded)
 
 **Features**:
+
 - Article management
 - Category management
 - User management
@@ -204,6 +209,7 @@ provideAppInitializer(() => {
 **Purpose**: Article browsing and display (lazy-loaded)
 
 **Features**:
+
 - Article list display
 - Category filtering
 - Article detail view
@@ -227,6 +233,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 **File**: `styles.scss`
 
 **Includes**:
+
 - Bootstrap CSS customization
 - Global theme variables
 - Application-wide styling
@@ -267,6 +274,7 @@ this.http.post<Article>(this.settings.articlesApiUrl, newArticle)
 
 ### API URLs
 Dynamically configured from `settings.json`:
+
 - Articles API: `${articlesApiUrl}`
 - Categories API: `${categoriesApiUrl}`
 - Users API: `${usersApiUrl}`
@@ -326,6 +334,7 @@ npm run coverage
 ```bash
 npm start
 ```
+
 - Starts ng serve on port 8080
 - Features:
   - Hot module reloading
@@ -337,6 +346,7 @@ npm start
 ```bash
 npm run build
 ```
+
 - Generates optimized bundle in `dist/`
 - Features:
   - TreeShaking for dead code elimination
@@ -367,12 +377,14 @@ npm run build
 ### Docker Deployment
 
 **Dockerfile**:
+
 - Multi-stage build (angular build → nginx serve)
 - Builds production artifacts
 - Serves via nginx
 - Exposes port 8080
 
 **nginx Configuration** (nginx.conf):
+
 - Serves static files
 - Redirects SPA routes to index.html
 - Configures caching policies
@@ -383,12 +395,14 @@ npm run build
 ### ESLint Configuration
 
 **Features**:
+
 - TypeScript-specific rules
 - Angular best practices
 - Import organization
 - JSDoc enforcement
 
 ### Coverage Goals
+
 - Aim for high code coverage
 - Vitest provides incremental coverage reports
 - Integration with CI/CD pipeline
@@ -435,11 +449,13 @@ ngOnInit() {
 ## Environment Configuration
 
 ### Development Environment (`environment.ts`)
+
 - API server: `http://localhost:4000`
 - Development mode: True
 - Remote service URLs configurable
 
 ### Production Environment (`environment.prod.ts`)
+
 - API server: Production URL
 - Development mode: False
 - Optimizations enabled
@@ -447,6 +463,7 @@ ngOnInit() {
 ## Angular Version Features
 
 ### Angular 21 Capabilities Used
+
 - Standalone components
 - Standalone API for modules
 - Improved change detection

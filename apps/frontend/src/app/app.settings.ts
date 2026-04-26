@@ -5,6 +5,7 @@ export interface AppSettings {
   categoriesApiUrl: string;
   usersApiUrl: string;
   articlesApiUrl: string;
+  commentsApiUrl: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -12,7 +13,8 @@ export class AppSettingsService {
   public settings: AppSettings = {
     categoriesApiUrl: '',
     usersApiUrl: '',
-    articlesApiUrl: ''
+    articlesApiUrl: '',
+    commentsApiUrl: ''
   };
 }
 

@@ -4,37 +4,36 @@
 
 The frontend is now part of an Nx monorepo. Build, test, and lint using Nx CLI:
 
-- Build: `npx nx build frontend`
-- Test: `npx nx test frontend`
-- Lint: `npx nx lint frontend`
+- Build: `npx nx build frontend` - Test: `npx nx test frontend` - Lint: `npx nx
+  lint frontend`
 
 See [docs/nx-monorepo-migration.md](docs/nx-monorepo-migration.md) for details.
 
 ## Overview
 
-The INCAP frontend is an Angular 21 Single Page Application (SPA) built with TypeScript, featuring a responsive Bootstrap 5 UI and modern Component-driven architecture.
+The INCAP frontend is an Angular 21 Single Page Application (SPA) built with
+TypeScript, featuring a responsive Bootstrap 5 UI and modern Component-driven
+architecture.
 
 ## Technology Stack
 
 ### Core Technologies
 
-- **Angular**: 21.1 - Modern framework for building SPAs
-- **TypeScript**: 5.9 - Type-safe language
-- **Bootstrap**: 5.3 - Responsive CSS framework
-- **ng-bootstrap**: 20.0 - Native Bootstrap components for Angular
-- **Font Awesome**: 7.1 - Comprehensive icon library
-- **RxJS**: 7.8 - Reactive programming with Observables
-- **SCSS**: Sass for stylesheets
+- **Angular**: 21.1 - Modern framework for building SPAs - **TypeScript**: 5.9 -
+  Type-safe language - **Bootstrap**: 5.3 - Responsive CSS framework -
+  **ng-bootstrap**: 20.0 - Native Bootstrap components for Angular - **Font
+  Awesome**: 7.1 - Comprehensive icon library - **RxJS**: 7.8 - Reactive
+  programming with Observables - **SCSS**: Sass for stylesheets
 
 ### Build & Development
 
-- **Angular CLI**: 21.1 - Build tooling and development server
-- **Vitest**: 4.0 - Fast unit test runner
-- **TypeScript Compiler**: 5.9 - Type checking and compilation
+- **Angular CLI**: 21.1 - Build tooling and development server - **Vitest**: 4.0
+  - Fast unit test runner - **TypeScript Compiler**: 5.9 - Type checking and
+  compilation
 
 ## Project Structure
 
-```
+```text
 frontend/
 ├── src/
 │   ├── index.html                 # Entry HTML file
@@ -95,6 +94,7 @@ AppModule
 ```
 
 **Configuration:**
+
 ```typescript
 @NgModule({
   declarations: [],
@@ -126,22 +126,20 @@ const routes: Routes = [
 
 **Routing Features:**
 
-- Lazy-loading for feature modules (reduce initial bundle size)
-- Component-based routing
-- Standalone components support
-- Future redirect capability for 404 handling
+- Lazy-loading for feature modules (reduce initial bundle size) -
+  Component-based routing - Standalone components support - Future redirect
+  capability for 404 handling
 
 ## Key Components
 
 ### App Component
+
 **Purpose**: Root application component
 
 **Responsibilities**:
 
-- Application shell
-- Global navigation
-- Layout structure
-- Component composition
+- Application shell - Global navigation - Layout structure - Component
+  composition
 
 ### App Settings Service
 
@@ -168,13 +166,14 @@ export class AppSettingsService {
 export class AppSettingsHttpService {
   public initializeApp(): void {
     this.http.get('assets/settings.json')
-      .subscribe((res: AppSettings) => 
+      .subscribe((res: AppSettings) =>
         this.appSettingsService.settings = res);
   }
 }
 ```
 
 **Configuration File** (`assets/settings.json`):
+
 ```json
 {
   "categoriesApiUrl": "http://backend:4000/categories",
@@ -184,8 +183,11 @@ export class AppSettingsHttpService {
 ```
 
 **Initialization Strategy**:
+
 ```typescript
-export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => void {
+export function app_Init(
+  appSettingsHttpService: AppSettingsHttpService
+): () => void {
   return () => appSettingsHttpService.initializeApp();
 }
 
@@ -197,26 +199,25 @@ provideAppInitializer(() => {
 ```
 
 ### Admin Module
+
 **Purpose**: Content management interface (lazy-loaded)
 
 **Features**:
 
-- Article management
-- Category management
-- User management
+- Article management - Category management - User management
 
 ### Articles Module
+
 **Purpose**: Article browsing and display (lazy-loaded)
 
 **Features**:
 
-- Article list display
-- Category filtering
-- Article detail view
+- Article list display - Category filtering - Article detail view
 
 ## Styling Strategy
 
 ### Bootstrap 5 Integration
+
 ```typescript
 // In app.module.ts
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -230,16 +231,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 ```
 
 ### Global Styles
+
 **File**: `styles.scss`
 
 **Includes**:
 
-- Bootstrap CSS customization
-- Global theme variables
-- Application-wide styling
-- Font definitions
+- Bootstrap CSS customization - Global theme variables - Application-wide
+  styling - Font definitions
 
 ### Component Styles
+
 ```typescript
 @Component({
   selector: 'app-example',
@@ -253,6 +254,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 ### HttpClient Integration
 
 **Configuration** in app.module.ts:
+
 ```typescript
 providers: [
   provideHttpClient(withInterceptorsFromDi())
@@ -260,6 +262,7 @@ providers: [
 ```
 
 **Usage Pattern**:
+
 ```typescript
 constructor(private http: HttpClient) {}
 
@@ -273,17 +276,18 @@ this.http.post<Article>(this.settings.articlesApiUrl, newArticle)
 ```
 
 ### API URLs
+
 Dynamically configured from `settings.json`:
 
-- Articles API: `${articlesApiUrl}`
-- Categories API: `${categoriesApiUrl}`
-- Users API: `${usersApiUrl}`
+- Articles API: `${articlesApiUrl}` - Categories API: `${categoriesApiUrl}` -
+  Users API: `${usersApiUrl}`
 
 ## Testing Strategy
 
 ### Test Framework: Vitest
 
 **Configuration** (vitest.config.ts):
+
 ```typescript
 {
   environment: 'jsdom',
@@ -301,15 +305,16 @@ Dynamically configured from `settings.json`:
 ### Test Patterns
 
 **Component Testing**:
+
 ```typescript
 describe('ArticlesComponent', () => {
   it('should fetch articles on init', () => {
     // Arrange
     const mockArticles = [...];
-    
+
     // Act
     component.ngOnInit();
-    
+
     // Assert
     expect(component.articles).toEqual(mockArticles);
   });
@@ -317,6 +322,7 @@ describe('ArticlesComponent', () => {
 ```
 
 ### Running Tests
+
 ```bash
 # Unit tests
 npm run test:unit
@@ -331,30 +337,26 @@ npm run coverage
 ## Build Process
 
 ### Development Build
+
 ```bash
 npm start
 ```
 
-- Starts ng serve on port 8080
-- Features:
-  - Hot module reloading
-  - Source maps
-  - Full TypeScript compilation
-  - Proxy to backend (via `proxy.conf.json`)
+- Starts ng serve on port 8080 - Features: - Hot module reloading - Source maps
+  - Full TypeScript compilation - Proxy to backend (via `proxy.conf.json`)
 
 ### Production Build
+
 ```bash
 npm run build
 ```
 
-- Generates optimized bundle in `dist/`
-- Features:
-  - TreeShaking for dead code elimination
-  - Minification and compression
-  - AOT compilation
-  - Small bundle size
+- Generates optimized bundle in `dist/` - Features: - TreeShaking for dead code
+  elimination - Minification and compression - AOT compilation - Small bundle
+  size
 
 ### Proxy Configuration (proxy.conf.json)
+
 ```json
 {
   "/categories": {
@@ -378,17 +380,13 @@ npm run build
 
 **Dockerfile**:
 
-- Multi-stage build (angular build → nginx serve)
-- Builds production artifacts
-- Serves via nginx
-- Exposes port 8080
+- Multi-stage build (angular build → nginx serve) - Builds production artifacts
+  - Serves via nginx - Exposes port 8080
 
 **nginx Configuration** (nginx.conf):
 
-- Serves static files
-- Redirects SPA routes to index.html
-- Configures caching policies
-- Sets security headers
+- Serves static files - Redirects SPA routes to index.html - Configures caching
+  policies - Sets security headers
 
 ## Code Quality
 
@@ -396,20 +394,18 @@ npm run build
 
 **Features**:
 
-- TypeScript-specific rules
-- Angular best practices
-- Import organization
-- JSDoc enforcement
+- TypeScript-specific rules - Angular best practices - Import organization -
+  JSDoc enforcement
 
 ### Coverage Goals
 
-- Aim for high code coverage
-- Vitest provides incremental coverage reports
-- Integration with CI/CD pipeline
+- Aim for high code coverage - Vitest provides incremental coverage reports -
+  Integration with CI/CD pipeline
 
 ## Development Best Practices
 
 ### Standalone Components
+
 ```typescript
 @Component({
   selector: 'app-feature',
@@ -419,20 +415,23 @@ npm run build
 ```
 
 ### Lazy-Loading
+
 ```typescript
-{ 
-  path: 'admin', 
+{
+  path: 'admin',
   loadChildren: () => import('./admin/admin.module')
-    .then(m => m.AdminModule) 
+    .then(m => m.AdminModule)
 }
 ```
 
 ### Dependency Injection
+
 ```typescript
 constructor(private http: HttpClient) {}
 ```
 
 ### Reactive Programming
+
 ```typescript
 articles$ = this.articles.asObservable();
 
@@ -450,27 +449,22 @@ ngOnInit() {
 
 ### Development Environment (`environment.ts`)
 
-- API server: `http://localhost:4000`
-- Development mode: True
-- Remote service URLs configurable
+- API server: `http://localhost:4000` - Development mode: True - Remote service
+  URLs configurable
 
 ### Production Environment (`environment.prod.ts`)
 
-- API server: Production URL
-- Development mode: False
-- Optimizations enabled
+- API server: Production URL - Development mode: False - Optimizations enabled
 
 ## Angular Version Features
 
 ### Angular 21 Capabilities Used
 
-- Standalone components
-- Standalone API for modules
-- Improved change detection
-- Enhanced dependency injection
-- Typed reactive forms (planned)
-- Signal-based reactivity compatibility
+- Standalone components - Standalone API for modules - Improved change detection
+  - Enhanced dependency injection - Typed reactive forms (planned) -
+  Signal-based reactivity compatibility
 
 ---
 
-For API implementation details, see [Backend Technical Details](./backend-technical-details.md).
+For API implementation details, see [Backend Technical
+Details](./backend-technical-details.md).

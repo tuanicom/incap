@@ -2,15 +2,18 @@
 
 ## Nx Monorepo Migration
 
-This project is now managed as an Nx monorepo. All apps are under `apps/` and all builds, tests, and linting are run via Nx CLI. See [docs/nx-monorepo-migration.md](docs/nx-monorepo-migration.md) for details.
+This project is now managed as an Nx monorepo. All apps are under `apps/` and
+all builds, tests, and linting are run via Nx CLI. See
+[docs/nx-monorepo-migration.md](docs/nx-monorepo-migration.md) for details.
 
 ## Architecture Overview
 
-INCAP follows a modern, cloud-native architecture with clear separation between frontend and backend services.
+INCAP follows a modern, cloud-native architecture with clear separation between
+frontend and backend services.
 
 ### High-Level Architecture Diagram
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                         Client Browser                          │
 └──────────────────────────────┬──────────────────────────────────┘
@@ -71,59 +74,100 @@ INCAP follows a modern, cloud-native architecture with clear separation between 
 ## Technology Stack
 
 ### Frontend Stack
+
 | Layer | Technology | Version | Purpose |
-|-------|-----------|---------|---------|
+
+| ------- | ----------- | --------- | --------- |
+
 | **Framework** | Angular | 21.1 | Component-based SPA framework |
+
 | **Language** | TypeScript | 5.9 | Type-safe JavaScript |
+
 | **UI Components** | ng-bootstrap | 20.0 | Angular Bootstrap components |
+
 | **Styling** | Bootstrap | 5.3 | Responsive CSS framework |
+
 | **Icons** | Font Awesome | 7.1 | Icon library |
+
 | **HTTP** | HttpClient | Built-in | REST API communication |
+
 | **Routing** | @angular/router | 21.1 | Client-side routing |
+
 | **Reactive** | RxJS | 7.8 | Reactive programming |
+
 | **Build Tool** | Angular CLI | 21.1 | Development & production builds |
 
 ### Backend Stack
+
 | Layer | Technology | Version | Purpose |
-|-------|-----------|---------|---------|
+
+| ------- | ----------- | --------- | --------- |
+
 | **Runtime** | Node.js | 24.x | JavaScript runtime |
+
 | **Framework** | Express.js | 5.2 | Web server framework |
+
 | **Language** | TypeScript | 5.9 | Type-safe JavaScript |
+
 | **Database** | MongoDB | Latest | NoSQL document database |
+
 | **ODM** | Mongoose | 9.1 | MongoDB object modeling |
+
 | **Logging** | Morgan | 1.10 | HTTP request logging |
+
 | **CORS** | cors | 2.8 | Cross-Origin Resource Sharing |
+
 | **Bundler** | esbuild | 0.27 | Fast JavaScript bundler |
+
 | **Body Parser** | body-parser | 2.2 | Request body parsing |
 
 ### Development & Testing Stack
+
 | Category | Technology | Version | Purpose |
-|----------|-----------|---------|---------|
+
+| ---------- | ----------- | --------- | --------- |
+
 | **Testing Framework** | Vitest | 4.0 | Fast unit test runner |
+
 | **Assertion** | Chai | 4.5 | BDD assertion library |
+
 | **Mocking** | Sinon | 21.0 | Spies, stubs, mocks |
+
 | **API Testing** | Supertest | 7.2 | HTTP assertion library |
+
 | **Code Coverage** | @vitest/coverage-v8 | 4.0 | V8 coverage provider |
+
 | **Linting** | ESLint | 9.39 | Code quality & style |
+
 | **Type Checking** | TypeScript | 5.9 | Static type analysis |
 
 ### Infrastructure & DevOps
+
 | Component | Technology | Purpose |
-|-----------|-----------|---------|
+
+| ----------- | ----------- | --------- |
+
 | **Containerization** | Docker | Container images for all services |
+
 | **Orchestration** | Docker Compose | Local development environment |
+
 | **Kubernetes** | K8s YAML manifests | Production orchestration |
+
 | **CI/CD** | AppVeyor | Build and test automation |
+
 | **Code Analysis** | SonarCloud | Code quality analysis |
+
 | **Security Scanning** | Snyk | Vulnerability detection |
+
 | **Coverage Tracking** | Coveralls | Code coverage reporting |
+
 | **Code Review** | Codacy | Automated code review |
 
 ## Service Architecture
 
 ### Service Decomposition
 
-```
+```text
 ┌─────────────────────────────────────────────────────────┐
 │                   Backend (Port 4000)                   │
 ├─────────────────┬─────────────────┬─────────────────────┤
@@ -141,29 +185,26 @@ INCAP follows a modern, cloud-native architecture with clear separation between 
 
 ### Three-Layer Backend Architecture
 
-**1. Route Layer**
+#### 1. Route Layer
 
-- Defines HTTP endpoints
-- Handles request routing
-- Uses `express-async-handler` for async/await support
-- Decouples HTTP concerns from business logic
+- Defines HTTP endpoints - Handles request routing - Uses
+  `express-async-handler` for async/await support - Decouples HTTP concerns from
+  business logic
 
-**2. Controller Layer**
+#### 2. Controller Layer
 
-- Processes incoming requests
-- Orchestrates business logic via Process layer
-- Handles parameter extraction
-- Returns formatted JSON responses
+- Processes incoming requests - Orchestrates business logic via Process layer -
+  Handles parameter extraction - Returns formatted JSON responses
 
-**3. Service Layers**
+#### 3. Service Layers
 
-- **Process Layer**: Business logic and data manipulation
-- **Model Layer**: Data schemas, validation, and persistence
-- Mongoose models provide MongoDB integration
+- **Process Layer**: Business logic and data manipulation - **Model Layer**:
+  Data schemas, validation, and persistence - Mongoose models provide MongoDB
+  integration
 
 ### Data Flow
 
-```
+```text
 HTTP Request
     ↓
 Routes (article.routes.ts)
@@ -183,7 +224,7 @@ Response (JSON)
 
 ### Module Structure
 
-```
+```text
 src/app/
 ├── app.component        # Root component
 ├── app.module          # Root module declaration
@@ -200,7 +241,7 @@ src/app/
 
 ### Component Hierarchy
 
-```
+```text
 AppComponent (Root)
 ├── AppRoutingModule
 │   ├── Route: '' → AppComponent
@@ -214,7 +255,8 @@ AppComponent (Root)
 ## Deployment Architecture
 
 ### Development Environment
-```
+
+```text
 Docker Compose:
 - Frontend (localhost:8080)
 - Backend (localhost:4000)
@@ -222,7 +264,8 @@ Docker Compose:
 ```
 
 ### Production Environment
-```
+
+```text
 Kubernetes:
 - Frontend Deployment + Service
 - Backend Deployment + Service
@@ -235,23 +278,18 @@ Kubernetes:
 
 ### Frontend-Backend Communication
 
-- **Protocol**: HTTP/REST
-- **Data Format**: JSON
-- **Configuration**: Dynamic via `settings.json`
-- **API URLs**:
-  - Categories: `/categories`
-  - Users: `/users`
-  - Articles: `/articles`
+- **Protocol**: HTTP/REST - **Data Format**: JSON - **Configuration**: Dynamic
+  via `settings.json` - **API URLs**: - Categories: `/categories` - Users:
+  `/users` - Articles: `/articles`
 
 ### Backend-Database Communication
 
-- **Protocol**: MongoDB Wire Protocol
-- **ODM**: Mongoose for abstraction
-- **Connection**: Configurable via `MONGO_DB_URL` environment variable
+- **Protocol**: MongoDB Wire Protocol - **ODM**: Mongoose for abstraction -
+  **Connection**: Configurable via `MONGO_DB_URL` environment variable
 
 ## Development Workflow
 
-```
+```text
                      Feature Development
                             ↓
                     Git Branch (feature/*)
@@ -283,16 +321,16 @@ Kubernetes:
 
 ## Key Design Patterns
 
-1. **Controller-Service-Repository Pattern**: Clear separation of concerns
-2. **Dependency Injection**: Implicit in constructor parameters
-3. **Lazy Loading**: Angular feature modules loaded on demand
-4. **Reactive Programming**: RxJS observables for async operations
-5. **Type Safety**: Full TypeScript implementation
-6. **Environment Configuration**: Settings via environment variables
+1. **Controller-Service-Repository Pattern**: Clear separation of concerns 2.
+   **Dependency Injection**: Implicit in constructor parameters 3. **Lazy
+   Loading**: Angular feature modules loaded on demand 4. **Reactive
+   Programming**: RxJS observables for async operations 5. **Type Safety**: Full
+   TypeScript implementation 6. **Environment Configuration**: Settings via
+   environment variables
 
 ---
 
 For detailed implementation specifics, see:
 
-- [Frontend Technical Details](./frontend-technical-details.md)
-- [Backend Technical Details](./backend-technical-details.md)
+- [Frontend Technical Details](./frontend-technical-details.md) - [Backend
+  Technical Details](./backend-technical-details.md)

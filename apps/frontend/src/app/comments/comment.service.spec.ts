@@ -22,7 +22,7 @@ describe('CommentService', () => {
       providers: [
         CommentService,
         { provide: HttpClient, useValue: httpClientSpy },
-        { provide: AppSettingsService, useValue: { settings: { articlesApiUrl: 'http://localhost:4000/articles' } } }
+        { provide: AppSettingsService, useValue: { settings: { articlesApiUrl: 'http://localhost:4000/articles', commentsApiUrl: 'http://localhost:4000/comments' } } }
       ]
     }).compileComponents();
   });
@@ -74,7 +74,7 @@ describe('CommentService', () => {
     it('should call put on /comments/:id', () => {
       service.update('1', { text: 'u' });
       expect(httpClientSpy.put).toHaveBeenCalled();
-      expect(vi.mocked(httpClientSpy.put).mock.calls[0][0]).toBe('/comments/1');
+      expect(vi.mocked(httpClientSpy.put).mock.calls[0][0]).toBe('http://localhost:4000/comments/1');
     });
   });
 
@@ -87,7 +87,7 @@ describe('CommentService', () => {
     it('should call delete on /comments/:id', () => {
       service.delete('1');
       expect(httpClientSpy.delete).toHaveBeenCalled();
-      expect(vi.mocked(httpClientSpy.delete).mock.calls[0][0]).toBe('/comments/1');
+      expect(vi.mocked(httpClientSpy.delete).mock.calls[0][0]).toBe('http://localhost:4000/comments/1');
     });
   });
 });

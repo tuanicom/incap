@@ -1,28 +1,50 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose -f docker-compose.yml convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
   labels:
     io.kompose.service: incap-frontend
   name: incap-frontend
+  namespace: incap
 spec:
   replicas: 1
-  strategy: {}
+  selector:
+    matchLabels:
+      io.kompose.service: incap-frontend
+  strategy:
+    type: RollingUpdate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         io.kompose.service: incap-frontend
     spec:
       containers:
         - env:
             - name: CATEGORIES_API_URL
-              value: http://localhost:4000
+              value: http://incap-backend:4000/categories
+            - name: USERS_API_URL
+              value: http://incap-backend:4000/users
+            - name: ARTICLES_API_URL
+              value: http://incap-backend:4000/articles
+            - name: COMMENTS_API_URL
+              value: http://incap-backend:4000/comments
           image: tuanicom/incap-frontend
+          imagePullPolicy: Always
           name: incap-frontend
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -33,4 +55,3 @@ spec:
             - containerPort: 8080
           resources: {}
       restartPolicy: Always
-status: {}

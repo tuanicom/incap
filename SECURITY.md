@@ -2,10 +2,12 @@
 
 ## Supported Versions
 
-| Version | Supported          |
+| Version | Supported |
+
 | ------- | ------------------ |
-| 1.0.x   | :white_check_mark: |
+
+| 1.0.x | :white_check_mark: |
 
 ## Reporting a Vulnerability
 
-https://github.com/tuanicom/incap/issues
+<https://github.com/tuanicom/incap/issues>

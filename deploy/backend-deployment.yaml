@@ -1,19 +1,22 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose -f docker-compose.yml convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
   labels:
     io.kompose.service: incap-backend
   name: incap-backend
+  namespace: incap
 spec:
   replicas: 1
-  strategy: {}
+  selector:
+    matchLabels:
+      io.kompose.service: incap-backend
+  strategy:
+    type: RollingUpdate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         io.kompose.service: incap-backend
     spec:
@@ -22,7 +25,18 @@ spec:
             - name: MONGO_DB_URL
               value: mongodb:27017
           image: tuanicom/incap-backend
+          imagePullPolicy: Always
           name: incap-backend
+          livenessProbe:
+            tcpSocket:
+              port: 4000
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 4000
+            initialDelaySeconds: 10
+            periodSeconds: 10
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -33,4 +47,3 @@ spec:
             - containerPort: 4000
           resources: {}
       restartPolicy: Always
-status: {}

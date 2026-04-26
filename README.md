@@ -1,22 +1,37 @@
 
-|  Build | Coverage  | Code Analysis   | SCA | Publish  |
-|---|---|---|---|---|
-|[![CircleCI](https://dl.circleci.com/status-badge/img/gh/tuanicom/incap/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/tuanicom/incap/tree/master)   | [![Coverage Status](https://coveralls.io/repos/github/tuanicom/incap/badge.svg?branch=master)](https://coveralls.io/github/tuanicom/incap?branch=master)  |  [![Sonar Status](https://sonarcloud.io/api/project_badges/measure?project=tuanicom_incap&metric=alert_status)](https://sonarcloud.io/dashboard?id=tuanicom_incap) | [![Known Vulnerabilities](https://snyk.io/test/github/tuanicom/incap/badge.svg?targetFile=backend%2Fpackage.json)](https://snyk.io/test/github/tuanicom/incap?targetFile=backend%2Fpackage.json) |[![Docker Image CI](https://github.com/tuanicom/incap/actions/workflows/docker-image.yml/badge.svg)](https://github.com/tuanicom/incap/actions/workflows/docker-image.yml) |
-|[![Build status](https://ci.appveyor.com/api/projects/status/x9dtpjle2v6afiwf?svg=true)](https://ci.appveyor.com/project/tuanicom/incap)   | [![codecov](https://codecov.io/gh/tuanicom/incap/branch/master/graph/badge.svg)](https://codecov.io/gh/tuanicom/incap)  |  [![Codacy Badge](https://app.codacy.com/project/badge/Grade/0f7609d8534e4ca89dbda6af634166a9)](https://www.codacy.com/gh/tuanicom/incap/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tuanicom/incap&amp;utm_campaign=Badge_Grade) | [![Known Vulnerabilities](https://snyk.io/test/github/tuanicom/incap/badge.svg?targetFile=frontend%2Fpackage.json)](https://snyk.io/test/github/tuanicom/incap?targetFile=frontend%2Fpackage.json) | [![pages-build-deployment](https://github.com/tuanicom/incap/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/tuanicom/incap/actions/workflows/pages/pages-build-deployment) |
-
 # incap
 
-This is just a personal test project. Anyway, if you want to fork it, feel free to do it (just let me know your goal)
+## Project Status
+
+- [CircleCI build status](https://dl.circleci.com/status-badge/redirect/gh/tuanicom/incap/tree/master)
+- [AppVeyor build status](https://ci.appveyor.com/project/tuanicom/incap)
+- [Coveralls coverage](https://coveralls.io/github/tuanicom/incap?branch=master)
+- [Codecov coverage](https://codecov.io/gh/tuanicom/incap)
+- [SonarCloud quality gate](https://sonarcloud.io/dashboard?id=tuanicom_incap)
+- [Codacy grade](https://www.codacy.com/gh/tuanicom/incap/dashboard)
+- [Snyk backend scan](https://snyk.io/test/github/tuanicom/incap?targetFile=backend%2Fpackage.json)
+- [Snyk frontend scan](https://snyk.io/test/github/tuanicom/incap?targetFile=frontend%2Fpackage.json)
+- [Docker image workflow](https://github.com/tuanicom/incap/actions/workflows/docker-image.yml)
+- [Pages deployment workflow](https://github.com/tuanicom/incap/actions/workflows/pages/pages-build-deployment)
+
+This is just a personal test project. Anyway, if you want to fork it, feel free
+to do it (just let me know your goal)
 
 ## Purpose
-This is a test project for me to be able to test a few technologies I want to get skilled on:
-*   MEAN stack (with Typescript) 
-*   PrimeNG with Tailwind
-*   Nx
-*   Micro-services
-*   Docker/Kubernetes
+
+This is a test project for me to be able to test a few technologies I want to
+get skilled on:
+
+- MEAN stack (with Typescript)
+- PrimeNG with Tailwind
+- Nx
+- Micro-services
+- Docker/Kubernetes
 
 ## Presentation of the application
-This application is based on a old website we wrote in PHP long time ago with a friend. 
-This site was a kind of collaborative blog where community people (our friends) wrote some articles on various topics, sorted into categories, on which we could add comments. 
-It has been killed by the arrival of Facebook (sad, right?)
+
+This application is based on a old website we wrote in PHP long time ago with a
+friend. This site was a kind of collaborative blog where community people (our
+friends) wrote some articles on various topics, sorted into categories, on which
+we could add comments. It has been killed by the arrival of Facebook (sad,
+right?)

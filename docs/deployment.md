@@ -4,14 +4,13 @@
 
 This repository ships deployment assets for three main scenarios:
 
-- local runtime wiring with `docker-compose.yml`
-- local image build or image pull flows with `docker-compose-build.yml` and `docker-compose-image.yml`
-- Kubernetes manifests under `deploy/`
+- local runtime wiring with `docker-compose.yml` - local image build or image
+  pull flows with `docker-compose-build.yml` and `docker-compose-image.yml` -
+  Kubernetes manifests under `deploy/`
 
 The frontend and backend Dockerfiles live in the Nx monorepo under:
 
-- `apps/frontend/Dockerfile`
-- `apps/backend/Dockerfile`
+- `apps/frontend/Dockerfile` - `apps/backend/Dockerfile`
 
 ## Docker Images
 
@@ -23,23 +22,22 @@ The frontend image is built from the monorepo root context.
 
 Build stage:
 
-- base image: `node:22-alpine`
-- copies `package*.json`, `nx.json`, `tsconfig.base.json`, and `apps/frontend`
-- installs dependencies with `npm ci --legacy-peer-deps`
-- runs `npm run build:frontend`
+- base image: `node:22-alpine` - copies `package*.json`, `nx.json`,
+  `tsconfig.base.json`, and `apps/frontend` - installs dependencies with `npm ci
+  --legacy-peer-deps` - runs `npm run build:frontend`
 
 Runtime stage:
 
-- base image: `nginx:1.29.4-alpine3.23-slim`
-- serves files from `dist/apps/frontend/browser/`
-- exposes port `8080`
-- injects runtime API endpoints into nginx config via `envsubst`
+- base image: `nginx:1.29.4-alpine3.23-slim` - serves files from
+  `dist/apps/frontend/browser/` - exposes port `8080` - injects runtime API
+  endpoints into nginx config via `envsubst`
 
 Default runtime environment variables:
 
-- `CATEGORIES_API_URL=http://localhost/api/categories`
-- `USERS_API_URL=http://localhost/api/users`
-- `ARTICLES_API_URL=http://localhost/api/articles`
+- `CATEGORIES_API_URL=http://incap-backend:4000/categories` -
+  `USERS_API_URL=http://incap-backend:4000/users` -
+  `ARTICLES_API_URL=http://incap-backend:4000/articles` -
+  `COMMENTS_API_URL=http://incap-backend:4000/comments`
 
 Published image tag:
 
@@ -53,22 +51,18 @@ The backend image is also built from the monorepo root context.
 
 Build stage:
 
-- base image: `node:22-alpine`
-- copies `package*.json` and `apps/backend`
-- installs dependencies with `npm ci --legacy-peer-deps`
-- runs `npm --prefix apps/backend run build`
+- base image: `node:22-alpine` - copies `package*.json` and `apps/backend` -
+  installs dependencies with `npm ci --legacy-peer-deps` - runs `npm --prefix
+  apps/backend run build`
 
 Runtime stage:
 
-- base image: `node:22-alpine`
-- copies `apps/backend/dist/server.js` into the runtime image
-- creates and uses a non-root user
-- exposes port `4000`
+- base image: `node:22-alpine` - copies `apps/backend/dist/server.js` into the
+  runtime image - creates and uses a non-root user - exposes port `4000`
 
 Default runtime environment variables:
 
-- `NODE_ENV=production`
-- `MONGO_DB_URL=localhost:27017`
+- `NODE_ENV=production` - `MONGO_DB_URL=localhost:27017`
 
 Published image tag:
 
@@ -78,33 +72,33 @@ Published image tag:
 
 ### `docker-compose.yml`
 
-This file documents runtime relationships between the three services and is the simplest local orchestration entry point.
+This file documents runtime relationships between the three services and is the
+simplest local orchestration entry point.
 
 Defined services:
 
-- `frontend`
-- `backend`
-- `mongodb`
+- `frontend` - `backend` - `mongodb`
 
 Current configuration in the file:
 
-- frontend publishes `8080:8080`
-- frontend uses:
-  - `CATEGORIES_API_URL=http://backend:4000/categories`
-  - `USERS_API_URL=http://backend:4000/users`
-  - `ARTICLES_API_URL=http://backend:4000/articles`
-- backend uses `MONGO_DB_URL=mongodb:27017`
-- mongodb uses the official `mongo` image
+- frontend publishes `8080:8080` - frontend uses: -
+  `CATEGORIES_API_URL=http://backend:4000/categories` -
+  `USERS_API_URL=http://backend:4000/users` -
+  `ARTICLES_API_URL=http://backend:4000/articles` -
+  `COMMENTS_API_URL=http://backend:4000/comments` - backend uses
+  `MONGO_DB_URL=mongodb:27017` - mongodb uses the official `mongo` image
 
-Important limitation: this file does not currently declare `build`, `image`, backend port publishing, MongoDB port publishing, or a persistent volume. It is useful as a lightweight wiring reference, but it is not a fully self-contained production compose stack.
+Important limitation: this file does not currently declare `build`, `image`,
+backend port publishing, MongoDB port publishing, or a persistent volume. It is
+useful as a lightweight wiring reference, but it is not a fully self-contained
+production compose stack.
 
 ### `docker-compose-build.yml`
 
 This file builds local images from source:
 
-- frontend build context: `apps/frontend`
-- backend build context: `apps/backend`
-- mongodb image: `mongo`
+- frontend build context: `apps/frontend` - backend build context:
+  `apps/backend` - mongodb image: `mongo`
 
 Use it when you want Docker to build the application images locally.
 
@@ -112,16 +106,20 @@ Use it when you want Docker to build the application images locally.
 
 This file pulls prebuilt images instead of building them:
 
-- `tuanicom/incap-frontend`
-- `tuanicom/incap-backend`
+- `tuanicom/incap-frontend` - `tuanicom/incap-backend`
 
 Both services use `pull_policy: always`.
 
 ### `deploy/docker-compose.yml`
 
-This file is a separate deployment-oriented compose reference under `deploy/`. It uses service names `incap-frontend` and `incap-backend`, publishes both application ports, and points the frontend category API to `http://localhost:4000/categories`.
+This file is a separate deployment-oriented compose reference under `deploy/`.
+It uses service names `incap-frontend` and `incap-backend`, publishes both
+application ports, and configures the frontend with four runtime API endpoints:
 
-Unlike the root `docker-compose.yml`, it does not define all three frontend API environment variables.
+- `CATEGORIES_API_URL=http://incap-backend:4000/categories` -
+  `USERS_API_URL=http://incap-backend:4000/users` -
+  `ARTICLES_API_URL=http://incap-backend:4000/articles` -
+  `COMMENTS_API_URL=http://incap-backend:4000/comments`
 
 ## Running with Docker
 
@@ -143,14 +141,13 @@ docker-compose -f docker-compose-image.yml up -d
 
 Kubernetes assets are stored in `deploy/`:
 
-- `deploy/backend-deployment.yaml`
-- `deploy/backend-service.yaml`
-- `deploy/frontend-deployment.yaml`
-- `deploy/frontend-service.yaml`
-- `deploy/mongodb-deployment.yaml`
-- `deploy/mongodb-service.yaml`
+- `deploy/backend-deployment.yaml` - `deploy/backend-service.yaml` -
+  `deploy/frontend-deployment.yaml` - `deploy/frontend-service.yaml` -
+  `deploy/mongodb-deployment.yaml` - `deploy/mongodb-service.yaml`
 
-These files appear to be Kompose-generated manifests derived from an older compose definition and should be treated as baseline manifests rather than polished production Kubernetes resources.
+These files appear to be Kompose-generated manifests derived from an older
+compose definition and should be treated as baseline manifests rather than
+polished production Kubernetes resources.
 
 ### Backend Deployment
 
@@ -158,11 +155,11 @@ These files appear to be Kompose-generated manifests derived from an older compo
 
 Current characteristics:
 
-- `apiVersion: extensions/v1beta1`
-- image: `tuanicom/incap-backend`
-- env: `MONGO_DB_URL=mongodb:27017`
-- container port: `4000`
-- security context sets `allowPrivilegeEscalation: false`, `runAsNonRoot: true`, and drops all capabilities
+- `apiVersion: apps/v1` - image: `tuanicom/incap-backend` - env:
+  `MONGO_DB_URL=mongodb:27017` - container port: `4000` - readiness and liveness
+  probes use a TCP socket on port `4000` - security context sets
+  `allowPrivilegeEscalation: false`, `runAsNonRoot: true`, and drops all
+  capabilities
 
 ### Backend Service
 
@@ -170,10 +167,7 @@ Current characteristics:
 
 Current characteristics:
 
-- service type: `NodePort`
-- service port: `4000`
-- target port: `4000`
-- node port: `30400`
+- service type: `ClusterIP` - service port: `4000` - target port: `4000`
 
 ### Frontend Deployment
 
@@ -181,12 +175,12 @@ Current characteristics:
 
 Current characteristics:
 
-- `apiVersion: extensions/v1beta1`
-- image: `tuanicom/incap-frontend`
-- only one env variable is present: `CATEGORIES_API_URL=http://localhost:4000`
-- container port: `8080`
-
-Note that this does not mirror the frontend Dockerfile defaults, which define three API URL variables.
+- `apiVersion: apps/v1` - image: `tuanicom/incap-frontend` - env: -
+  `CATEGORIES_API_URL=http://incap-backend:4000/categories` -
+  `USERS_API_URL=http://incap-backend:4000/users` -
+  `ARTICLES_API_URL=http://incap-backend:4000/articles` -
+  `COMMENTS_API_URL=http://incap-backend:4000/comments` - container port: `8080`
+  - readiness and liveness probes use `GET /` on port `8080`
 
 ### Frontend Service
 
@@ -194,23 +188,20 @@ Note that this does not mirror the frontend Dockerfile defaults, which define th
 
 Current characteristics:
 
-- service type: `NodePort`
-- service port: `8080`
-- target port: `8080`
-- node port: `30080`
+- service type: `LoadBalancer` - service port: `80` - target port: `8080`
 
 ### MongoDB
 
 **Files**:
 
-- `deploy/mongodb-deployment.yaml`
-- `deploy/mongodb-service.yaml`
+- `deploy/mongodb-deployment.yaml` - `deploy/mongodb-service.yaml`
 
 Current characteristics:
 
-- image: `mongo`
-- service port: `27017`
-- no persistent volume claim is defined in the repository
+- image: `mongo` - deployment uses `apiVersion: apps/v1` - service type:
+  `ClusterIP` - service port: `27017` - readiness and liveness probes use a TCP
+  socket on port `27017` - no persistent volume claim is defined in the
+  repository
 
 ## Applying the Kubernetes Manifests
 
@@ -230,16 +221,17 @@ kubectl apply -f deploy/frontend-deployment.yaml -n incap
 
 The frontend runtime can be configured with:
 
-- `CATEGORIES_API_URL`
-- `USERS_API_URL`
-- `ARTICLES_API_URL`
+- `CATEGORIES_API_URL` - `USERS_API_URL` - `ARTICLES_API_URL` -
+  `COMMENTS_API_URL`
 
-Those variables are consumed by `apps/frontend/nginx.conf` and substituted at container startup by the frontend Docker image.
+Those variables are consumed by `apps/frontend/nginx.conf` and substituted at
+container startup by the frontend Docker image.
 
-The application code also still contains `assets/settings.json` support, so there are effectively two configuration mechanisms in the repository today:
+The application code also still contains `assets/settings.json` support, so
+there are effectively two configuration mechanisms in the repository today:
 
-- static/runtime file-based app settings inside the frontend app
-- nginx proxy endpoint injection through container environment variables
+- static/runtime file-based app settings inside the frontend app - nginx proxy
+  endpoint injection through container environment variables
 
 ### Backend
 
@@ -253,15 +245,17 @@ The default value in the server code and Dockerfile is `localhost:27017`.
 
 These are important operational caveats in the repository as it exists today:
 
-- The root `docker-compose.yml` is incomplete for a full fresh deployment because it does not specify image builds or published backend and MongoDB ports.
-- The root compose file also does not define a named volume for MongoDB persistence.
-- The Kubernetes deployments still use deprecated `extensions/v1beta1` API versions.
-- The Kubernetes services are `NodePort`, not `ClusterIP` or `LoadBalancer`.
-- The frontend Kubernetes deployment sets only `CATEGORIES_API_URL`, while the frontend Docker image expects three API URL variables.
-- No health probes are defined in the Kubernetes manifests.
-- No persistent storage manifest for MongoDB is present under `deploy/`.
+- The root `docker-compose.yml` is incomplete for a full fresh deployment
+  because it does not specify image builds or published backend and MongoDB
+  ports. - The root compose file also does not define a named volume for MongoDB
+  persistence. - The backend and MongoDB services are cluster-internal
+  `ClusterIP` services, while the frontend remains a `LoadBalancer`; there is
+  still no ingress layer or host/path-based routing configuration in the
+  repository. - The frontend runtime now depends on four per-endpoint API URL
+  variables, so any additional compose or Kubernetes overlays need to define all
+  four consistently. - No persistent storage manifest for MongoDB is present
+  under `deploy/`.
 
 ## Related Files
 
-- [CI/CD and Code Analysis](./cicd-and-analysis.md)
-- [README](../README.md)
+- [CI/CD and Code Analysis](./cicd-and-analysis.md) - [README](../README.md)

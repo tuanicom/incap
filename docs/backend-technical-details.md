@@ -4,48 +4,63 @@
 
 The backend is now part of an Nx monorepo. Build, test, and lint using Nx CLI:
 
-- Build: `npx nx build backend`
-- Test: `npx nx test backend`
-- Lint: `npx nx lint backend`
+- Build: `npx nx build backend` - Test: `npx nx test backend` - Lint: `npx nx
+  lint backend`
 
 See [docs/nx-monorepo-migration.md](docs/nx-monorepo-migration.md) for details.
 
 ## Overview
 
-The INCAP backend is a RESTful API server built with Express.js and TypeScript, providing complete CRUD operations for articles, categories, and users. It demonstrates a clean three-layer architecture with proper separation of concerns.
+The INCAP backend is a RESTful API server built with Express.js and TypeScript,
+providing complete CRUD operations for articles, categories, and users. It
+demonstrates a clean three-layer architecture with proper separation of
+concerns.
 
 ## Technology Stack
 
 ### Core Technologies
 
-- **Node.js**: 24.x - JavaScript runtime
-- **Express.js**: 5.2 - Web application framework
-- **TypeScript**: 5.9 - Type-safe language
-- **MongoDB**: Latest - NoSQL document database
-- **Mongoose**: 9.1 - ODM (Object Document Mapper)
+- **Node.js**: 24.x - JavaScript runtime - **Express.js**: 5.2 - Web application
+  framework - **TypeScript**: 5.9 - Type-safe language - **MongoDB**: Latest -
+  NoSQL document database - **Mongoose**: 9.1 - ODM (Object Document Mapper)
 
 ### Middleware & Utilities
+
 | Package | Version | Purpose |
-|---------|---------|---------|
+
+| --------- | --------- | --------- |
+
 | morgan | 1.10 | HTTP request logging |
+
 | cors | 2.8 | Cross-Origin Resource Sharing |
+
 | body-parser | 2.2 | Request body parsing |
+
 | express-async-handler | 1.2 | Async/await error handling |
 
 ### Development & Testing
+
 | Package | Version | Purpose |
-|---------|---------|---------|
+
+| --------- | --------- | --------- |
+
 | Vitest | 4.0 | Unit test runner |
+
 | Chai | 4.5 | Assertion library |
+
 | Sinon | 21.0 | Mocking & stubbing |
+
 | Supertest | 7.2 | HTTP assertion testing |
+
 | TypeScript | 5.9 | Type checking |
+
 | esbuild | 0.27 | Fast bundler |
+
 | ESLint | 9.39 | Code quality |
 
 ## Project Structure
 
-```
+```text
 backend/
 ├── src/
 │   ├── server.ts                  # Application bootstrap
@@ -116,7 +131,7 @@ Server.bootstrap();
 
 ### Startup Sequence
 
-```
+```text
 1. Import Express, MongoDB modules
 2. Create Server instance
    ├── Initialize Express app
@@ -142,17 +157,15 @@ private config() {
 
 **Middleware Order & Purpose**:
 
-1. **Security**: Disable X-Powered-By header
-2. **CORS**: Allow cross-origin requests
-3. **Body Parsing**: Parse JSON request bodies
-4. **Logging**: Log all HTTP requests
-5. **Routing**: Mount route handlers
+1. **Security**: Disable X-Powered-By header 2. **CORS**: Allow cross-origin
+   requests 3. **Body Parsing**: Parse JSON request bodies 4. **Logging**: Log
+   all HTTP requests 5. **Routing**: Mount route handlers
 
 ## Architecture Pattern: Three-Layer Model
 
 Each domain (Articles, Categories, Users) follows this pattern:
 
-```
+```text
 HTTP Request
     ↓
 ┌─────────────────────────────────────────┐
@@ -198,6 +211,7 @@ HTTP Request
 ### Routes Layer (article.routes.ts)
 
 **Defined Endpoints**:
+
 ```typescript
 router.get('/')                 // GET /articles?category=...
 router.get('/:id')              // GET /articles/:id
@@ -207,6 +221,7 @@ router.delete('/:id')           // DELETE /articles/:id
 ```
 
 **Example Route Handler**:
+
 ```typescript
 this.router.route('/').get(
     asyncHandler(async (_req, res) => {
@@ -221,10 +236,8 @@ this.router.route('/').get(
 
 **Responsibilities**:
 
-- Extract request parameters
-- Call service layer
-- Handle business logic coordination
-- Return data for response
+- Extract request parameters - Call service layer - Handle business logic
+  coordination - Return data for response
 
 ```typescript
 export class ArticleController {
@@ -262,21 +275,19 @@ export class ArticleController {
 
 **Responsibilities**:
 
-- Implement business rules
-- Data validation
-- Coordinate with models
-- Handle error cases
+- Implement business rules - Data validation - Coordinate with models - Handle
+  error cases
 
 **Typical Operations**:
 
-- `getAll(category?: string)` - Retrieve articles, optionally filtered
-- `getById(id: string)` - Find single article
-- `save(article: Article)` - Create or update
-- `delete(id: string)` - Remove article
+- `getAll(category?: string)` - Retrieve articles, optionally filtered -
+  `getById(id: string)` - Find single article - `save(article: Article)` -
+  Create or update - `delete(id: string)` - Remove article
 
 #### Model Layer (article.model.ts)
 
 **MongoDB Schema Definition**:
+
 ```typescript
 export interface Article extends Document<string> {
     title: string;
@@ -294,6 +305,7 @@ export const articleSchema = new Schema({
 ```
 
 **Mongoose Model Pattern**:
+
 ```typescript
 function getArticleModel(): Model<Article> {
     // Check if model exists
@@ -305,19 +317,20 @@ function getArticleModel(): Model<Article> {
 }
 
 // Factory function for instantiation
-const articleModelFactory = (...args) => 
+const articleModelFactory = (...args) =>
     new (getArticleModel())(...args);
 ```
 
 **Delegated Methods**:
+
 ```typescript
 const staticMethods = [
-    'find', 'findById', 'findOneAndDelete', 
-    'findOne', 'create', 'findByIdAndUpdate', 
+    'find', 'findById', 'findOneAndDelete',
+    'findOne', 'create', 'findByIdAndUpdate',
     'findOneAndUpdate', 'deleteOne'
 ];
 for (const name of staticMethods) {
-    articleModelFactory[name] = (...args) => 
+    articleModelFactory[name] = (...args) =>
         getArticleModel()[name](...args);
 }
 ```
@@ -327,6 +340,7 @@ for (const name of staticMethods) {
 ### Article Model
 
 **Schema**:
+
 ```typescript
 {
     title: String,
@@ -341,6 +355,7 @@ for (const name of staticMethods) {
 ### Category Model
 
 **Schema**:
+
 ```typescript
 {
     name: String,
@@ -353,6 +368,7 @@ for (const name of staticMethods) {
 ### User Model
 
 **Schema**:
+
 ```typescript
 {
     username: String,
@@ -371,12 +387,13 @@ for (const name of staticMethods) {
 ### MongoDB Connection
 
 **Configuration**:
+
 ```typescript
 private dbConnection() {
     const mongoDbUrl = process.env.MONGO_DB_URL || "localhost:27017";
     mongoose.connect(`mongodb://${mongoDbUrl}/incap`);
     mongoose.set('strictQuery', false);
-    
+
     const connection = mongoose.connection;
     connection.once("open", () => {
         console.log("MongoDB connection established!");
@@ -391,16 +408,20 @@ private dbConnection() {
 ### Collections
 
 | Collection | Purpose | Documents |
-|-----------|---------|-----------|
+
+| ----------- | --------- | ----------- |
+
 | articles | Store article content | Article documents |
+
 | categories | Store category taxonomy | Category documents |
+
 | users | Store user information | User documents |
 
 ## API Endpoints
 
 ### Articles API
 
-```
+```text
 GET    /articles
        - Query: ?category=categoryName
        - Returns: Article[]
@@ -422,7 +443,7 @@ DELETE /articles/:id
 
 ### Categories API
 
-```
+```text
 GET    /categories
        - Returns: Category[]
 
@@ -443,7 +464,7 @@ DELETE /categories/:id
 
 ### Users API
 
-```
+```text
 GET    /users
        - Returns: User[]
 
@@ -481,6 +502,7 @@ router.route('/').get(asyncHandler(async (req, res) => {
 ### HTTP Response Pattern
 
 **Success Response**:
+
 ```json
 {
     "title": "Article Title",
@@ -492,6 +514,7 @@ router.route('/').get(asyncHandler(async (req, res) => {
 ```
 
 **Error Response** (Express default):
+
 ```json
 {
     "status": 500,
@@ -504,6 +527,7 @@ router.route('/').get(asyncHandler(async (req, res) => {
 ### Test Framework: Vitest
 
 **Configuration**:
+
 ```typescript
 export default defineConfig({
   test: {
@@ -528,6 +552,7 @@ export default defineConfig({
 ### Test Patterns
 
 **Unit Test Example**:
+
 ```typescript
 describe('ArticleController', () => {
     let controller: ArticleController;
@@ -567,6 +592,7 @@ npm run coverage
 ### TypeScript Compilation
 
 **tsconfig.json**:
+
 ```json
 {
     "compilerOptions": {
@@ -582,24 +608,26 @@ npm run coverage
 ### Production Build
 
 **esbuild Configuration**:
+
 ```bash
 esbuild server.ts --outdir=dist --bundle --platform=node
 ```
 
 **Results**:
 
-- Single bundled file at `dist/server.js`
-- All dependencies included
-- Optimized for Node.js environment
+- Single bundled file at `dist/server.js` - All dependencies included -
+  Optimized for Node.js environment
 
 ### Running the Application
 
 **Development**:
+
 ```bash
 npm run test:watch
 ```
 
 **Production**:
+
 ```bash
 npm run build
 npm run start
@@ -610,34 +638,35 @@ npm run start
 ### Morgan HTTP Logger
 
 **Configuration**:
+
 ```typescript
 this.app.use(morgan('combined'));
 ```
 
 **Logs Format**:
-```
+
+```text
 127.0.0.1 - - [timestamp] "GET /articles HTTP/1.1" 200 1234
 ```
 
 **Information Captured**:
 
-- Remote IP address
-- Request timestamp
-- HTTP method and path
-- Status code
-- Response size
+- Remote IP address - Request timestamp - HTTP method and path - Status code -
+  Response size
 
 ## Security Considerations
 
 ### CORS Configuration
+
 ```typescript
 this.app.use(cors());
 ```
 
-- Allows requests from any origin
-- Configurable for production (should restrict domains)
+- Allows requests from any origin - Configurable for production (should restrict
+  domains)
 
 ### Headers
+
 ```typescript
 this.app.disable('x-powered-by');
 ```
@@ -646,9 +675,8 @@ this.app.disable('x-powered-by');
 
 ### Input Validation
 
-- Express.json() built-in body size limits
-- QueryString parsing by Express
-- Type-safe through TypeScript
+- Express.json() built-in body size limits - QueryString parsing by Express -
+  Type-safe through TypeScript
 
 ---
 

@@ -1,26 +1,39 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
     kompose.cmd: kompose -f docker-compose.yml convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
   labels:
     io.kompose.service: mongodb
   name: mongodb
   namespace: incap
 spec:
   replicas: 1
-  strategy: {}
+  selector:
+    matchLabels:
+      io.kompose.service: mongodb
+  strategy:
+    type: RollingUpdate
   template:
     metadata:
-      creationTimestamp: null
       labels:
         io.kompose.service: mongodb
     spec:
       containers:
         - image: mongo
+          imagePullPolicy: IfNotPresent
           name: mongodb
+          livenessProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 20
+            periodSeconds: 20
+          readinessProbe:
+            tcpSocket:
+              port: 27017
+            initialDelaySeconds: 10
+            periodSeconds: 10
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -31,4 +44,3 @@ spec:
             - containerPort: 27017
           resources: {}
       restartPolicy: Always
-status: {}

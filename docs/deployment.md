@@ -163,10 +163,11 @@ These files appear to be Kompose-generated manifests derived from an older compo
 
 Current characteristics:
 
-- `apiVersion: extensions/v1beta1`
+- `apiVersion: apps/v1`
 - image: `tuanicom/incap-backend`
 - env: `MONGO_DB_URL=mongodb:27017`
 - container port: `4000`
+- readiness and liveness probes use a TCP socket on port `4000`
 - security context sets `allowPrivilegeEscalation: false`, `runAsNonRoot: true`, and drops all capabilities
 
 ### Backend Service
@@ -175,10 +176,9 @@ Current characteristics:
 
 Current characteristics:
 
-- service type: `NodePort`
+- service type: `ClusterIP`
 - service port: `4000`
 - target port: `4000`
-- node port: `30400`
 
 ### Frontend Deployment
 
@@ -186,7 +186,7 @@ Current characteristics:
 
 Current characteristics:
 
-- `apiVersion: extensions/v1beta1`
+- `apiVersion: apps/v1`
 - image: `tuanicom/incap-frontend`
 - env:
   - `CATEGORIES_API_URL=http://incap-backend:4000/categories`
@@ -194,6 +194,7 @@ Current characteristics:
   - `ARTICLES_API_URL=http://incap-backend:4000/articles`
   - `COMMENTS_API_URL=http://incap-backend:4000/comments`
 - container port: `8080`
+- readiness and liveness probes use `GET /` on port `8080`
 
 ### Frontend Service
 
@@ -215,7 +216,10 @@ Current characteristics:
 Current characteristics:
 
 - image: `mongo`
+- deployment uses `apiVersion: apps/v1`
+- service type: `ClusterIP`
 - service port: `27017`
+- readiness and liveness probes use a TCP socket on port `27017`
 - no persistent volume claim is defined in the repository
 
 ## Applying the Kubernetes Manifests
@@ -262,10 +266,8 @@ These are important operational caveats in the repository as it exists today:
 
 - The root `docker-compose.yml` is incomplete for a full fresh deployment because it does not specify image builds or published backend and MongoDB ports.
 - The root compose file also does not define a named volume for MongoDB persistence.
-- The Kubernetes deployments still use deprecated `extensions/v1beta1` API versions.
-- The Kubernetes services are `LoadBalancer` and still lack an ingress layer or cluster-internal/frontend-specific routing strategy beyond the service exposure.
+- The backend and MongoDB services are cluster-internal `ClusterIP` services, while the frontend remains a `LoadBalancer`; there is still no ingress layer or host/path-based routing configuration in the repository.
 - The frontend runtime now depends on four per-endpoint API URL variables, so any additional compose or Kubernetes overlays need to define all four consistently.
-- No health probes are defined in the Kubernetes manifests.
 - No persistent storage manifest for MongoDB is present under `deploy/`.
 
 ## Related Files

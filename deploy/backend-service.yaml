@@ -4,14 +4,13 @@ metadata:
   annotations:
     kompose.cmd: kompose -f docker-compose.yml convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
   labels:
     io.kompose.service: incap-backend
     name: incap-backend
   name: incap-backend
   namespace: incap
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - name: "incap-backend"
     port: 4000
@@ -19,5 +18,3 @@ spec:
     protocol: TCP
   selector:
     io.kompose.service: incap-backend
-status:
-  loadBalancer: {}

@@ -4,18 +4,16 @@ metadata:
   annotations:
     kompose.cmd: kompose -f docker-compose.yml convert
     kompose.version: 1.16.0 (0c01309)
-  creationTimestamp: null
   labels:
     io.kompose.service: mongodb
     name: mongodb
   name: mongodb
   namespace: incap
 spec:
+  type: ClusterIP
   ports:
   - name: "mongodb"
     port: 27017
     targetPort: 27017
   selector:
     io.kompose.service: mongodb
-status:
-  loadBalancer: {}

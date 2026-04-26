@@ -20,4 +20,4 @@ services:
       - mongodb
 
   mongodb: # name of the third service
-    image: mongo # specify image to build container from
+    image: mongo:8.0.20 # specify image to build container from

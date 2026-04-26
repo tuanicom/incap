@@ -1,5 +1,5 @@
 # Build the Angular app from the monorepo root context.
-FROM node:22-alpine AS builder
+FROM node:22.22-alpine3.23 AS builder
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -9,7 +9,7 @@ COPY apps/frontend ./apps/frontend
 RUN npm ci --legacy-peer-deps
 RUN npm run build:frontend
 
-FROM nginx:1.29.4-alpine3.23-slim AS runner
+FROM nginx:1.29.8-alpine3.23-slim AS runner
 
 RUN rm -rf /usr/share/nginx/html/*
 COPY apps/frontend/nginx.conf /src/nginx.conf

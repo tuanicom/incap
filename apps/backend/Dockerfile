@@ -1,5 +1,5 @@
 # Build the bundled backend from the monorepo root context.
-FROM node:22-alpine AS builder
+FROM node:22.22-alpine3.23 AS builder
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -8,7 +8,7 @@ COPY apps/backend ./apps/backend
 RUN npm ci --legacy-peer-deps
 RUN npm --prefix apps/backend run build
 
-FROM node:22-alpine AS runner
+FROM node:22.22-alpine3.23 AS runner
 WORKDIR /usr/src/app
 
 COPY --from=builder /usr/src/app/apps/backend/dist/server.js ./server.js

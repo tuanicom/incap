@@ -16,8 +16,9 @@ COPY apps/frontend/nginx.conf /src/nginx.conf
 COPY --from=builder /usr/src/app/dist/apps/frontend/browser/ /usr/share/nginx/html/
 
 EXPOSE 8080
-ENV CATEGORIES_API_URL=http://localhost/api/categories
-ENV USERS_API_URL=http://localhost/api/users
-ENV ARTICLES_API_URL=http://localhost/api/articles
+ENV CATEGORIES_API_URL=http://incap-backend:4000/categories
+ENV USERS_API_URL=http://incap-backend:4000/users
+ENV ARTICLES_API_URL=http://incap-backend:4000/articles
+ENV COMMENTS_API_URL=http://incap-backend:4000/comments
 
-CMD ["/bin/sh", "-c", "envsubst '$CATEGORIES_API_URL,$USERS_API_URL,$ARTICLES_API_URL' < /src/nginx.conf > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"]
+CMD ["/bin/sh", "-c", "envsubst '$CATEGORIES_API_URL,$USERS_API_URL,$ARTICLES_API_URL,$COMMENTS_API_URL' < /src/nginx.conf > /etc/nginx/nginx.conf && exec nginx -g 'daemon off;'"]

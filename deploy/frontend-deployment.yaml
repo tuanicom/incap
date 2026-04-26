@@ -21,7 +21,13 @@ spec:
       containers:
         - env:
             - name: CATEGORIES_API_URL
-              value: http://localhost:4000
+              value: http://incap-backend:4000/categories
+            - name: USERS_API_URL
+              value: http://incap-backend:4000/users
+            - name: ARTICLES_API_URL
+              value: http://incap-backend:4000/articles
+            - name: COMMENTS_API_URL
+              value: http://incap-backend:4000/comments
           image: tuanicom/incap-frontend
           name: incap-frontend
           securityContext:

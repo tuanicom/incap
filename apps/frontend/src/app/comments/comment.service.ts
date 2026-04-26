@@ -13,6 +13,10 @@ export class CommentService {
     return this.appSettings.settings.articlesApiUrl;
   }
 
+  private get commentsApi(): string {
+    return this.appSettings.settings.commentsApiUrl;
+  }
+
   public listForArticle(articleId: string): Observable<Comment[]> {
     return this.http.get<Comment[]>(`${this.articlesApi}/${articleId}/comments`);
   }
@@ -22,10 +26,10 @@ export class CommentService {
   }
 
   public update(id: string, payload: Partial<Comment>): Observable<Comment> {
-    return this.http.put<Comment>(`/comments/${id}`, payload);
+    return this.http.put<Comment>(`${this.commentsApi}/${id}`, payload);
   }
 
   public delete(id: string): Observable<any> {
-    return this.http.delete(`/comments/${id}`);
+    return this.http.delete(`${this.commentsApi}/${id}`);
   }
 }

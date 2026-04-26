@@ -1,5 +1,6 @@
 {
   "categoriesApiUrl":"/api/categories",
   "usersApiUrl":"/api/users",
-  "articlesApiUrl":"/api/articles"
+  "articlesApiUrl":"/api/articles",
+  "commentsApiUrl":"/api/comments"
 }

@@ -37,9 +37,10 @@ Runtime stage:
 
 Default runtime environment variables:
 
-- `CATEGORIES_API_URL=http://localhost/api/categories`
-- `USERS_API_URL=http://localhost/api/users`
-- `ARTICLES_API_URL=http://localhost/api/articles`
+- `CATEGORIES_API_URL=http://incap-backend:4000/categories`
+- `USERS_API_URL=http://incap-backend:4000/users`
+- `ARTICLES_API_URL=http://incap-backend:4000/articles`
+- `COMMENTS_API_URL=http://incap-backend:4000/comments`
 
 Published image tag:
 
@@ -93,6 +94,7 @@ Current configuration in the file:
   - `CATEGORIES_API_URL=http://backend:4000/categories`
   - `USERS_API_URL=http://backend:4000/users`
   - `ARTICLES_API_URL=http://backend:4000/articles`
+  - `COMMENTS_API_URL=http://backend:4000/comments`
 - backend uses `MONGO_DB_URL=mongodb:27017`
 - mongodb uses the official `mongo` image
 
@@ -119,9 +121,12 @@ Both services use `pull_policy: always`.
 
 ### `deploy/docker-compose.yml`
 
-This file is a separate deployment-oriented compose reference under `deploy/`. It uses service names `incap-frontend` and `incap-backend`, publishes both application ports, and points the frontend category API to `http://localhost:4000/categories`.
+This file is a separate deployment-oriented compose reference under `deploy/`. It uses service names `incap-frontend` and `incap-backend`, publishes both application ports, and configures the frontend with four runtime API endpoints:
 
-Unlike the root `docker-compose.yml`, it does not define all three frontend API environment variables.
+- `CATEGORIES_API_URL=http://incap-backend:4000/categories`
+- `USERS_API_URL=http://incap-backend:4000/users`
+- `ARTICLES_API_URL=http://incap-backend:4000/articles`
+- `COMMENTS_API_URL=http://incap-backend:4000/comments`
 
 ## Running with Docker
 
@@ -183,10 +188,12 @@ Current characteristics:
 
 - `apiVersion: extensions/v1beta1`
 - image: `tuanicom/incap-frontend`
-- only one env variable is present: `CATEGORIES_API_URL=http://localhost:4000`
+- env:
+  - `CATEGORIES_API_URL=http://incap-backend:4000/categories`
+  - `USERS_API_URL=http://incap-backend:4000/users`
+  - `ARTICLES_API_URL=http://incap-backend:4000/articles`
+  - `COMMENTS_API_URL=http://incap-backend:4000/comments`
 - container port: `8080`
-
-Note that this does not mirror the frontend Dockerfile defaults, which define three API URL variables.
 
 ### Frontend Service
 
@@ -194,10 +201,9 @@ Note that this does not mirror the frontend Dockerfile defaults, which define th
 
 Current characteristics:
 
-- service type: `NodePort`
-- service port: `8080`
+- service type: `LoadBalancer`
+- service port: `80`
 - target port: `8080`
-- node port: `30080`
 
 ### MongoDB
 
@@ -233,6 +239,7 @@ The frontend runtime can be configured with:
 - `CATEGORIES_API_URL`
 - `USERS_API_URL`
 - `ARTICLES_API_URL`
+- `COMMENTS_API_URL`
 
 Those variables are consumed by `apps/frontend/nginx.conf` and substituted at container startup by the frontend Docker image.
 
@@ -256,8 +263,8 @@ These are important operational caveats in the repository as it exists today:
 - The root `docker-compose.yml` is incomplete for a full fresh deployment because it does not specify image builds or published backend and MongoDB ports.
 - The root compose file also does not define a named volume for MongoDB persistence.
 - The Kubernetes deployments still use deprecated `extensions/v1beta1` API versions.
-- The Kubernetes services are `NodePort`, not `ClusterIP` or `LoadBalancer`.
-- The frontend Kubernetes deployment sets only `CATEGORIES_API_URL`, while the frontend Docker image expects three API URL variables.
+- The Kubernetes services are `LoadBalancer` and still lack an ingress layer or cluster-internal/frontend-specific routing strategy beyond the service exposure.
+- The frontend runtime now depends on four per-endpoint API URL variables, so any additional compose or Kubernetes overlays need to define all four consistently.
 - No health probes are defined in the Kubernetes manifests.
 - No persistent storage manifest for MongoDB is present under `deploy/`.
 

@@ -9,7 +9,8 @@ describe('AppSettings', () => {
     const appSettings: AppSettings = {
         categoriesApiUrl: '',
         usersApiUrl: '',
-        articlesApiUrl: ''
+        articlesApiUrl: '',
+        commentsApiUrl: ''
     };
     let appSettingsService: AppSettingsService = new AppSettingsService();
     let appSettingsHttpService: AppSettingsHttpService;
@@ -22,6 +23,8 @@ describe('AppSettings', () => {
         };
         appSettings.categoriesApiUrl = 'http://localhost:4000/categories';
         appSettings.usersApiUrl = 'http://localhost:4000/users';
+        appSettings.articlesApiUrl = 'http://localhost:4000/articles';
+        appSettings.commentsApiUrl = 'http://localhost:4000/comments';
 
         await TestBed.configureTestingModule({
             imports: [],

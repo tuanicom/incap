@@ -7,9 +7,12 @@ services:
     ports:
       - "8080:8080" # specify port forewarding
     environment:
-      CATEGORIES_API_URL: http://localhost:4000/categories
+      CATEGORIES_API_URL: http://incap-backend:4000/categories
+      USERS_API_URL: http://incap-backend:4000/users
+      ARTICLES_API_URL: http://incap-backend:4000/articles
+      COMMENTS_API_URL: http://incap-backend:4000/comments
     depends_on:
-      - backend
+      - incap-backend
 
   incap-backend: #name of the second service
     image: tuanicom/incap-backend

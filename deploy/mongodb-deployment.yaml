@@ -21,7 +21,7 @@ spec:
         io.kompose.service: mongodb
     spec:
       containers:
-        - image: mongo
+        - image: mongo:8.0.20
           imagePullPolicy: IfNotPresent
           name: mongodb
           livenessProbe:

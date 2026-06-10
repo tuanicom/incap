@@ -1,5 +1,6 @@
 /node_modules
 .angular
 .nx
+.node-portable
 dist
 coverage

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Category } from '../../models/category';
@@ -8,6 +8,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
     selector: 'app-categories-add',
     templateUrl: './add.component.html',
     styleUrls: ['./add.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [ReactiveFormsModule]
 })

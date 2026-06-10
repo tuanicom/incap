@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
@@ -11,6 +11,7 @@ import { CommentListComponent } from '../../../comments/comment-list/comment-lis
     selector: 'app-articles-edit',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [ReactiveFormsModule, CommonModule, CommentListComponent]
 })

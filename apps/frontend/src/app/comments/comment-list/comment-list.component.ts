@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommentService } from '../comment.service';
 import { Comment } from '../comment.model';
@@ -9,6 +9,7 @@ import { CommentItemComponent } from '../comment-item/comment-item.component';
   selector: 'app-comment-list',
   templateUrl: './comment-list.component.html',
   styleUrls: ['./comment-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
   standalone: true,
   imports: [CommonModule, CommentFormComponent, CommentItemComponent]
 })

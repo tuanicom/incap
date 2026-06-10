@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ArticlesRoutingModule } from './articles-routing.module';
 import { ArticlesComponent } from './articles.component';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AddComponent } from './components/add/add.component';
@@ -22,5 +22,5 @@ import { ArticleService } from './services/article.service';
         ListComponent,
         EditComponent,
         CommentListComponent,
-        AddComponent], providers: [ArticleService, provideHttpClient(withInterceptorsFromDi())] })
+        AddComponent], providers: [ArticleService, provideHttpClient(withInterceptorsFromDi(), withXhr())] })
 export class ArticlesModule { }

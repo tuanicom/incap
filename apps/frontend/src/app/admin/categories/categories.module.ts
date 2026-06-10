@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { CategoriesComponent } from './categories.component';
 import { ListComponent } from './components/list/list.component';
 import { CategoryService } from './services/category.service';
@@ -18,6 +18,6 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         CategoriesComponent,
         ListComponent,
         EditComponent,
-        AddComponent], providers: [CategoryService, provideHttpClient(withInterceptorsFromDi())] })
+        AddComponent], providers: [CategoryService, provideHttpClient(withInterceptorsFromDi(), withXhr())] })
 export class CategoriesModule {
 }

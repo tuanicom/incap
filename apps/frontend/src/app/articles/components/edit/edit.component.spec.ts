@@ -4,7 +4,7 @@ import { EditComponent } from './edit.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
@@ -42,7 +42,7 @@ describe('Articles > EditComponent', () => {
                 { provide: ArticleService, useValue: articleServiceSpy },
                 { provide: Router, useValue: routerSpy },
                 { provide: ActivatedRoute, useValue: { params: Observable.of<Params>({ id: articleId }) } },
-                provideHttpClient(withInterceptorsFromDi())
+                provideHttpClient(withInterceptorsFromDi(), withXhr())
             ]
         }).compileComponents();
     });

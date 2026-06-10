@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Article } from '../../models/article';
@@ -8,6 +8,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
     selector: 'app-articles-add',
     templateUrl: './add.component.html',
     styleUrls: ['./add.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [ReactiveFormsModule]
 })

@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
 import { Observable } from 'rxjs';
@@ -11,6 +11,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     selector: 'app-categories-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [CommonModule, FontAwesomeModule]
 })

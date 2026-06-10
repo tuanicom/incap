@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, inject, provideAppInitializer } from '@angular/core';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
@@ -22,7 +22,7 @@ export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => 
         const initializerFn = (app_Init)(inject(AppSettingsHttpService));
         return initializerFn();
       }),
-        provideHttpClient(withInterceptorsFromDi())
+        provideHttpClient(withInterceptorsFromDi(), withXhr())
     ] })
 export class AppModule {
 }

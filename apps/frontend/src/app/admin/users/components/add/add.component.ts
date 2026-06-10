@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user';
@@ -8,6 +8,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
     selector: 'app-users-add',
     templateUrl: './add.component.html',
     styleUrls: ['./add.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [ReactiveFormsModule]
 })

@@ -4,7 +4,7 @@ import { EditComponent } from './edit.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { RouterModule, Router, ActivatedRoute, Params } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
@@ -42,7 +42,7 @@ describe('Categories > EditComponent', () => {
                 { provide: CategoryService, useValue: categoryServiceSpy },
                 { provide: Router, useValue: routerSpy },
                 { provide: ActivatedRoute, useValue: { params: Observable.of<Params>({ id: categoryId }) } },
-                provideHttpClient(withInterceptorsFromDi())
+                provideHttpClient(withInterceptorsFromDi(), withXhr())
             ]
         }).compileComponents();
     });

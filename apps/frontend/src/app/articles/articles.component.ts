@@ -1,10 +1,11 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Params, RouterModule } from '@angular/router';
 
 @Component({
     selector: 'app-articles',
     templateUrl: './articles.component.html',
     styleUrls: ['./articles.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [RouterModule]
 })

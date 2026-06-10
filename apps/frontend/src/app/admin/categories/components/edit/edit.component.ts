@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category';
@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
     selector: 'app-categories-edit',
     templateUrl: './edit.component.html',
     styleUrls: ['./edit.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
     standalone: true,
     imports: [ReactiveFormsModule, CommonModule]
 })

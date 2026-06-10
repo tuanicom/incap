@@ -2,7 +2,7 @@ import type { Mock } from "vitest";
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ListComponent } from './list.component';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -42,7 +42,7 @@ describe('Categories > ListComponent', () => {
                 { provide: CategoryService, useValue: categoryServiceSpy },
                 { provide: Router, useValue: routerSpy },
                 { provide: ActivatedRoute, useValue: {} },
-                provideHttpClient(withInterceptorsFromDi())
+                provideHttpClient(withInterceptorsFromDi(), withXhr())
             ]
         }).compileComponents();
     });

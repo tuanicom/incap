@@ -4,7 +4,7 @@ import { AddComponent } from './add.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
@@ -39,7 +39,7 @@ describe('Users > AddComponent', () => {
                 { provide: UserService, useValue: userServiceSpy },
                 { provide: Router, useValue: routerSpy },
                 { provide: ActivatedRoute, useValue: {} },
-                provideHttpClient(withInterceptorsFromDi()),
+                provideHttpClient(withInterceptorsFromDi(), withXhr()),
             ]
         }).compileComponents();
     });

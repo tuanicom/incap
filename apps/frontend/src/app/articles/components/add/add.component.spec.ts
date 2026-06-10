@@ -4,7 +4,7 @@ import { AddComponent } from './add.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
@@ -45,7 +45,7 @@ describe('Articles > AddComponent', () => {
                         }
                     }
                 },
-                provideHttpClient(withInterceptorsFromDi())
+                provideHttpClient(withInterceptorsFromDi(), withXhr())
             ]
         }).compileComponents();
     });

@@ -45,7 +45,7 @@
     "express": "^5.2.1",
     "express-async-handler": "^1.2.0",
     "font-awesome": "^4.7.0",
-    "mongoose": "^9.5.0",
+    "mongoose": "^9.7.2",
     "morgan": "^1.11.0",
     "primeicons": "^7.0.0",
     "primeng": "^21.1.6",

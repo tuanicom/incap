@@ -5,7 +5,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { AppSettingsHttpService } from './app.settings';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => void {
   return () => appSettingsHttpService.initializeApp();
@@ -16,7 +15,6 @@ export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => 
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         RouterModule,
-        FontAwesomeModule,
         AppComponent], providers: [
         provideAppInitializer(() => {
         const initializerFn = (app_Init)(inject(AppSettingsHttpService));

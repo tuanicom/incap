@@ -8,7 +8,6 @@ import { AddComponent } from './components/add/add.component';
 import { UserService } from './services/user.service';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { RouterModule } from '@angular/router';
 
 
@@ -17,7 +16,6 @@ import { RouterModule } from '@angular/router';
         ReactiveFormsModule,
         RouterModule,
         UsersRoutingModule,
-        FontAwesomeModule,
         UsersComponent,
         ListComponent,
         AddComponent], providers: [UserService, provideHttpClient(withInterceptorsFromDi())] })

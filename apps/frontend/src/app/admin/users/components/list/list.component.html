@@ -16,7 +16,7 @@
               (click)="deleteUser(user._id)"
               class="inline-flex items-center justify-center rounded-md px-2 py-1 bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors"
               title="Delete">
-              <fa-icon [icon]="icons['trash']" class="w-4 h-4"></fa-icon>
+              <i [class]="'pi ' + icons['trash']" class="w-4 h-4"></i>
             </button>
           </td>
         </tr>
@@ -28,7 +28,7 @@
           <button 
             (click)="addUser()"
             class="inline-flex items-center gap-2 px-4 py-2 rounded-md bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors font-medium">
-            <fa-icon [icon]="icons['plus']" class="w-4 h-4"></fa-icon>
+            <i [class]="'pi ' + icons['plus']" class="w-4 h-4"></i>
             Add User
           </button>
         </td>

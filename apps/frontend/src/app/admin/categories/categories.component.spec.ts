@@ -7,15 +7,13 @@ import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 import { RouterModule } from '@angular/router';
 import { CategoryService } from './services/category.service';
 import { APP_BASE_HREF } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ReactiveFormsModule } from '@angular/forms';
-
 describe('CategoriesComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
     declarations: [
     ],
-    imports: [FontAwesomeModule,
+    imports: [
         ReactiveFormsModule,
         BrowserModule,
         RouterModule.forRoot([], {}),
@@ -29,7 +27,6 @@ describe('CategoriesComponent', () => {
     ]
 }).compileComponents();
   });
-
   it('should create the app', () => {
     const fixture = TestBed.createComponent(CategoriesComponent);
     const app = fixture.debugElement.componentInstance;

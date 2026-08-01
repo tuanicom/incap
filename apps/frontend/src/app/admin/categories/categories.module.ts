@@ -8,13 +8,11 @@ import { EditComponent } from './components/edit/edit.component';
 import { AddComponent } from './components/add/add.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CategoriesRoutingModule } from './categories-routing.module';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({ declarations: [
     ], imports: [CommonModule,
         ReactiveFormsModule,
         CategoriesRoutingModule,
-        FontAwesomeModule,
         CategoriesComponent,
         ListComponent,
         EditComponent,

@@ -6,7 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { RouterModule } from '@angular/router';
 import { AppSettingsHttpService } from './app.settings';
 
-export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => void {
+export function appInit(appSettingsHttpService: AppSettingsHttpService): () => void {
   return () => appSettingsHttpService.initializeApp();
 }
 
@@ -17,7 +17,7 @@ export function app_Init(appSettingsHttpService: AppSettingsHttpService): () => 
         RouterModule,
         AppComponent], providers: [
         provideAppInitializer(() => {
-        const initializerFn = (app_Init)(inject(AppSettingsHttpService));
+        const initializerFn = (appInit)(inject(AppSettingsHttpService));
         return initializerFn();
       }),
         provideHttpClient(withInterceptorsFromDi())

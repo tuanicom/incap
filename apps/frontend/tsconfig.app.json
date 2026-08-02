@@ -3,15 +3,13 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/apps/frontend",
+    "rootDir": ".",
     "types": []
   },
   "angularCompilerOptions": {
     "disableTypeScriptVersionCheck": true
   },
-  "files": [
-    "src/main.ts"
-  ],
   "include": [
-    "src/**/*.d.ts"
+    "src/**/*.ts"
   ]
 }

@@ -3,26 +3,25 @@ import { ArticleService } from '../../services/article.service';
 import { Article } from '../../models/article';
 import { Observable } from 'rxjs';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { faPlus, faEdit, faTrash, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { CommonModule } from '@angular/common';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PrimeIcons } from 'primeng/api';
 
 @Component({
     selector: 'app-articles-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.scss'],
     standalone: true,
-    imports: [CommonModule, FontAwesomeModule]
+    imports: [CommonModule]
 })
 export class ListComponent implements OnInit {
   public articles$!: Observable<Article[]>;
   private readonly articleService = inject(ArticleService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
-  public icons: { [id: string]: IconDefinition; } = {
-    plus: faPlus,
-    edit: faEdit,
-    trash: faTrash,
+  public icons = {
+    plus: PrimeIcons.PLUS,
+    edit: PrimeIcons.PENCIL,
+    trash: PrimeIcons.TRASH,
   };
   private category = '';
 

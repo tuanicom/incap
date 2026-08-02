@@ -4,7 +4,6 @@ import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/
 import { AppSettingsHttpService, AppSettingsService, AppSettings } from './app.settings';
 import { APP_BASE_HREF } from '@angular/common';
 import * as Observable from 'rxjs';
-
 describe('AppSettings', () => {
     const appSettings: AppSettings = {
         categoriesApiUrl: '',
@@ -25,7 +24,6 @@ describe('AppSettings', () => {
         appSettings.usersApiUrl = 'http://localhost:4000/users';
         appSettings.articlesApiUrl = 'http://localhost:4000/articles';
         appSettings.commentsApiUrl = 'http://localhost:4000/comments';
-
         await TestBed.configureTestingModule({
             imports: [],
             providers: [
@@ -39,29 +37,24 @@ describe('AppSettings', () => {
         appSettingsHttpService = TestBed.inject(AppSettingsHttpService);
         appSettingsService = TestBed.inject(AppSettingsService);
     });
-
     it('should create the AppSettingsService', () => {
         expect(appSettingsService).toBeTruthy();
     });
-
     it('should create the AppSettingsHttpService', () => {
         expect(appSettingsHttpService).toBeTruthy();
     });
-
     describe('on app initialization', () => {
         beforeEach(async () => {
             httpClientSpy.get.mockReturnValueOnce(Observable.of<AppSettings>(appSettings));
             appSettingsHttpService.initializeApp();
             await new Promise((resolve) => setTimeout(resolve, 0));
         });
-
         it('should get data from assets/settings.json', () => {
             expect(httpClientSpy.get).toHaveBeenCalled();
             expect(vi.mocked(httpClientSpy.get).mock.calls.length).toBe(1);
             expect(vi.mocked(httpClientSpy.get).mock.calls[0].length).toBe(1);
             expect(vi.mocked(httpClientSpy.get).mock.calls[0][0]).toBe('assets/settings.json');
         });
-
         it('should assign categories url to AppSettingsService', () => {
             expect(appSettingsService.settings).toBe(appSettings);
         });

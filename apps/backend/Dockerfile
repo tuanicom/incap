@@ -1,5 +1,5 @@
 # Build the bundled backend from the monorepo root context.
-FROM node:22-alpine AS builder
+FROM node:26-alpine AS builder
 
 # Install dependencies for native modules if needed
 RUN apk add --no-cache python3 make g++
@@ -19,7 +19,7 @@ COPY apps/backend ./apps/backend
 RUN npm --prefix apps/backend run build
 
 # Runner stage
-FROM node:22-alpine AS runner
+FROM node:26-alpine AS runner
 
 # Install dumb-init for proper signal handling
 RUN apk add --no-cache dumb-init

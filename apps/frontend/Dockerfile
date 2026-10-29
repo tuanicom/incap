@@ -1,5 +1,5 @@
 # Build the Angular app from the monorepo root context.
-FROM node:22-alpine AS builder
+FROM node:26-alpine AS builder
 
 # Install dependencies for native modules if needed
 RUN apk add --no-cache python3 make g++

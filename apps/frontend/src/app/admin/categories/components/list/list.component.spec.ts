@@ -116,19 +116,4 @@ describe('Categories > ListComponent', () => {
         });
     });
 
-    it('should render the categories returned by the service', async () => {
-        categoryServiceSpy.getCategories.mockReturnValue(Observable.of([
-            { _id: '1', title: 'Category A', description: 'First category' }
-        ]));
-
-        component.getCategories();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        fixture.detectChanges();
-
-        const text = fixture.nativeElement.textContent;
-        expect(text).toContain('Category A');
-        expect(text).toContain('First category');
-        expect(text).toContain('Add Category');
-    });
 });

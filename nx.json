@@ -40,5 +40,6 @@
       "!{projectRoot}/**/*.spec.ts"
     ]
   },
-  "analytics": false
+  "analytics": false,
+  "nxCloudId": "6ae3c7553c9b4a9b6c90ea4d"
 }

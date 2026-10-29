@@ -53,7 +53,7 @@
       "options": {
         "cwd": "apps/frontend",
         "commands": [
-          "ng lint"
+          "eslint"
         ],
         "parallel": false
       }

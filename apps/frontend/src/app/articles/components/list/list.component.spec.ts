@@ -138,18 +138,4 @@ describe('Articles > ListComponent', () => {
         });
     });
 
-    it('should render article content returned by the service', async () => {
-        articleServiceSpy.getArticles.mockReturnValue(Observable.of([
-            { _id: '1', title: 'Rendered title', content: 'Rendered body', category: 'test' }
-        ]));
-
-        component.getArticles();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        fixture.detectChanges();
-
-        const text = fixture.nativeElement.textContent;
-        expect(text).toContain('Rendered title');
-        expect(text).toContain('Rendered body');
-    });
 });

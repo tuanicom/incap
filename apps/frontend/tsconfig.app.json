@@ -3,7 +3,9 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc/apps/frontend",
-    "types": []
+    "rootDir": ".",
+    "types": [],
+    "ignoreDeprecations": "6.0"
   },
   "angularCompilerOptions": {
     "disableTypeScriptVersionCheck": true

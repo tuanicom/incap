@@ -3,6 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": "./dist/out-tsc",
+    "rootDir": ".",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
@@ -19,6 +20,7 @@
     "module": "es2020",
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
+    "ignoreDeprecations": "6.0",
     "paths": {
       "@incap/backend/*": ["apps/backend/src/*"],
       "@incap/frontend/*": ["apps/frontend/src/*"],

@@ -1,23 +1,32 @@
-version: '3' # specify docker-compose version
-
-# Define the services/containers to be run
 services:
-  frontend: # name of the first service
+  frontend:
+    image: tuanicom/incap-frontend:latest
     ports:
-      - "8080:8080" # specify port forewarding
+      - "8080:8080"
     environment:
       CATEGORIES_API_URL: http://backend:4000/categories
       USERS_API_URL: http://backend:4000/users
       ARTICLES_API_URL: http://backend:4000/articles
       COMMENTS_API_URL: http://backend:4000/comments
     depends_on:
-      - backend
+      backend:
+        condition: service_started
+    restart: unless-stopped
 
-  backend: #name of the second service
+  backend:
+    image: tuanicom/incap-backend:latest
     environment:
       MONGO_DB_URL: mongodb:27017
     depends_on:
-      - mongodb
+      mongodb:
+        condition: service_started
+    restart: unless-stopped
 
-  mongodb: # name of the third service
-    image: mongo:8.0.20 # specify image to build container from
+  mongodb:
+    image: mongo:8.0.20
+    restart: unless-stopped
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5

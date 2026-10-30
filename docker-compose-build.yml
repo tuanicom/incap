@@ -1,12 +1,21 @@
-version: '3' # specify docker-compose version
-
-# Define the services/containers to be run
 services:
-  frontend: # name of the first service
-    build: apps/frontend # specify the directory of the Dockerfile with Nx-based build
+  frontend:
+    build:
+      context: .
+      dockerfile: apps/frontend/Dockerfile
+    restart: unless-stopped
 
-  backend: #name of the second service
-    build: apps/backend # specify the directory of the Dockerfile with Nx-based build
+  backend:
+    build:
+      context: .
+      dockerfile: apps/backend/Dockerfile
+    restart: unless-stopped
 
-  mongodb: # name of the third service
-    image: mongo:8.0.20 # specify image to build container from
+  mongodb:
+    image: mongo:8.0.20
+    restart: unless-stopped
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5

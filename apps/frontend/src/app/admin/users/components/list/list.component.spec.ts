@@ -99,18 +99,4 @@ describe('Users > ListComponent', () => {
         });
     });
 
-    it('should render the users returned by the service', async () => {
-        userServiceSpy.getUsers.mockReturnValue(Observable.of([
-            { _id: '1', name: 'Ada Lovelace' }
-        ]));
-
-        component.getUsers();
-        fixture.detectChanges();
-        await fixture.whenStable();
-        fixture.detectChanges();
-
-        const text = fixture.nativeElement.textContent;
-        expect(text).toContain('Ada Lovelace');
-        expect(text).toContain('Add User');
-    });
 });

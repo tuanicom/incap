@@ -9,14 +9,15 @@ WORKDIR /usr/src/app
 # Copy dependency files first for better layer caching
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --legacy-peer-deps --omit=dev
+# Install dependencies (include devDependencies for build tools)
+RUN npm ci --legacy-peer-deps
 
 # Copy source files
 COPY apps/backend ./apps/backend
+COPY nx.json tsconfig.base.json ./
 
-# Build the application
-RUN npm --prefix apps/backend run build
+# Build the application using Nx
+RUN npm run build:backend
 
 # Runner stage
 FROM node:26-alpine AS runner
@@ -30,7 +31,7 @@ WORKDIR /usr/src/app
 # No need to create it again
 
 # Copy built assets from builder
-COPY --from=builder --chown=node:node /usr/src/app/apps/backend/dist/server.js ./server.js
+COPY --from=builder --chown=node:node /usr/src/app/apps/backend/dist/ ./dist
 
 # Switch to non-root user
 USER node
@@ -46,4 +47,4 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
 
 # Use dumb-init for proper signal handling
 ENTRYPOINT ["dumb-init", "--"]
-CMD ["node", "server.js"]
+CMD ["node", "dist/server.js"]

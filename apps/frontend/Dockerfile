@@ -10,8 +10,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 COPY nx.json tsconfig.base.json ./
 
-# Install dependencies
-RUN npm ci --legacy-peer-deps --omit=dev
+# Install dependencies (include devDependencies for build tools)
+RUN npm ci --legacy-peer-deps
 
 # Copy source files
 COPY apps/frontend ./apps/frontend

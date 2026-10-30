@@ -25,8 +25,8 @@ FROM nginx:alpine AS runner
 # Install wget for health check
 RUN apk add --no-cache wget
 
-# Create non-root user
-RUN addgroup -S nginx && adduser -S nginx -G nginx
+# Note: nginx:alpine already includes an nginx user with UID 101
+# No need to create it again
 
 # Remove default nginx content
 RUN rm -rf /usr/share/nginx/html/*

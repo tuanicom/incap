@@ -26,8 +26,8 @@ RUN apk add --no-cache dumb-init
 
 WORKDIR /usr/src/app
 
-# Create non-root user
-RUN addgroup -S node && adduser -S node -G node
+# Note: node:26-alpine already includes a node user with UID 1000
+# No need to create it again
 
 # Copy built assets from builder
 COPY --from=builder --chown=node:node /usr/src/app/apps/backend/dist/server.js ./server.js
